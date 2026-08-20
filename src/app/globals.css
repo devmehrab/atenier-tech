@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  /* --- Premium Light Theme (Unchanged) --- */
+  :root {
+    --background: 40 20% 98%;
+    --foreground: 220 15% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 15%;
+
+    --primary: 160 30% 35%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 40 15% 92%;
+    --secondary-foreground: 220 15% 20%;
+
+    --muted: 40 15% 92%;
+    --muted-foreground: 220 10% 45%;
+
+    --accent: 160 20% 90%;
+    --accent-foreground: 160 30% 30%;
+
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 40 10% 85%;
+    --input: 40 10% 85%;
+    --ring: 160 30% 35%;
+
+    --radius: 0.75rem;
+  }
+
+  /* --- Soft Premium Dark Theme --- */
+  .dark {
+    /* Softened slate/charcoal background (L: 8% -> 16%) */
+    --background: 215 15% 16%;
+    /* Slightly dimmed text to reduce harsh glare */
+    --foreground: 215 15% 85%;
+
+    /* Slightly lighter than background to create soft depth */
+    --card: 215 15% 19%;
+    --card-foreground: 215 15% 85%;
+
+    --popover: 215 15% 19%;
+    --popover-foreground: 215 15% 85%;
+
+    /* Keeping the beautiful soft sage primary */
+    --primary: 160 35% 60%;
+    --primary-foreground: 215 20% 12%;
+
+    /* Soft elevated slate for secondary elements */
+    --secondary: 215 15% 24%;
+    --secondary-foreground: 215 15% 90%;
+
+    --muted: 215 15% 22%;
+    --muted-foreground: 215 10% 65%;
+
+    --accent: 160 25% 25%;
+    --accent-foreground: 160 40% 70%;
+
+    --destructive: 0 60% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Visible but very gentle borders */
+    --border: 215 15% 26%;
+    --input: 215 15% 26%;
+    --ring: 160 35% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.8);
+}
