@@ -2,9 +2,10 @@ import { MetadataRoute } from "next";
 import { connectToDatabase } from "@/lib/db/connection";
 import { Organization } from "@/lib/db/models/Organization";
 import { Property } from "@/lib/db/models/Property";
+import { getBaseUrl } from "@/lib/utils/seo";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const baseUrl = getBaseUrl();
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {

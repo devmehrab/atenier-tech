@@ -13,9 +13,9 @@ interface ExplorePageProps {
 }
 
 export const metadata = {
-  title: "Explore Real Estate Properties & Listings",
+  title: "প্রপার্টি খুঁজুন | ফ্ল্যাট, জমি ও বাণিজ্যিক স্পেস — Atenier",
   description:
-    "Browse homes, apartments, penthouses, villas, and commercial real estate for sale and rent across all agencies.",
+    "এলাকা, বাজেট ও ক্যাটাগরি অনুযায়ী খুঁজে নিন আপনার স্বপ্নের ফ্ল্যাট, বাড়ি, জমি কিংবা বাণিজ্যিক প্রপার্টি।",
 };
 
 export default async function ExplorePage({ searchParams }: ExplorePageProps) {
@@ -47,10 +47,10 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
         <SlideUp distance={16}>
           <div className="mb-8">
             <h1 className="text-3xl font-extrabold text-foreground">
-              Real Estate Marketplace
+              পছন্দের প্রপার্টি খুঁজুন
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
-              Discover {total} properties listed across our network of verified real estate agencies.
+              এলাকা, বাজেট এবং ধরন অনুযায়ী খুঁজে নিন সেরা ফ্ল্যাট, বাড়ি ও জমি (মোট {total}টি এভেইলেবল লিস্টিং)
             </p>
           </div>
         </SlideUp>
@@ -62,8 +62,8 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
         <SlideUp delay={0.2}>
           <PropertyGrid
             properties={properties}
-            emptyTitle="No properties match your filter criteria"
-            emptySubtitle="Try loosening your search filters, adjusting the price range, or choosing a different city."
+            emptyTitle="এই ফিল্টারে কোনো প্রপার্টি পাওয়া যায়নি"
+            emptySubtitle="অনুগ্রহ করে ফিল্টারে সার্চের শব্দ, বাজেট রেঞ্জ বা এলাকা পরিবর্তন করে আবার চেষ্টা করুন।"
           />
         </SlideUp>
 

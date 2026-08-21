@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getPublicPropertyBySlug, listProperties } from "@/lib/services/property.service";
 import { formatPrice, formatArea, formatDate } from "@/lib/utils/formatters";
-import { generatePropertyJsonLd } from "@/lib/utils/seo";
+import { generatePropertyJsonLd, getBaseUrl } from "@/lib/utils/seo";
 import { PropertyGallery } from "@/components/tenant/PropertyGallery";
 import { AgentCard } from "@/components/tenant/AgentCard";
 import { WhatsAppButton } from "@/components/tenant/WhatsAppButton";
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PropertyPageProps) {
   if (!data) return { title: "Property Not Found" };
 
   const { property, organization } = data;
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const baseUrl = getBaseUrl();
   const canonicalUrl = `${baseUrl}/${organization.slug}/properties/${property.slug}`;
   const imageUrl =
     property.featuredImage ||
@@ -77,8 +77,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
   }
 
   const { property, organization, agent } = data;
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-  const jsonLd = generatePropertyJsonLd(property, organization, baseUrl);
+  const jsonLd = generatePropertyJsonLd(property, organization);
 
   // Fetch 3 related properties from same agency
   const { properties: related } = await listProperties(
@@ -105,12 +104,12 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-primary transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
-              Back to {organization.name} Listings
+              {organization.name}-এর সকল লিস্টিং
             </Link>
 
             <div className="flex items-center gap-3">
               <span className="text-xs text-muted-foreground hidden sm:inline">
-                Published on {formatDate(property.publishedAt || property.createdAt)}
+                পাবলিশ তারিখ: {formatDate(property.publishedAt || property.createdAt)}
               </span>
               <BrochureDownloadButton
                 property={property}
@@ -143,12 +142,12 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
                   className="font-bold uppercase"
                 >
                   {property.status === "SOLD"
-                    ? "Sold"
+                    ? "বিক্রি হয়ে গেছে"
                     : property.status === "RENTED"
-                      ? "Rented"
+                      ? "ভাড়া হয়ে গেছে"
                       : property.listingType === "RENT"
-                        ? "For Rent"
-                        : "For Sale"}
+                        ? "ভাড়ার জন্য"
+                        : "বিক্রির জন্য"}
                 </Badge>
                 <Badge variant="outline" className="font-semibold">
                   {property.propertyType}
@@ -175,20 +174,19 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
 
             <div className="flex flex-col lg:items-end">
               <span className="text-xs font-bold uppercase text-muted-foreground">
-                Listing Price
+                মূল্য
               </span>
               <div className="text-3xl sm:text-4xl font-extrabold text-foreground">
                 {formatPrice(property.price, property.currency, property.pricePeriod)}
               </div>
               {property.priceNegotiable && (
                 <span className="text-xs text-primary font-semibold mt-0.5">
-                  Price Negotiable
+                  দাম আলোচনা সাপেক্ষ
                 </span>
               )}
             </div>
           </div>
         </SlideUp>
-
         {/* Gallery */}
         <FadeIn delay={0.1}>
           <PropertyGallery images={property.images} title={property.title} />
@@ -202,7 +200,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
             <SlideUp delay={0.15}>
               <div className="rounded-2xl border border-border/60 bg-card p-6 shadow-sm">
                 <h2 className="text-base font-bold text-card-foreground mb-6">
-                  Property Specifications
+                  প্রপার্টির বিবরণ ও সাইজ
                 </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-sm">
                   <div className="flex items-center gap-3">
@@ -210,8 +208,8 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
                       <Bed className="h-5 w-5" />
                     </div>
                     <div>
-                      <span className="block text-xs text-muted-foreground font-medium">Bedrooms</span>
-                      <span className="font-bold text-card-foreground">{property.specifications.bedrooms} Beds</span>
+                      <span className="block text-xs text-muted-foreground font-medium">বেডরুম</span>
+                      <span className="font-bold text-card-foreground">{property.specifications.bedrooms} টি</span>
                     </div>
                   </div>
 
@@ -220,8 +218,8 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
                       <Bath className="h-5 w-5" />
                     </div>
                     <div>
-                      <span className="block text-xs text-muted-foreground font-medium">Bathrooms</span>
-                      <span className="font-bold text-card-foreground">{property.specifications.bathrooms} Baths</span>
+                      <span className="block text-xs text-muted-foreground font-medium">বাথরুম</span>
+                      <span className="font-bold text-card-foreground">{property.specifications.bathrooms} টি</span>
                     </div>
                   </div>
 
@@ -230,7 +228,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
                       <Square className="h-5 w-5" />
                     </div>
                     <div>
-                      <span className="block text-xs text-muted-foreground font-medium">Floor Area</span>
+                      <span className="block text-xs text-muted-foreground font-medium">আয়তন / সাইজ</span>
                       <span className="font-bold text-card-foreground">
                         {formatArea(property.specifications.propertySize, property.specifications.propertySizeUnit)}
                       </span>
@@ -242,9 +240,9 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
                       <Car className="h-5 w-5" />
                     </div>
                     <div>
-                      <span className="block text-xs text-muted-foreground font-medium">Parking</span>
+                      <span className="block text-xs text-muted-foreground font-medium">পার্কিং</span>
                       <span className="font-bold text-card-foreground">
-                        {property.specifications.parkingSpaces || 0} Spaces
+                        {property.specifications.parkingSpaces || 0} টি
                       </span>
                     </div>
                   </div>
@@ -255,10 +253,10 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
                         <Layers className="h-5 w-5" />
                       </div>
                       <div>
-                        <span className="block text-xs text-muted-foreground font-medium">Floor Level</span>
+                        <span className="block text-xs text-muted-foreground font-medium">ফ্লোর নম্বর</span>
                         <span className="font-bold text-card-foreground">
                           {property.specifications.floorNumber}
-                          {property.specifications.totalFloors ? ` of ${property.specifications.totalFloors}` : ""}
+                          {property.specifications.totalFloors ? ` (মোট ${property.specifications.totalFloors} তলার)` : ""}
                         </span>
                       </div>
                     </div>
@@ -270,7 +268,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
                         <Calendar className="h-5 w-5" />
                       </div>
                       <div>
-                        <span className="block text-xs text-muted-foreground font-medium">Year Built</span>
+                        <span className="block text-xs text-muted-foreground font-medium">নির্মাণ সাল</span>
                         <span className="font-bold text-card-foreground">{property.specifications.yearBuilt}</span>
                       </div>
                     </div>
@@ -282,7 +280,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
             {/* Description */}
             <SlideUp delay={0.2}>
               <div className="rounded-2xl border border-border/60 bg-card p-6 sm:p-8 shadow-sm space-y-4">
-                <h2 className="text-lg font-bold text-card-foreground">About This Property</h2>
+                <h2 className="text-lg font-bold text-card-foreground">প্রপার্টি সম্পর্কে বিস্তারিত</h2>
                 <div className="prose prose-neutral dark:prose-invert max-w-none text-sm text-muted-foreground whitespace-pre-line">
                   {property.description}
                 </div>
@@ -293,7 +291,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
             {property.amenities && property.amenities.length > 0 && (
               <SlideUp delay={0.25}>
                 <div className="rounded-2xl border border-border/60 bg-card p-6 sm:p-8 shadow-sm space-y-4">
-                  <h2 className="text-lg font-bold text-card-foreground">Amenities & Infrastructure</h2>
+                  <h2 className="text-lg font-bold text-card-foreground">সুযোগ-সুবিধা ও সিকিউরিটি</h2>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     {property.amenities.map((amenity) => (
                       <div
@@ -330,8 +328,8 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
                     <FileText className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-card-foreground">Property Brochure</h3>
-                    <p className="text-xs text-muted-foreground">Download printable PDF presentation</p>
+                    <h3 className="text-sm font-bold text-card-foreground">প্রপার্টি ব্রোশিওর (Brochure)</h3>
+                    <p className="text-xs text-muted-foreground">প্রিন্ট-রেডি PDF ফাইল ডাউনলোড করুন</p>
                   </div>
                 </div>
                 <BrochureDownloadButton
@@ -355,7 +353,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
           <section className="pt-12 border-t border-border/60">
             <SlideUp>
               <h2 className="text-2xl font-extrabold text-foreground mb-6">
-                More Properties from {organization.name}
+                {organization.name}-এর আরও প্রপার্টি
               </h2>
             </SlideUp>
             <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={0.08}>

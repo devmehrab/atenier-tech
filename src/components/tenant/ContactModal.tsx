@@ -33,8 +33,8 @@ export function ContactModal({
     email: "",
     phone: "",
     message: propertyTitle
-      ? `Hi, I am interested in "${propertyTitle}". Please provide more details or schedule a viewing.`
-      : "Hi, I am interested in your property listings. Please contact me.",
+      ? `আসসালামু আলাইকুম, আমি "${propertyTitle}" প্রপার্টিটি দেখতে এবং বিস্তারিত জানতে আগ্রহী।`
+      : "আসসালামু আলাইকুম, আমি আপনাদের প্রপার্টি লিস্টিং সম্পর্কে বিস্তারিত জানতে আগ্রহী।",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,12 +53,12 @@ export function ContactModal({
 
       if (res.success) {
         setSubmitted(true);
-        success("Your inquiry has been sent to the agency!");
+        success("আপনার বার্তা সফলভাবে এজেন্সির কাছে পাঠানো হয়েছে!");
       } else {
-        error(res.message || "Failed to submit inquiry");
+        error(res.message || "বার্তা পাঠানো সম্ভব হয়নি");
       }
     } catch (err: any) {
-      error(err.message || "An unexpected error occurred");
+      error(err.message || "একটি অনাকাঙ্ক্ষিত ত্রুটি ঘটেছে");
     } finally {
       setLoading(false);
     }
@@ -80,37 +80,37 @@ export function ContactModal({
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       {submitted ? (
-        <div className="py-6 text-center space-y-4">
+        <div className="py-6 text-center space-y-4 font-sans">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
             <CheckCircle2 className="h-8 w-8" />
           </div>
-          <h3 className="text-xl font-bold text-foreground">Inquiry Sent!</h3>
-          <p className="text-sm text-muted-foreground max-w-sm mx-auto">
-            The agency has received your message and will reach out to you via phone or email shortly.
+          <h3 className="text-xl font-bold text-foreground">মেসেজ সফলভাবে পাঠানো হয়েছে!</h3>
+          <p className="text-sm text-muted-foreground max-w-sm mx-auto font-light">
+            এজেন্সির দায়িত্বপ্রাপ্ত প্রতিনিধি খুব শীঘ্রই আপনার মোবাইল বা WhatsApp-এ যোগাযোগ করবেন।
           </p>
           <div className="pt-4">
-            <Button onClick={handleClose} className="w-full">
-              Close
+            <Button onClick={handleClose} className="w-full font-medium">
+              ঠিক আছে
             </Button>
           </div>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 font-sans">
           <DialogHeader>
-            <DialogTitle>Inquire About This Property</DialogTitle>
+            <DialogTitle>প্রপার্টি সংক্রান্ত তথ্য ও ইনকোয়ারি</DialogTitle>
             <DialogDescription>
-              {propertyTitle ? `Listing: ${propertyTitle}` : "Send a message directly to the agency"}
+              {propertyTitle ? `লিস্টিং: ${propertyTitle}` : "এজেন্সির প্রতিনিধির কাছে সরাসরি বার্তা পাঠান"}
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-3">
             <div>
               <label className="block text-xs font-semibold text-muted-foreground mb-1">
-                Your Full Name *
+                আপনার নাম *
               </label>
               <Input
                 required
-                placeholder="e.g. John Doe"
+                placeholder="উদাঃ মোঃ আনিসুর রহমান"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               />
@@ -119,23 +119,24 @@ export function ContactModal({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-semibold text-muted-foreground mb-1">
-                  Email Address *
+                  ইমেইল এড্রেস *
                 </label>
                 <Input
                   type="email"
                   required
-                  placeholder="john@example.com"
+                  placeholder="name@example.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-muted-foreground mb-1">
-                  Phone / WhatsApp
+                  মোবাইল / WhatsApp নম্বর *
                 </label>
                 <Input
                   type="tel"
-                  placeholder="+1 (555) 000-0000"
+                  required
+                  placeholder="+880 1700-000000"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 />
@@ -144,7 +145,7 @@ export function ContactModal({
 
             <div>
               <label className="block text-xs font-semibold text-muted-foreground mb-1">
-                Message *
+                বার্তা (Message) *
               </label>
               <Textarea
                 rows={3}
@@ -155,18 +156,17 @@ export function ContactModal({
             </div>
           </div>
 
-
           <DialogFooter>
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
             >
-              Cancel
+              বাতিল
             </Button>
-            <Button type="submit" isLoading={loading} className="gap-1.5">
+            <Button type="submit" isLoading={loading} className="gap-1.5 font-medium">
               <Send className="h-4 w-4" />
-              Send Inquiry
+              মেসেজ পাঠান
             </Button>
           </DialogFooter>
         </form>

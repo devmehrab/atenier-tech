@@ -55,7 +55,7 @@ export function Navbar({ user }: NavbarProps) {
               href="/#features"
               className="transition-colors hover:text-primary"
             >
-              আমাদের সেবাসমূহ
+              কেন ATENIER?
             </Link>
             <Link
               href="/#agencies"
@@ -122,7 +122,7 @@ export function Navbar({ user }: NavbarProps) {
               </Button>
               <Button size="sm" className="shadow-sm rounded-full font-medium px-5">
                 <Link href="/register-organization">
-                  একাউন্ট তৈরি করুন
+                  এজেন্সি ওয়েবসাইট শুরু করুন
                 </Link>
               </Button>
             </div>
@@ -158,7 +158,7 @@ export function Navbar({ user }: NavbarProps) {
               onClick={() => setMobileOpen(false)}
               className="py-2 hover:text-primary transition-colors pl-7"
             >
-              আমাদের সেবাসমূহ
+              কেন Atenier?
             </Link>
             <Link
               href="/#agencies"
@@ -208,7 +208,7 @@ export function Navbar({ user }: NavbarProps) {
                 </Link>
                 <Link href="/register-organization" onClick={() => setMobileOpen(false)}>
                   <Button className="w-full justify-center rounded-full h-11 shadow-sm font-medium">
-                    একাউন্ট তৈরি করুন
+                    এজেন্সি ওয়েবসাইট শুরু করুন
                   </Button>
                 </Link>
               </>

@@ -28,7 +28,7 @@ export function TenantFooter({ organization }: TenantFooterProps) {
           {/* Quick Links */}
           <div>
             <h4 className="text-sm font-semibold uppercase text-foreground mb-4">
-              Browse Listings
+              লিস্টিং ক্যাটাগরি
             </h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
@@ -36,7 +36,7 @@ export function TenantFooter({ organization }: TenantFooterProps) {
                   href={`/${organization.slug}/properties?listingType=SALE`}
                   className="hover:text-primary transition-colors"
                 >
-                  Properties for Sale
+                  বিক্রয়যোগ্য প্রপার্টি
                 </Link>
               </li>
               <li>
@@ -44,7 +44,7 @@ export function TenantFooter({ organization }: TenantFooterProps) {
                   href={`/${organization.slug}/properties?listingType=RENT`}
                   className="hover:text-primary transition-colors"
                 >
-                  Properties for Rent
+                  ভাড়ার প্রপার্টি
                 </Link>
               </li>
               <li>
@@ -52,7 +52,7 @@ export function TenantFooter({ organization }: TenantFooterProps) {
                   href={`/${organization.slug}/properties?propertyType=APARTMENT`}
                   className="hover:text-primary transition-colors"
                 >
-                  Apartments & Condos
+                  ফ্ল্যাট ও অ্যাপার্টমেন্ট
                 </Link>
               </li>
               <li>
@@ -60,7 +60,7 @@ export function TenantFooter({ organization }: TenantFooterProps) {
                   href={`/${organization.slug}/properties?propertyType=VILLA`}
                   className="hover:text-primary transition-colors"
                 >
-                  Luxury Villas
+                  লাক্সারি ভিলা ও ডুপ্লেক্স
                 </Link>
               </li>
             </ul>
@@ -69,7 +69,7 @@ export function TenantFooter({ organization }: TenantFooterProps) {
           {/* Contact Details */}
           <div>
             <h4 className="text-sm font-semibold uppercase text-foreground mb-4">
-              Office & Contact
+              অফিস ও যোগাযোগ
             </h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
               {organization.address && (
@@ -105,7 +105,7 @@ export function TenantFooter({ organization }: TenantFooterProps) {
                     rel="noopener noreferrer"
                     className="hover:text-foreground transition-colors"
                   >
-                    WhatsApp Chat
+                    WhatsApp চ্যাট
                   </a>
                 </li>
               )}
@@ -114,10 +114,10 @@ export function TenantFooter({ organization }: TenantFooterProps) {
         </div>
 
         <div className="mt-12 pt-8 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} {organization.name}. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} {organization.name}. সর্বস্বত্ব সংরক্ষিত।</p>
           <div className="flex items-center gap-4">
             <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
-              Powered by Atenier Multi-Tenant SaaS
+              Powered by Atenier
             </Link>
           </div>
         </div>

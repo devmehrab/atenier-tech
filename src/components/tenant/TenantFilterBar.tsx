@@ -54,7 +54,7 @@ export function TenantFilterBar() {
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
               type="text"
-              placeholder="Search by title, location, keywords..."
+              placeholder="প্রপার্টির নাম, এলাকা বা কিওয়ার্ড লিখুন..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full h-10 pl-10 pr-3 rounded-lg border border-input bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-colors"
@@ -62,9 +62,9 @@ export function TenantFilterBar() {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button type="submit" className="gap-1.5 h-10">
+            <Button type="submit" className="gap-1.5 h-10 font-semibold">
               <Filter className="h-4 w-4" />
-              Apply Filters
+              ফিল্টার করুন
             </Button>
             <Button
               type="button"
@@ -73,7 +73,7 @@ export function TenantFilterBar() {
               className="h-10 text-muted-foreground hover:text-foreground gap-1.5"
             >
               <RotateCcw className="h-4 w-4" />
-              Reset
+              রিসেট
             </Button>
           </div>
         </div>
@@ -82,66 +82,66 @@ export function TenantFilterBar() {
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-3 border-t border-border/50">
           <div>
             <label className="block text-xs font-semibold text-muted-foreground mb-1">
-              Purpose
+              উদ্দেশ্য (Purpose)
             </label>
             <select
               value={listingType}
               onChange={(e) => setListingType(e.target.value)}
               className="w-full h-9 rounded-md border border-input bg-background px-2.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             >
-              <option value="">All Types (Sale/Rent)</option>
-              <option value="SALE">For Sale</option>
-              <option value="RENT">For Rent</option>
-              <option value="LEASE">Commercial Lease</option>
+              <option value="">সকল ধরন (বিক্রি/ভাড়া)</option>
+              <option value="SALE">বিক্রয়ের জন্য (Sale)</option>
+              <option value="RENT">ভাড়ার জন্য (Rent)</option>
+              <option value="LEASE">কমার্শিয়াল লিজ (Lease)</option>
             </select>
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-muted-foreground mb-1">
-              Property Type
+              প্রপার্টি টাইপ
             </label>
             <select
               value={propertyType}
               onChange={(e) => setPropertyType(e.target.value)}
               className="w-full h-9 rounded-md border border-input bg-background px-2.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             >
-              <option value="">All Categories</option>
-              <option value="APARTMENT">Apartment</option>
-              <option value="HOUSE">House / Single Family</option>
-              <option value="VILLA">Luxury Villa</option>
-              <option value="PENTHOUSE">Penthouse</option>
-              <option value="COMMERCIAL">Commercial</option>
-              <option value="OFFICE">Office Space</option>
-              <option value="LAND">Land / Plot</option>
+              <option value="">সব ক্যাটাগরি</option>
+              <option value="APARTMENT">অ্যাপার্টমেন্ট / ফ্ল্যাট</option>
+              <option value="HOUSE">বাড়ি / ভিলা</option>
+              <option value="VILLA">লাক্সারি ভিলা</option>
+              <option value="PENTHOUSE">পেন্টহাউস</option>
+              <option value="COMMERCIAL">বাণিজ্যিক স্পেস</option>
+              <option value="OFFICE">অফিস স্পেস</option>
+              <option value="LAND">জমি / প্লট</option>
             </select>
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-muted-foreground mb-1">
-              Bedrooms
+              বেডরুম
             </label>
             <select
               value={bedrooms}
               onChange={(e) => setBedrooms(e.target.value)}
               className="w-full h-9 rounded-md border border-input bg-background px-2.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             >
-              <option value="">Any Beds</option>
-              <option value="1">1+ Beds</option>
-              <option value="2">2+ Beds</option>
-              <option value="3">3+ Beds</option>
-              <option value="4">4+ Beds</option>
-              <option value="5">5+ Beds</option>
+              <option value="">যেকোনো বেড</option>
+              <option value="1">১+ বেড</option>
+              <option value="2">২+ বেড</option>
+              <option value="3">৩+ বেড</option>
+              <option value="4">৪+ বেড</option>
+              <option value="5">৫+ বেড</option>
             </select>
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-muted-foreground mb-1">
-              Price Range
+              বাজেট (মূল্য)
             </label>
             <div className="flex items-center gap-1.5">
               <input
                 type="number"
-                placeholder="Min"
+                placeholder="সর্বনিম্ন"
                 value={minPrice}
                 onChange={(e) => setMinPrice(e.target.value)}
                 className="w-full h-9 rounded-md border border-input bg-background text-foreground px-2 text-xs focus:outline-none focus:ring-2 focus:ring-ring"
@@ -149,7 +149,7 @@ export function TenantFilterBar() {
               <span className="text-muted-foreground text-xs">-</span>
               <input
                 type="number"
-                placeholder="Max"
+                placeholder="সর্বোচ্চ"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(e.target.value)}
                 className="w-full h-9 rounded-md border border-input bg-background text-foreground px-2 text-xs focus:outline-none focus:ring-2 focus:ring-ring"
@@ -159,17 +159,17 @@ export function TenantFilterBar() {
 
           <div>
             <label className="block text-xs font-semibold text-muted-foreground mb-1">
-              Sort By
+              সাজান (Sort By)
             </label>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               className="w-full h-9 rounded-md border border-input bg-background px-2.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             >
-              <option value="newest">Newest First</option>
-              <option value="price_asc">Price: Low to High</option>
-              <option value="price_desc">Price: High to Low</option>
-              <option value="popular">Most Viewed</option>
+              <option value="newest">নতুন লিস্টিং আগে</option>
+              <option value="price_asc">মূল্য: কম থেকে বেশি</option>
+              <option value="price_desc">মূল্য: বেশি থেকে কম</option>
+              <option value="popular">সর্বাধিক জনপ্রিয়</option>
             </select>
           </div>
         </div>

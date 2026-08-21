@@ -37,31 +37,31 @@ export function AgentCard({ agent, organization }: AgentCardProps) {
             <UserCheck className="h-4 w-4 text-primary" />
           </div>
           <p className="text-xs text-muted-foreground font-medium">
-            {agent ? `Certified Agent @ ${organization.name}` : `Agency Listing`}
+            {agent ? `ভেরিফাইড এজেন্ট @ ${organization.name}` : `অফিসিয়াল এজেন্সি লিস্টিং`}
           </p>
         </div>
       </div>
 
-      <div className="mt-6 space-y-2.5">
+      <div className="mt-6 space-y-2.5 font-sans">
         {contactPhone && (
           <a
             href={`tel:${contactPhone}`}
             className="flex items-center justify-center gap-2 w-full rounded-xl border border-border bg-card py-2.5 px-4 text-sm font-semibold text-card-foreground hover:bg-muted shadow-sm transition-all"
           >
             <Phone className="h-4 w-4 text-primary" />
-            Call {contactPhone}
+            সরাসরি কল: {contactPhone}
           </a>
         )}
 
         {contactWhatsApp && (
           <a
-            href={`https://wa.me/${contactWhatsApp.replace(/[^0-9]/g, "")}?text=Hello,%20I%20am%20inquiring%20about%20your%20property%20listing.`}
+            href={`https://wa.me/${contactWhatsApp.replace(/[^0-9]/g, "")}?text=${encodeURIComponent("আসসালামু আলাইকুম, আমি আপনাদের প্রপার্টি লিস্টিং সম্পর্কে বিস্তারিত জানতে আগ্রহী।")}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 w-full rounded-xl bg-primary py-2.5 px-4 text-sm font-semibold text-primary-foreground hover:bg-primary/90 shadow transition-all"
           >
             <MessageSquare className="h-4 w-4" />
-            Chat on WhatsApp
+            WhatsApp-এ চ্যাট করুন
           </a>
         )}
 
@@ -71,7 +71,7 @@ export function AgentCard({ agent, organization }: AgentCardProps) {
             className="flex items-center justify-center gap-2 w-full rounded-xl border border-border/60 bg-muted/50 py-2 px-4 text-xs font-medium text-muted-foreground hover:bg-muted transition-colors"
           >
             <Mail className="h-3.5 w-3.5" />
-            Email Us
+            ইমেইল পাঠান
           </a>
         )}
       </div>

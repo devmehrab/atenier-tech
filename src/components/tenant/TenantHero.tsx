@@ -44,18 +44,18 @@ export function TenantHero({ organization }: TenantHeroProps) {
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 py-20 text-center sm:px-6 lg:px-8">
-        <div className="inline-flex items-center gap-2 rounded-full bg-muted/80 px-4 py-1.5 text-xs font-semibold uppercase text-primary backdrop-blur-md border border-border/50 mb-6">
-          <span>Official Real Estate Website</span>
+        <div className="inline-flex items-center gap-2 rounded-full bg-muted/80 px-4 py-1.5 text-xs font-semibold text-primary backdrop-blur-md border border-border/50 mb-6">
+          <span>অফিসিয়াল প্রপার্টি ওয়েবসাইট</span>
         </div>
 
         <h1 className="text-4xl font-extrabold sm:text-5xl lg:text-6xl text-foreground drop-shadow-sm max-w-4xl mx-auto">
-          Find Your Dream Property with{" "}
+          খুঁজে নিন আপনার পছন্দের প্রপার্টি —{" "}
           <span className="text-primary">{organization.name}</span>
         </h1>
 
-        <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+        <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto font-light">
           {organization.description ||
-            `Browse premier residential apartments, luxury villas, and prime commercial developments curated by ${organization.name}.`}
+            `${organization.name}-এর সকল ভেরিফাইড ফ্ল্যাট, জমি ও বাণিজ্যিক প্রপার্টি লিস্টিং দেখুন এক জায়গায়।`}
         </p>
 
         {/* Hero Search Box */}
@@ -65,32 +65,32 @@ export function TenantHero({ organization }: TenantHeroProps) {
             <button
               type="button"
               onClick={() => setListingType("ALL")}
-              className={`rounded-lg px-4 py-1.5 text-xs font-bold transition-all ${listingType === "ALL"
+              className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition-all ${listingType === "ALL"
                 ? "bg-primary text-primary-foreground shadow-sm"
                 : "text-muted-foreground hover:bg-muted"
                 }`}
             >
-              All Listings
+              সকল লিস্টিং
             </button>
             <button
               type="button"
               onClick={() => setListingType("SALE")}
-              className={`rounded-lg px-4 py-1.5 text-xs font-bold transition-all ${listingType === "SALE"
+              className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition-all ${listingType === "SALE"
                 ? "bg-primary text-primary-foreground shadow-sm"
                 : "text-muted-foreground hover:bg-muted"
                 }`}
             >
-              Buy
+              ক্রয় (Buy)
             </button>
             <button
               type="button"
               onClick={() => setListingType("RENT")}
-              className={`rounded-lg px-4 py-1.5 text-xs font-bold transition-all ${listingType === "RENT"
+              className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition-all ${listingType === "RENT"
                 ? "bg-primary text-primary-foreground shadow-sm"
                 : "text-muted-foreground hover:bg-muted"
                 }`}
             >
-              Rent
+              ভাড়া (Rent)
             </button>
           </div>
 
@@ -99,7 +99,7 @@ export function TenantHero({ organization }: TenantHeroProps) {
               <Search className="absolute left-3.5 h-4 w-4 text-muted-foreground" />
               <input
                 type="text"
-                placeholder="Search neighborhood, property type, keywords..."
+                placeholder="এলাকা, প্রপার্টির নাম বা কিওয়ার্ড..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full h-11 pl-10 pr-3 rounded-xl border border-input bg-background text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:bg-background transition-colors"
@@ -110,7 +110,7 @@ export function TenantHero({ organization }: TenantHeroProps) {
               <MapPin className="absolute left-3.5 h-4 w-4 text-muted-foreground" />
               <input
                 type="text"
-                placeholder="City / Area"
+                placeholder="শহর / এলাকা (উদাঃ গুলশান)"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 className="w-full h-11 pl-10 pr-3 rounded-xl border border-input bg-background text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:bg-background transition-colors"
@@ -118,9 +118,9 @@ export function TenantHero({ organization }: TenantHeroProps) {
             </div>
 
             <div className="sm:col-span-3">
-              <Button type="submit" size="lg" className="w-full h-11 rounded-xl shadow-md gap-2">
+              <Button type="submit" size="lg" className="w-full h-11 rounded-xl shadow-md gap-2 font-semibold">
                 <Search className="h-4 w-4" />
-                Find Properties
+                প্রপার্টি খুঁজুন
               </Button>
             </div>
           </form>

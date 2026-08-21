@@ -6,6 +6,8 @@ import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvide
 import { ThemeProvider } from "next-themes";
 import Script from 'next/script';
 
+import { getBaseUrl } from "@/lib/utils/seo";
+
 // Configure Hind Siliguri font
 const hindSiliguri = Hind_Siliguri({
   subsets: ["bengali", "latin"],
@@ -16,27 +18,61 @@ const hindSiliguri = Hind_Siliguri({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Atenier Real Estate Platform",
-    default: "Atenier | Multi-Tenant Real Estate Marketplace & Agency SaaS",
+    template: "%s | Atenier",
+    default: "Atenier | রিয়েল এস্টেট এজেন্সির নিজস্ব প্রপার্টি ওয়েবসাইট",
   },
   description:
-    "Production-ready multi-tenant property listing platform for real estate agencies and agents. Discover luxury homes, apartments, villas, and commercial real estate.",
+    "আপনার রিয়েল এস্টেট বিজনেসের সব প্রপার্টি লিস্টিং সাজিয়ে রাখুন এক জায়গায়। কাস্টমারকে দিন চমৎকার প্রফেশনাল ব্রাউজিং অভিজ্ঞতা এবং সরাসরি WhatsApp ও ফোন ইনকোয়ারি গ্রহণ করুন।",
   keywords: [
-    "real estate",
-    "property listings",
-    "apartments for sale",
-    "houses for rent",
-    "commercial properties",
-    "real estate agency saas",
+    "রিয়েল এস্টেট",
+    "প্রপার্টি লিস্টিং",
+    "ফ্ল্যাট বিক্রি",
+    "বাড়ি ভাড়া",
+    "জমি ক্রয় বিক্রয়",
+    "কমার্শিয়াল স্পেস",
+    "রিয়েল এস্টেট এজেন্সি ওয়েবসাইট",
+    "real estate agency website",
+    "property listings Bangladesh",
   ],
-  authors: [{ name: "Mehrab Hossain" }],
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
-  ),
+  authors: [{ name: "Atenier Technologies" }],
+  metadataBase: new URL(getBaseUrl()),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
-    locale: "en_US",
-    siteName: "Atenier Platform",
+    locale: "bn_BD",
+    url: "/",
+    siteName: "Atenier",
+    title: "Atenier | রিয়েল এস্টেট এজেন্সির নিজস্ব প্রপার্টি ওয়েবসাইট",
+    description:
+      "আপনার রিয়েল এস্টেট বিজনেসের সব প্রপার্টি লিস্টিং সাজিয়ে রাখুন এক জায়গায়। কাস্টমারকে দিন চমৎকার প্রফেশনাল ব্রাউজিং অভিজ্ঞতা এবং সরাসরি WhatsApp ও ফোন ইনকোয়ারি গ্রহণ করুন।",
+    images: [
+      {
+        url: "/favicon.png",
+        width: 512,
+        height: 512,
+        alt: "Atenier - রিয়েল এস্টেট এজেন্সি ওয়েবসাইট প্ল্যাটফর্ম",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Atenier | রিয়েল এস্টেট এজেন্সির নিজস্ব প্রপার্টি ওয়েবসাইট",
+    description:
+      "আপনার রিয়েল এস্টেট বিজনেসের সব প্রপার্টি লিস্টিং সাজিয়ে রাখুন এক জায়গায়। কাস্টমারকে দিন চমৎকার প্রফেশনাল ব্রাউজিং অভিজ্ঞতা এবং সরাসরি WhatsApp ও ফোন ইনকোয়ারি গ্রহণ করুন।",
+    images: ["/favicon.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 

@@ -1,16 +1,15 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { IProperty, IOrganization, IUser } from "@/lib/types";
 import { generateBrochureHtml } from "./generateBrochureHtml";
 import { Button } from "@/components/ui/button";
 import {
   FileText,
   Printer,
-  Download,
   Loader2,
   X,
-  Eye,
   CheckCircle2,
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
@@ -38,7 +37,35 @@ export function BrochureDownloadButton({
 }: BrochureDownloadButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  // Handle escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
 
   const getHtml = () => {
     return generateBrochureHtml({
@@ -95,6 +122,82 @@ export function BrochureDownloadButton({
     setIsOpen(true);
   };
 
+  const modalContent = isOpen && mounted ? (
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-2 sm:p-4 md:p-6 animate-in fade-in duration-200">
+      <div
+        className="fixed inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={() => setIsOpen(false)}
+      />
+
+      <div className="relative z-10 flex flex-col h-[92vh] max-h-[950px] w-full max-w-4xl overflow-hidden rounded-2xl bg-card border border-border/80 shadow-2xl animate-in zoom-in-95 duration-200">
+        {/* Modal Top Bar */}
+        <div className="flex items-center justify-between border-b border-border/60 bg-muted/40 px-4 py-3 sm:px-6">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <FileText className="h-4 w-4" />
+            </div>
+            <div>
+              <h3 className="text-sm sm:text-base font-bold text-foreground line-clamp-1">
+                Property Brochure Preview
+              </h3>
+              <p className="text-xs text-muted-foreground hidden sm:block">
+                Ready to save as PDF or print
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              onClick={handleDirectPrintOrSave}
+              disabled={isGenerating}
+              className="gap-1.5 shadow-sm font-medium"
+            >
+              {isGenerating ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Printer className="h-4 w-4" />
+              )}
+              <span>Print / Save PDF</span>
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsOpen(false)}
+              className="h-8 w-8 rounded-lg text-muted-foreground hover:text-foreground"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Modal Body / Iframe Preview */}
+        <div className="flex-1 overflow-y-auto bg-neutral-100 p-2 sm:p-6 dark:bg-neutral-900/50">
+          <div className="mx-auto max-w-[800px] overflow-hidden rounded-xl bg-white shadow-xl border border-neutral-200">
+            <iframe
+              title="Brochure Preview"
+              srcDoc={getHtml()}
+              className="w-full min-h-[900px] border-0"
+              style={{ height: "1050px" }}
+            />
+          </div>
+        </div>
+
+        {/* Modal Footer Note */}
+        <div className="border-t border-border/60 bg-card px-4 py-2.5 sm:px-6 flex items-center justify-between text-xs text-muted-foreground font-sans">
+          <div className="flex items-center gap-1.5">
+            <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
+            <span>Executive A4 Format with High-Resolution Imagery</span>
+          </div>
+          <div className="hidden sm:block">
+            Choose <strong className="text-foreground">&quot;Save as PDF&quot;</strong> in your print dialog destination
+          </div>
+        </div>
+      </div>
+    </div>
+  ) : null;
+
   return (
     <>
       <Button
@@ -111,82 +214,7 @@ export function BrochureDownloadButton({
         <span>{label}</span>
       </Button>
 
-      {/* Brochure Preview & Export Modal */}
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 animate-in fade-in duration-200">
-          <div
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm"
-            onClick={() => setIsOpen(false)}
-          />
-
-          <div className="relative z-50 flex flex-col h-[92vh] max-h-[950px] w-full max-w-4xl overflow-hidden rounded-2xl bg-card border border-border/80 shadow-2xl animate-in zoom-in-95 duration-200">
-            {/* Modal Top Bar */}
-            <div className="flex items-center justify-between border-b border-border/60 bg-muted/40 px-4 py-3 sm:px-6">
-              <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                  <FileText className="h-4 w-4" />
-                </div>
-                <div>
-                  <h3 className="text-sm sm:text-base font-bold text-foreground line-clamp-1">
-                    Property Brochure Preview
-                  </h3>
-                  <p className="text-xs text-muted-foreground hidden sm:block">
-                    Ready to save as PDF or print
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <Button
-                  size="sm"
-                  onClick={handleDirectPrintOrSave}
-                  disabled={isGenerating}
-                  className="gap-1.5 shadow-sm"
-                >
-                  {isGenerating ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Printer className="h-4 w-4" />
-                  )}
-                  <span>Print / Save PDF</span>
-                </Button>
-
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setIsOpen(false)}
-                  className="h-8 w-8 rounded-lg text-muted-foreground hover:text-foreground"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Modal Body / Iframe Preview */}
-            <div className="flex-1 overflow-y-auto bg-neutral-100 p-2 sm:p-6 dark:bg-neutral-900/50">
-              <div className="mx-auto max-w-[800px] overflow-hidden rounded-xl bg-white shadow-xl border border-neutral-200">
-                <iframe
-                  title="Brochure Preview"
-                  srcDoc={getHtml()}
-                  className="w-full min-h-[900px] border-0"
-                  style={{ height: "1050px" }}
-                />
-              </div>
-            </div>
-
-            {/* Modal Footer Note */}
-            <div className="border-t border-border/60 bg-card px-4 py-2.5 sm:px-6 flex items-center justify-between text-xs text-muted-foreground">
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
-                <span>Executive A4 Format with High-Resolution Imagery</span>
-              </div>
-              <div className="hidden sm:block">
-                Choose <strong className="text-foreground">"Save as PDF"</strong> in your print dialog destination
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {mounted && modalContent && createPortal(modalContent, document.body)}
     </>
   );
 }

@@ -5,8 +5,10 @@ import { requireOrganizationAccess } from "@/lib/auth/guards";
 import { getPropertyById } from "@/lib/services/property.service";
 import { getOrganizationById } from "@/lib/services/organization.service";
 import { formatPrice, formatArea, formatDate } from "@/lib/utils/formatters";
+import { getBaseUrl } from "@/lib/utils/seo";
 import { StatusBadge } from "@/components/dashboard/StatusBadge";
 import { BrochureDownloadButton } from "@/components/brochure";
+import { CopyFacebookCaptionButton } from "@/components/dashboard/CopyFacebookCaptionButton";
 import { Button } from "@/components/ui/button";
 import {
   ExternalLink,
@@ -37,9 +39,11 @@ export default async function DashboardPropertyViewPage({
 
   const organization = await getOrganizationById(property.organizationId);
 
-  const publicUrl = session.organizationSlug
+  const baseUrl = getBaseUrl();
+  const relativePath = session.organizationSlug
     ? `/${session.organizationSlug}/properties/${property.slug}`
     : `/explore`;
+  const fullPublicUrl = `${baseUrl}${relativePath}`;
 
   return (
     <div className="space-y-6 max-w-5xl">
@@ -55,15 +59,20 @@ export default async function DashboardPropertyViewPage({
           <StatusBadge status={property.status} />
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {property.status === "PUBLISHED" && (
-            <Link href={publicUrl} target="_blank">
+            <Link href={relativePath} target="_blank">
               <Button variant="outline" size="sm" className="gap-1.5">
                 <ExternalLink className="h-4 w-4" />
                 View Public Page
               </Button>
             </Link>
           )}
+          <CopyFacebookCaptionButton
+            property={property}
+            organization={organization}
+            publicUrl={fullPublicUrl}
+          />
           <BrochureDownloadButton
             property={property}
             organization={organization}

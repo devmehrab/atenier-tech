@@ -1,15 +1,18 @@
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 import { getOrganizationBySlug } from "@/lib/services/organization.service";
 import { TenantHeader } from "@/components/tenant/TenantHeader";
 import { TenantFooter } from "@/components/tenant/TenantFooter";
-import { generateOrganizationJsonLd } from "@/lib/utils/seo";
+import { generateOrganizationJsonLd, getBaseUrl } from "@/lib/utils/seo";
 
 interface TenantLayoutProps {
   children: React.ReactNode;
   params: Promise<{ tenant: string }>;
 }
 
-export async function generateMetadata({ params }: TenantLayoutProps) {
+export async function generateMetadata({
+  params,
+}: TenantLayoutProps): Promise<Metadata> {
   const { tenant } = await params;
   const org = await getOrganizationBySlug(tenant);
 
@@ -19,7 +22,7 @@ export async function generateMetadata({ params }: TenantLayoutProps) {
     };
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const baseUrl = getBaseUrl();
 
   return {
     title: `${org.name} | Official website`,
@@ -53,8 +56,7 @@ export default async function TenantLayout({
     notFound();
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-  const jsonLd = generateOrganizationJsonLd(organization, baseUrl);
+  const jsonLd = generateOrganizationJsonLd(organization);
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground font-sans">

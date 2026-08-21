@@ -11,38 +11,38 @@ export function Footer() {
           <div className="space-y-5 md:col-span-1">
             <Logo />
             <p className="text-sm text-muted-foreground font-light">
-              আপনার রিয়েল এস্টেট ব্যবসাকে ডিজিটালি এগিয়ে নিতে একটি নির্ভরযোগ্য ও প্রিমিয়াম প্ল্যাটফর্ম। আপনার ব্র্যান্ডকে পৌঁছে দিন আরও বেশি গ্রাহকের কাছে।
+              আপনার রিয়েল এস্টেট বিজনেসের সব ফ্ল্যাট ও জমির লিস্টিং সাজিয়ে রাখুন এক জায়গায়। কাস্টমারদের দিন চমৎকার প্রফেশনাল ব্রাউজিং অভিজ্ঞতা।
             </p>
             <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground/80">
               <ShieldCheck className="h-4 w-4 text-primary/80" />
-              <span>শতভাগ নিরাপদ ও বিশ্বস্ত</span>
+              <span>সহজ, নিরাপদ ও প্রফেশনাল</span>
             </div>
           </div>
 
           {/* Marketplace Links */}
           <div>
             <h4 className="text-sm font-medium text-foreground mb-5">
-              প্রপার্টি মার্কেটপ্লেস
+              প্রপার্টি খুঁজুন
             </h4>
             <ul className="space-y-3.5 text-sm text-muted-foreground font-light">
               <li>
                 <Link href="/explore" className="hover:text-primary transition-colors">
-                  সকল প্রপার্টি দেখুন
+                  সকল প্রপার্টি
                 </Link>
               </li>
               <li>
                 <Link href="/explore?listingType=SALE" className="hover:text-primary transition-colors">
-                  বিক্রয়যোগ্য প্রপার্টি
+                  বিক্রয়যোগ্য ফ্ল্যাট ও বাড়ি
                 </Link>
               </li>
               <li>
                 <Link href="/explore?listingType=RENT" className="hover:text-primary transition-colors">
-                  ভাড়ার জন্য প্রপার্টি
+                  ভাড়ার প্রপার্টি
                 </Link>
               </li>
               <li>
                 <Link href="/#agencies" className="hover:text-primary transition-colors">
-                  আমাদের পার্টনার এজেন্সিসমূহ
+                  পার্টনার এজেন্সিসমূহ
                 </Link>
               </li>
             </ul>
@@ -56,22 +56,22 @@ export function Footer() {
             <ul className="space-y-3.5 text-sm text-muted-foreground font-light">
               <li>
                 <Link href="/register-organization" className="hover:text-primary transition-colors">
-                  এজেন্সি প্রোফাইল তৈরি করুন
+                  এজেন্সি ওয়েবসাইট শুরু করুন
                 </Link>
               </li>
               <li>
                 <Link href="/login" className="hover:text-primary transition-colors">
-                  এডমিন ড্যাশবোর্ড
+                  লগইন করুন
                 </Link>
               </li>
               <li>
                 <Link href="/rahman-properties" className="hover:text-primary transition-colors">
-                  ডেমো প্রোফাইল দেখুন
+                  ডেমো ওয়েবসাইট দেখুন (রহমান প্রোপার্টিজ)
                 </Link>
               </li>
               <li>
                 <Link href="/#features" className="hover:text-primary transition-colors">
-                  আমাদের সেবাসমূহ
+                  কেন Atenier?
                 </Link>
               </li>
             </ul>
@@ -80,10 +80,10 @@ export function Footer() {
           {/* Promise & Security */}
           <div>
             <h4 className="text-sm font-medium text-foreground mb-5">
-              আমাদের প্রতিশ্রুতি
+              আমাদের লক্ষ্য
             </h4>
             <p className="text-sm text-muted-foreground mb-4 font-light">
-              আপনার ব্যবসাকে আধুনিক প্রযুক্তির মাধ্যমে আরও সহজ ও স্মার্ট করতে আমরা সর্বদা আপনার পাশে আছি।
+              আপনার প্রপার্টি ব্যবসাকে সহজ ও স্মার্ট করতে আমরা নিয়ে এসেছি এমন সমাধান, যা আপনার ও আপনার কাস্টমারদের মূল্যবান সময় বাঁচাবে।
             </p>
           </div>
         </div>

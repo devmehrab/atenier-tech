@@ -48,12 +48,12 @@ export function PropertyCard({ property, tenantSlug }: PropertyCardProps) {
             className="font-bold uppercase shadow-sm"
           >
             {property.status === "SOLD"
-              ? "Sold"
+              ? "বিক্রি"
               : property.status === "RENTED"
-                ? "Rented"
+                ? "ভাড়া"
                 : property.listingType === "RENT"
-                  ? "For Rent"
-                  : "For Sale"}
+                  ? "ভাড়ার জন্য"
+                  : "বিক্রির জন্য"}
           </Badge>
 
           <span className="rounded-md bg-background/80 px-2 py-0.5 text-xs font-semibold text-foreground backdrop-blur-sm">
@@ -68,14 +68,14 @@ export function PropertyCard({ property, tenantSlug }: PropertyCardProps) {
               {formatPrice(property.price, property.currency, property.pricePeriod)}
             </span>
             {property.priceNegotiable && (
-              <span className="ml-1.5 text-xs text-neutral-200 font-medium">(Negotiable)</span>
+              <span className="ml-1.5 text-xs text-neutral-200 font-medium">(আলোচনা সাপেক্ষ)</span>
             )}
           </div>
         </div>
       </Link>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col p-5">
+      <div className="flex flex-1 flex-col p-5 font-sans">
         <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1.5">
           <MapPin className="h-3.5 w-3.5 text-primary shrink-0" />
           <span className="truncate">
@@ -95,17 +95,17 @@ export function PropertyCard({ property, tenantSlug }: PropertyCardProps) {
 
         {/* Specs footer */}
         <div className="mt-auto pt-4 border-t border-border/50 flex items-center justify-between text-xs text-muted-foreground font-medium">
-          <div className="flex items-center gap-1.5" title="Bedrooms">
+          <div className="flex items-center gap-1.5" title="বেডরুম">
             <Bed className="h-4 w-4 text-muted-foreground/70" />
-            <span>{property.specifications.bedrooms} Beds</span>
+            <span>{property.specifications.bedrooms} বেড</span>
           </div>
 
-          <div className="flex items-center gap-1.5" title="Bathrooms">
+          <div className="flex items-center gap-1.5" title="বাথরুম">
             <Bath className="h-4 w-4 text-muted-foreground/70" />
-            <span>{property.specifications.bathrooms} Baths</span>
+            <span>{property.specifications.bathrooms} বাথ</span>
           </div>
 
-          <div className="flex items-center gap-1.5" title="Property Size">
+          <div className="flex items-center gap-1.5" title="আয়তন">
             <Square className="h-4 w-4 text-muted-foreground/70" />
             <span>
               {formatArea(

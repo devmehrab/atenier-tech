@@ -18,8 +18,8 @@ export async function generateMetadata({ params }: TenantPropertiesPageProps) {
   if (!org) return { title: "Agency Not Found" };
 
   return {
-    title: `All Properties | ${org.name}`,
-    description: `Browse all luxury apartments, houses, villas, and commercial real estate available with ${org.name}.`,
+    title: `সকল প্রপার্টি | ${org.name}`,
+    description: `${org.name}-এর বিক্রয়যোগ্য ও ভাড়ার ফ্ল্যাট, বাড়ি, জমি ও বাণিজ্যিক প্রপার্টির সম্পূর্ণ তালিকা।`,
   };
 }
 
@@ -61,11 +61,10 @@ export default async function TenantPropertiesPage({
       <SlideUp distance={16}>
         <div className="mb-8">
           <h1 className="text-3xl font-extrabold text-foreground">
-            Property Listings
+            {organization.name}-এর সকল প্রপার্টি
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
-            Showing {properties.length} of {total} published properties available at{" "}
-            <span className="font-bold text-foreground">{organization.name}</span>
+            মোট <span className="font-bold text-foreground">{total}টি</span> এভেইলেবল লিস্টিং থেকে আপনার বাজেট ও পছন্দের প্রপার্টি বেছে নিন
           </p>
         </div>
       </SlideUp>
@@ -78,8 +77,8 @@ export default async function TenantPropertiesPage({
         <PropertyGrid
           properties={properties}
           tenantSlug={organization.slug}
-          emptyTitle="No properties match these criteria"
-          emptySubtitle="Try resetting your filters to view all available listings from this agency."
+          emptyTitle="এই ফিল্টারে কোনো প্রপার্টি পাওয়া যায়নি"
+          emptySubtitle="ফিল্টার রিসেট করে অথবা সার্চ পরিবর্তন করে এজেন্সির বাকি এভেইলেবল প্রপার্টিগুলো দেখুন।"
         />
       </SlideUp>
 

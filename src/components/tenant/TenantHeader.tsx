@@ -54,31 +54,31 @@ export function TenantHeader({ organization }: TenantHeaderProps) {
             href={`/${organization.slug}`}
             className="hover:text-primary transition-colors"
           >
-            Home
+            হোম
           </Link>
           <Link
             href={`/${organization.slug}/properties?listingType=SALE`}
             className="hover:text-primary transition-colors"
           >
-            For Sale
+            বিক্রির প্রপার্টি
           </Link>
           <Link
             href={`/${organization.slug}/properties?listingType=RENT`}
             className="hover:text-primary transition-colors"
           >
-            For Rent
+            ভাড়ার প্রপার্টি
           </Link>
           <Link
             href={`/${organization.slug}/properties`}
             className="hover:text-primary transition-colors"
           >
-            All Listings
+            সকল লিস্টিং
           </Link>
           <Link
             href={`/${organization.slug}/contact`}
             className="hover:text-primary transition-colors"
           >
-            Contact
+            যোগাযোগ
           </Link>
         </nav>
 
