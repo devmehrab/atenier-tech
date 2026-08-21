@@ -1,36 +1,41 @@
+import { cache } from "react";
 import { connectToDatabase } from "@/lib/db/connection";
 import { Organization } from "@/lib/db/models/Organization";
 import { User } from "@/lib/db/models/User";
 import { IOrganization, ISessionUser } from "@/lib/types";
 import { OrgUpdateInput } from "@/lib/validations/organization";
 
-export async function getOrganizationBySlug(slug: string): Promise<IOrganization | null> {
-  await connectToDatabase();
-  const org = await Organization.findOne({
-    slug: slug.toLowerCase(),
-    status: "ACTIVE",
-  }).lean();
+export const getOrganizationBySlug = cache(
+  async (slug: string): Promise<IOrganization | null> => {
+    await connectToDatabase();
+    const org = await Organization.findOne({
+      slug: slug.toLowerCase(),
+      status: "ACTIVE",
+    }).lean();
 
-  if (!org) return null;
+    if (!org) return null;
 
-  return {
-    ...org,
-    _id: org._id.toString(),
-    ownerId: org.ownerId.toString(),
-  } as unknown as IOrganization;
-}
+    return {
+      ...org,
+      _id: org._id.toString(),
+      ownerId: org.ownerId.toString(),
+    } as unknown as IOrganization;
+  }
+);
 
-export async function getOrganizationById(id: string): Promise<IOrganization | null> {
-  await connectToDatabase();
-  const org = await Organization.findById(id).lean();
-  if (!org) return null;
+export const getOrganizationById = cache(
+  async (id: string): Promise<IOrganization | null> => {
+    await connectToDatabase();
+    const org = await Organization.findById(id).lean();
+    if (!org) return null;
 
-  return {
-    ...org,
-    _id: org._id.toString(),
-    ownerId: org.ownerId.toString(),
-  } as unknown as IOrganization;
-}
+    return {
+      ...org,
+      _id: org._id.toString(),
+      ownerId: org.ownerId.toString(),
+    } as unknown as IOrganization;
+  }
+);
 
 export async function updateOrganizationProfile(
   orgId: string,

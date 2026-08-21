@@ -4,6 +4,7 @@ import "./globals.css";
 import { ToastProvider } from "@/components/ui/toast";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import { ThemeProvider } from "next-themes";
+import Script from 'next/script';
 
 // Configure Hind Siliguri font
 const hindSiliguri = Hind_Siliguri({
@@ -46,6 +47,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="smooth-scroll" suppressHydrationWarning>
+      <head>
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="6f78810e-6f35-4ec1-834d-d5fc9aadf064"
+          strategy="afterInteractive"
+        />
+      </head>
       <body
         className={`min-h-screen bg-background text-foreground flex flex-col antialiased font-sans ${hindSiliguri.variable}`}
       >

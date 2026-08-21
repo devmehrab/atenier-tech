@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Building2 } from "lucide-react";
+import Image from "next/image";
 import { cn } from "@/lib/utils/cn";
 
 interface LogoProps {
@@ -18,8 +18,13 @@ export function Logo({ className, iconOnly = false, href = "/", subtext }: LogoP
         className
       )}
     >
-      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm transition-transform group-hover:scale-105">
-        <Building2 className="h-5 w-5" />
+      <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg text-primary-foreground shadow-sm transition-transform group-hover:scale-105">
+        <Image
+          src="/favicon.png"
+          alt="Atenier Technologies Logo"
+          fill
+          className="object-cover"
+        />
       </div>
       {!iconOnly && (
         <div className="flex flex-col">
@@ -38,4 +43,3 @@ export function Logo({ className, iconOnly = false, href = "/", subtext }: LogoP
     </Link>
   );
 }
-

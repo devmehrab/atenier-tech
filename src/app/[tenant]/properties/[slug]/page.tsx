@@ -10,6 +10,7 @@ import { PropertyCard } from "@/components/tenant/PropertyCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PropertyInquiryClient } from "./PropertyInquiryClient";
+import { BrochureDownloadButton } from "@/components/brochure";
 import { FadeIn, SlideUp, StaggerContainer, StaggerItem } from "@/components/motion";
 import {
   Bed,
@@ -24,6 +25,7 @@ import {
   Share2,
   ArrowLeft,
   Building,
+  FileText,
 } from "lucide-react";
 
 interface PropertyPageProps {
@@ -106,10 +108,17 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
               Back to {organization.name} Listings
             </Link>
 
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-muted-foreground hidden sm:inline">
                 Published on {formatDate(property.publishedAt || property.createdAt)}
               </span>
+              <BrochureDownloadButton
+                property={property}
+                organization={organization}
+                agent={agent}
+                size="sm"
+                variant="outline"
+              />
             </div>
           </div>
         </SlideUp>
@@ -312,6 +321,27 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
                 whatsapp={organization.whatsapp || organization.phone}
                 phone={organization.phone}
               />
+            </SlideUp>
+
+            <SlideUp delay={0.22}>
+              <div className="rounded-2xl border border-border/60 bg-card p-5 shadow-sm space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary shrink-0">
+                    <FileText className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-card-foreground">Property Brochure</h3>
+                    <p className="text-xs text-muted-foreground">Download printable PDF presentation</p>
+                  </div>
+                </div>
+                <BrochureDownloadButton
+                  property={property}
+                  organization={organization}
+                  agent={agent}
+                  className="w-full"
+                  variant="outline"
+                />
+              </div>
             </SlideUp>
 
             <SlideUp delay={0.25}>

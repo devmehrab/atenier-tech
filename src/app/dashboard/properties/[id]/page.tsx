@@ -3,8 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { requireOrganizationAccess } from "@/lib/auth/guards";
 import { getPropertyById } from "@/lib/services/property.service";
+import { getOrganizationById } from "@/lib/services/organization.service";
 import { formatPrice, formatArea, formatDate } from "@/lib/utils/formatters";
 import { StatusBadge } from "@/components/dashboard/StatusBadge";
+import { BrochureDownloadButton } from "@/components/brochure";
 import { Button } from "@/components/ui/button";
 import {
   ExternalLink,
@@ -33,6 +35,8 @@ export default async function DashboardPropertyViewPage({
     notFound();
   }
 
+  const organization = await getOrganizationById(property.organizationId);
+
   const publicUrl = session.organizationSlug
     ? `/${session.organizationSlug}/properties/${property.slug}`
     : `/explore`;
@@ -60,6 +64,12 @@ export default async function DashboardPropertyViewPage({
               </Button>
             </Link>
           )}
+          <BrochureDownloadButton
+            property={property}
+            organization={organization}
+            size="sm"
+            variant="outline"
+          />
           <Link href={`/dashboard/properties/${property._id}/edit`}>
             <Button size="sm" className="gap-1.5 shadow-sm">
               <Edit className="h-4 w-4" />

@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { connectToDatabase } from "@/lib/db/connection";
 import { Property, IPropertyDocument } from "@/lib/db/models/Property";
 import { Organization } from "@/lib/db/models/Organization";
@@ -132,53 +133,55 @@ export async function listProperties(
 /**
  * Retrieves a single published property by agency slug and property slug for public storefront
  */
-export async function getPublicPropertyBySlug(
-  tenantSlug: string,
-  propertySlug: string
-): Promise<{ property: IProperty; organization: any; agent?: any } | null> {
-  await connectToDatabase();
+export const getPublicPropertyBySlug = cache(
+  async (
+    tenantSlug: string,
+    propertySlug: string
+  ): Promise<{ property: IProperty; organization: any; agent?: any } | null> => {
+    await connectToDatabase();
 
-  const organization = await Organization.findOne({
-    slug: tenantSlug.toLowerCase(),
-    status: "ACTIVE",
-  }).lean();
+    const organization = await Organization.findOne({
+      slug: tenantSlug.toLowerCase(),
+      status: "ACTIVE",
+    }).lean();
 
-  if (!organization) return null;
+    if (!organization) return null;
 
-  const propertyDoc = await Property.findOne({
-    organizationId: organization._id,
-    slug: propertySlug.toLowerCase(),
-    status: { $in: ["PUBLISHED", "SOLD", "RENTED"] },
-  }).lean();
+    const propertyDoc = await Property.findOne({
+      organizationId: organization._id,
+      slug: propertySlug.toLowerCase(),
+      status: { $in: ["PUBLISHED", "SOLD", "RENTED"] },
+    }).lean();
 
-  if (!propertyDoc) return null;
+    if (!propertyDoc) return null;
 
-  // Increment views count asynchronously
-  Property.updateOne({ _id: propertyDoc._id }, { $inc: { viewsCount: 1 } }).exec();
+    // Increment views count asynchronously
+    Property.updateOne({ _id: propertyDoc._id }, { $inc: { viewsCount: 1 } }).exec();
 
-  let agent = null;
-  if (propertyDoc.assignedAgent) {
-    agent = await User.findById(propertyDoc.assignedAgent)
-      .select("name email phone avatar")
-      .lean();
+    let agent = null;
+    if (propertyDoc.assignedAgent) {
+      agent = await User.findById(propertyDoc.assignedAgent)
+        .select("name email phone avatar")
+        .lean();
+    }
+
+    const { _id, ...rest } = propertyDoc;
+    const property = {
+      _id: _id.toString(),
+      ...rest,
+    } as unknown as IProperty;
+
+    return {
+      property,
+      organization: {
+        ...organization,
+        _id: organization._id.toString(),
+        ownerId: organization.ownerId.toString(),
+      },
+      agent: agent ? { ...agent, _id: agent._id.toString() } : null,
+    };
   }
-
-  const { _id, ...rest } = propertyDoc;
-  const property = {
-    _id: _id.toString(),
-    ...rest,
-  } as unknown as IProperty;
-
-  return {
-    property,
-    organization: {
-      ...organization,
-      _id: organization._id.toString(),
-      ownerId: organization.ownerId.toString(),
-    },
-    agent: agent ? { ...agent, _id: agent._id.toString() } : null,
-  };
-}
+);
 
 /**
  * Retrieves a single property for editing in dashboard (strictly tenant-guarded)

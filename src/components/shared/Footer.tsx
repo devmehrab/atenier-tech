@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Building, ShieldCheck, HeartHandshake } from "lucide-react";
+import { Logo } from "./Logo";
 
 export function Footer() {
   return (
@@ -8,14 +9,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 lg:gap-12">
           {/* Brand & Intro */}
           <div className="space-y-5 md:col-span-1">
-            <div className="flex items-center gap-3 text-foreground">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary font-bold border border-primary/20">
-                <Building className="h-5 w-5 stroke-[1.5]" />
-              </div>
-              <span className="text-xl font-semibold text-foreground">
-                ATENIER<span className="text-primary italic font-light">TECHNOLOGIES</span>
-              </span>
-            </div>
+            <Logo />
             <p className="text-sm text-muted-foreground font-light">
               আপনার রিয়েল এস্টেট ব্যবসাকে ডিজিটালি এগিয়ে নিতে একটি নির্ভরযোগ্য ও প্রিমিয়াম প্ল্যাটফর্ম। আপনার ব্র্যান্ডকে পৌঁছে দিন আরও বেশি গ্রাহকের কাছে।
             </p>
@@ -96,7 +90,7 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-16 pt-8 border-t border-border/60 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground font-light">
-          <p>© {new Date().getFullYear()} atenier technologies সর্বস্বত্ব সংরক্ষিত।</p>
+          <p>© {new Date().getFullYear()} Atenier Technologies সর্বস্বত্ব সংরক্ষিত।</p>
           <div className="flex items-center gap-6">
             <Link href="#" className="hover:text-foreground transition-colors">গোপনীয়তা নীতি</Link>
             <Link href="#" className="hover:text-foreground transition-colors">শর্তাবলী</Link>
