@@ -14,7 +14,7 @@ export function Logo({ className, iconOnly = false, href = "/", subtext }: LogoP
     <Link
       href={href}
       className={cn(
-        "flex items-center gap-2.5 font-bold tracking-tight text-foreground group transition-all",
+        "flex items-center gap-2.5 font-bold text-foreground group transition-all",
         className
       )}
     >
@@ -23,13 +23,13 @@ export function Logo({ className, iconOnly = false, href = "/", subtext }: LogoP
       </div>
       {!iconOnly && (
         <div className="flex flex-col">
-          <div className="flex items-center gap-1.5 leading-none">
-            <span className="text-lg font-extrabold tracking-tight text-foreground">
+          <div className="flex items-center gap-1.5">
+            <span className="text-lg font-extrabold text-foreground">
               ATENIER<span className="text-primary">TECHNOLOGIES</span>
             </span>
           </div>
           {subtext && (
-            <span className="text-[10px] font-medium text-muted-foreground tracking-wider uppercase mt-0.5">
+            <span className="text-[10px] font-medium text-muted-foreground uppercase mt-0.5">
               {subtext}
             </span>
           )}

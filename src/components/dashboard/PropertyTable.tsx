@@ -34,6 +34,7 @@ import {
   MoreVertical,
   Eye,
   Plus,
+  Home,
 } from "lucide-react";
 
 interface PropertyTableProps {
@@ -48,6 +49,35 @@ export function PropertyTable({ properties, tenantSlug }: PropertyTableProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const menuContainerRef = React.useRef<HTMLDivElement>(null);
+
+  // Close dropdown menu on outside click or escape key
+  React.useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (
+        menuContainerRef.current &&
+        !menuContainerRef.current.contains(e.target as Node)
+      ) {
+        setOpenMenuId(null);
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpenMenuId(null);
+      }
+    };
+
+    if (openMenuId) {
+      document.addEventListener("mousedown", handleOutsideClick);
+      document.addEventListener("keydown", handleKeyDown);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [openMenuId]);
 
   const handleDelete = async () => {
     if (!deleteId) return;
@@ -70,6 +100,7 @@ export function PropertyTable({ properties, tenantSlug }: PropertyTableProps) {
 
   const handleStatusChange = async (id: string, newStatus: PropertyStatus) => {
     setActionLoadingId(id);
+    setOpenMenuId(null);
     try {
       const res = await updatePropertyStatusAction(id, newStatus);
       if (res.success) {
@@ -87,6 +118,7 @@ export function PropertyTable({ properties, tenantSlug }: PropertyTableProps) {
 
   const handleDuplicate = async (id: string) => {
     setActionLoadingId(id);
+    setOpenMenuId(null);
     try {
       const res = await duplicatePropertyAction(id);
       if (res.success) {
@@ -126,7 +158,7 @@ export function PropertyTable({ properties, tenantSlug }: PropertyTableProps) {
 
   return (
     <>
-      <div className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-sm">
+      <div ref={menuContainerRef} className="rounded-2xl border border-border/60 bg-card shadow-sm">
         <Table>
           <TableHeader>
             <TableRow>
@@ -139,7 +171,7 @@ export function PropertyTable({ properties, tenantSlug }: PropertyTableProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {properties.map((property) => {
+            {properties.map((property, index) => {
               const imageUrl =
                 property.featuredImage ||
                 property.images?.[0]?.secureUrl ||
@@ -150,6 +182,8 @@ export function PropertyTable({ properties, tenantSlug }: PropertyTableProps) {
                 : `/explore`;
 
               const isWorking = actionLoadingId === property._id;
+              const isMenuOpen = openMenuId === property._id;
+              const isNearBottom = properties.length > 2 && index >= properties.length - 2;
 
               return (
                 <TableRow key={property._id} className="hover:bg-muted/40">
@@ -211,80 +245,150 @@ export function PropertyTable({ properties, tenantSlug }: PropertyTableProps) {
                   </TableCell>
 
                   <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      {/* View on Public Website */}
-                      {property.status === "PUBLISHED" && (
-                        <Link href={publicUrl} target="_blank">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            title="View on Public Storefront"
-                            className="h-8 w-8 text-muted-foreground hover:text-primary"
+                    <div className="relative inline-block text-left">
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        title="Actions"
+                        onClick={() => setOpenMenuId(isMenuOpen ? null : property._id)}
+                        className={`h-8 w-8 rounded-lg transition-colors ${isMenuOpen
+                            ? "bg-muted text-foreground"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted/70"
+                          }`}
+                      >
+                        <MoreVertical className="h-4 w-4" />
+                      </Button>
+
+                      {/* 3-Dot Dropdown Menu */}
+                      {isMenuOpen && (
+                        <div
+                          className={`absolute right-0 ${isNearBottom ? "bottom-full mb-1.5" : "top-full mt-1.5"
+                            } w-56 rounded-xl border border-border/80 bg-popover text-popover-foreground shadow-2xl z-50 p-1.5 animate-in fade-in zoom-in-95`}
+                        >
+                          {/* 1. View Details */}
+                          <Link
+                            href={`/dashboard/properties/${property._id}`}
+                            onClick={() => setOpenMenuId(null)}
+                            className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-popover-foreground hover:bg-muted transition-colors text-left"
                           >
-                            <ExternalLink className="h-4 w-4" />
-                          </Button>
-                        </Link>
+                            <Eye className="h-4 w-4 text-muted-foreground shrink-0" />
+                            <span>View Property Details</span>
+                          </Link>
+
+                          {/* 2. View on Public Website */}
+                          {property.status === "PUBLISHED" && (
+                            <Link
+                              href={publicUrl}
+                              target="_blank"
+                              onClick={() => setOpenMenuId(null)}
+                              className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-popover-foreground hover:bg-muted transition-colors text-left"
+                            >
+                              <ExternalLink className="h-4 w-4 text-primary shrink-0" />
+                              <span>View on Public Website</span>
+                            </Link>
+                          )}
+
+                          {/* 3. Edit Listing */}
+                          <Link
+                            href={`/dashboard/properties/${property._id}/edit`}
+                            onClick={() => setOpenMenuId(null)}
+                            className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-popover-foreground hover:bg-muted transition-colors text-left"
+                          >
+                            <Edit className="h-4 w-4 text-muted-foreground shrink-0" />
+                            <span>Edit Listing</span>
+                          </Link>
+
+                          {/* 4. Duplicate */}
+                          <button
+                            type="button"
+                            disabled={isWorking}
+                            onClick={() => handleDuplicate(property._id)}
+                            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-popover-foreground hover:bg-muted transition-colors text-left disabled:opacity-50"
+                          >
+                            <Copy className="h-4 w-4 text-muted-foreground shrink-0" />
+                            <span>Duplicate as Draft</span>
+                          </button>
+
+                          <div className="my-1 border-t border-border/60" />
+
+                          {/* 5. Status Management Actions */}
+                          {property.status === "DRAFT" || property.status === "UNPUBLISHED" ? (
+                            <button
+                              type="button"
+                              disabled={isWorking}
+                              onClick={() => handleStatusChange(property._id, "PUBLISHED")}
+                              className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-primary hover:bg-primary/10 transition-colors text-left disabled:opacity-50"
+                            >
+                              <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
+                              <span>Publish Listing</span>
+                            </button>
+                          ) : null}
+
+                          {property.status === "PUBLISHED" && (
+                            <>
+                              <button
+                                type="button"
+                                disabled={isWorking}
+                                onClick={() => handleStatusChange(property._id, "UNPUBLISHED")}
+                                className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-popover-foreground hover:bg-muted transition-colors text-left disabled:opacity-50"
+                              >
+                                <XCircle className="h-4 w-4 shrink-0 text-muted-foreground" />
+                                <span>Unpublish (Set to Draft)</span>
+                              </button>
+
+                              <button
+                                type="button"
+                                disabled={isWorking}
+                                onClick={() => handleStatusChange(property._id, "SOLD")}
+                                className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-amber-600 hover:bg-amber-500/10 transition-colors text-left disabled:opacity-50"
+                              >
+                                <DollarSign className="h-4 w-4 shrink-0 text-amber-600" />
+                                <span>Mark as Sold</span>
+                              </button>
+
+                              {property.listingType === "RENT" && (
+                                <button
+                                  type="button"
+                                  disabled={isWorking}
+                                  onClick={() => handleStatusChange(property._id, "RENTED")}
+                                  className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-blue-600 hover:bg-blue-500/10 transition-colors text-left disabled:opacity-50"
+                                >
+                                  <Home className="h-4 w-4 shrink-0 text-blue-600" />
+                                  <span>Mark as Rented</span>
+                                </button>
+                              )}
+                            </>
+                          )}
+
+                          {property.status === "SOLD" || property.status === "RENTED" ? (
+                            <button
+                              type="button"
+                              disabled={isWorking}
+                              onClick={() => handleStatusChange(property._id, "PUBLISHED")}
+                              className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-primary hover:bg-primary/10 transition-colors text-left disabled:opacity-50"
+                            >
+                              <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
+                              <span>Relist as Available</span>
+                            </button>
+                          ) : null}
+
+                          <div className="my-1 border-t border-border/60" />
+
+                          {/* 6. Delete Action */}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setOpenMenuId(null);
+                              setDeleteId(property._id);
+                            }}
+                            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-destructive hover:bg-destructive/10 transition-colors text-left"
+                          >
+                            <Trash2 className="h-4 w-4 shrink-0 text-destructive" />
+                            <span>Delete Permanently</span>
+                          </button>
+                        </div>
                       )}
-
-                      {/* Edit */}
-                      <Link href={`/dashboard/properties/${property._id}/edit`}>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          title="Edit Listing"
-                          className="h-8 w-8 text-muted-foreground hover:text-primary"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                      </Link>
-
-                      {/* Duplicate */}
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        title="Duplicate as Draft"
-                        disabled={isWorking}
-                        onClick={() => handleDuplicate(property._id)}
-                        className="hidden sm:inline-flex h-8 w-8 text-muted-foreground hover:text-foreground"
-                      >
-                        <Copy className="h-4 w-4" />
-                      </Button>
-
-                      {/* Status quick switch: Publish / Unpublish / Sold */}
-                      {property.status === "DRAFT" || property.status === "UNPUBLISHED" ? (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          title="Publish Listing"
-                          disabled={isWorking}
-                          onClick={() => handleStatusChange(property._id, "PUBLISHED")}
-                          className="h-8 w-8 text-primary hover:bg-primary/10"
-                        >
-                          <CheckCircle2 className="h-4 w-4" />
-                        </Button>
-                      ) : property.status === "PUBLISHED" ? (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          title="Mark as Sold"
-                          disabled={isWorking}
-                          onClick={() => handleStatusChange(property._id, "SOLD")}
-                          className="h-8 w-8 text-amber-600 hover:bg-amber-500/10"
-                        >
-                          <DollarSign className="h-4 w-4" />
-                        </Button>
-                      ) : null}
-
-                      {/* Delete */}
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        title="Delete Permanently"
-                        onClick={() => setDeleteId(property._id)}
-                        className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
                     </div>
                   </TableCell>
                 </TableRow>

@@ -64,7 +64,7 @@ export default async function TenantHomePage({ params }: TenantHomePageProps) {
           <SlideUp>
             <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-primary">
+                <span className="text-xs font-bold uppercase text-primary">
                   Spotlight Collection
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground mt-1">
@@ -95,7 +95,7 @@ export default async function TenantHomePage({ params }: TenantHomePageProps) {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SlideUp>
             <div className="text-center max-w-2xl mx-auto mb-10">
-              <span className="text-xs font-bold uppercase tracking-wider text-primary">
+              <span className="text-xs font-bold uppercase text-primary">
                 Browse by Category
               </span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground mt-1">
@@ -130,7 +130,7 @@ export default async function TenantHomePage({ params }: TenantHomePageProps) {
         <SlideUp>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-primary">
+              <span className="text-xs font-bold uppercase text-primary">
                 Fresh On Market
               </span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground mt-1">
@@ -172,7 +172,7 @@ export default async function TenantHomePage({ params }: TenantHomePageProps) {
                 <h2 className="text-3xl font-extrabold text-foreground">
                   About {organization.name}
                 </h2>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-sm text-muted-foreground">
                   {organization.description ||
                     `Dedicated to delivering premier real estate advisory and transaction services across ${organization.city}. Our team connects buyers, tenants, and investors with high-value residential and commercial properties.`}
                 </p>

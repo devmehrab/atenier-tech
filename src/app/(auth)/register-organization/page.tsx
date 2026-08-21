@@ -57,10 +57,10 @@ export default function RegisterOrgPage() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-extrabold text-foreground tracking-tight">
+        <h2 className="text-2xl font-extrabold text-foreground">
           নতুন এজেন্সি রেজিস্ট্রেশন
         </h2>
-        <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed">
+        <p className="mt-1.5 text-xs text-muted-foreground">
           আপনার রিয়েল এস্টেট এজেন্সির জন্য নিজস্ব ব্র্যান্ডেড স্টোরফ্রন্ট ও ক্লাউড ম্যানেজমেন্ট ড্যাশবোর্ড তৈরি করুন
         </p>
       </div>

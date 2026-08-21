@@ -17,7 +17,7 @@ export default async function DashboardSettingsPage() {
   return (
     <div className="space-y-6 max-w-4xl">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground">
           Agency Settings & Preferences
         </h1>
         <p className="text-sm text-muted-foreground mt-1">

@@ -111,9 +111,9 @@ export interface IPropertySpecifications {
   bathrooms: number;
   parkingSpaces?: number;
   propertySize: number;
-  propertySizeUnit: "sqft" | "sqm";
+  propertySizeUnit: "sqft" | "sqm" | "katha";
   landSize?: number;
-  landSizeUnit?: "sqft" | "sqm" | "katha" | "acre";
+  landSizeUnit?: "sqft" | "sqm" | "katha" | "acre" | "decimal" | "bigha";
   floorNumber?: number;
   totalFloors?: number;
   yearBuilt?: number;

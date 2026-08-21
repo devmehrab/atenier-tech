@@ -26,7 +26,7 @@ export default async function DashboardOverviewPage() {
       {/* Header Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground">
             Welcome back, {session.name}
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
@@ -40,7 +40,7 @@ export default async function DashboardOverviewPage() {
             <Link href={`/${session.organizationSlug}`} target="_blank">
               <Button variant="outline" size="sm" className="gap-1.5 text-muted-foreground hover:text-foreground">
                 <ExternalLink className="h-4 w-4" />
-                Live Storefront
+                Live Website
               </Button>
             </Link>
           )}
@@ -124,7 +124,7 @@ export default async function DashboardOverviewPage() {
             <PlusCircle className="h-5 w-5" />
           </div>
           <h3 className="text-base font-bold text-card-foreground">Create New Listing</h3>
-          <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+          <p className="mt-1 text-xs text-muted-foreground">
             Upload photos to Cloudinary, configure amenities, set price and publish instantly.
           </p>
         </Link>
@@ -137,7 +137,7 @@ export default async function DashboardOverviewPage() {
             <Building className="h-5 w-5" />
           </div>
           <h3 className="text-base font-bold text-card-foreground">Agency Branding & Logo</h3>
-          <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+          <p className="mt-1 text-xs text-muted-foreground">
             Customize logo, cover hero imagery, WhatsApp contact number, and theme colors.
           </p>
         </Link>
@@ -150,7 +150,7 @@ export default async function DashboardOverviewPage() {
             <Users className="h-5 w-5" />
           </div>
           <h3 className="text-base font-bold text-card-foreground">Manage Team & Agents</h3>
-          <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+          <p className="mt-1 text-xs text-muted-foreground">
             Invite licensed agents to publish and manage listings under your agency handle.
           </p>
         </Link>

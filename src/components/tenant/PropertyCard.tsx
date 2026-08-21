@@ -40,20 +40,20 @@ export function PropertyCard({ property, tenantSlug }: PropertyCardProps) {
               property.status === "SOLD"
                 ? "destructive"
                 : property.status === "RENTED"
-                ? "warning"
-                : property.listingType === "RENT"
-                ? "info"
-                : "default"
+                  ? "warning"
+                  : property.listingType === "RENT"
+                    ? "info"
+                    : "default"
             }
-            className="font-bold tracking-wide uppercase shadow-sm"
+            className="font-bold uppercase shadow-sm"
           >
             {property.status === "SOLD"
               ? "Sold"
               : property.status === "RENTED"
-              ? "Rented"
-              : property.listingType === "RENT"
-              ? "For Rent"
-              : "For Sale"}
+                ? "Rented"
+                : property.listingType === "RENT"
+                  ? "For Rent"
+                  : "For Sale"}
           </Badge>
 
           <span className="rounded-md bg-background/80 px-2 py-0.5 text-xs font-semibold text-foreground backdrop-blur-sm">
@@ -64,7 +64,7 @@ export function PropertyCard({ property, tenantSlug }: PropertyCardProps) {
         {/* Price on Image Bottom */}
         <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between text-white">
           <div>
-            <span className="text-xl font-extrabold tracking-tight drop-shadow-md">
+            <span className="text-xl font-extrabold drop-shadow-md">
               {formatPrice(property.price, property.currency, property.pricePeriod)}
             </span>
             {property.priceNegotiable && (
@@ -84,12 +84,12 @@ export function PropertyCard({ property, tenantSlug }: PropertyCardProps) {
         </div>
 
         <Link href={href} className="group-hover:text-primary transition-colors">
-          <h3 className="text-base font-bold text-card-foreground line-clamp-1 leading-snug">
+          <h3 className="text-base font-bold text-card-foreground line-clamp-1">
             {property.title}
           </h3>
         </Link>
 
-        <p className="mt-2 text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+        <p className="mt-2 text-xs text-muted-foreground line-clamp-2">
           {property.description}
         </p>
 

@@ -11,11 +11,11 @@ export default async function NewPropertyPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground">
           Create Property Listing
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
-          Add a new real estate listing to {session.organizationName}
+          Create a new property listing for {session.organizationName}
         </p>
       </div>
 

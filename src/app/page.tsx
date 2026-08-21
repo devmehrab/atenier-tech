@@ -101,7 +101,7 @@ export default async function HomePage() {
           <SlideUp>
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
               <div className="max-w-2xl">
-                <span className="text-sm font-medium tracking-wider text-primary mb-2 block">
+                <span className="text-sm font-medium text-primary mb-2 block">
                   আমাদের পার্টনার নেটওয়ার্ক
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-semibold text-foreground mt-2">
@@ -137,7 +137,7 @@ export default async function HomePage() {
                     <h3 className="text-xl font-semibold text-card-foreground group-hover:text-primary transition-colors">
                       {org.name}
                     </h3>
-                    <p className="mt-3 text-sm text-muted-foreground line-clamp-2 leading-relaxed font-light">
+                    <p className="mt-3 text-sm text-muted-foreground line-clamp-2 font-light">
                       {org.description || "নির্ভরযোগ্য প্রপার্টি সমাধান নিয়ে আমরা আছি আপনার স্বপ্নের আবাসন খোঁজার যাত্রায়।"}
                     </p>
                     <div className="mt-5 text-sm font-medium text-muted-foreground/80 flex items-center gap-2">
@@ -175,7 +175,7 @@ export default async function HomePage() {
             <SlideUp>
               <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
                 <div className="max-w-2xl">
-                  <span className="text-sm font-medium tracking-wider text-primary mb-2 block">
+                  <span className="text-sm font-medium text-primary mb-2 block">
                     এক্সক্লুসিভ কালেকশন
                   </span>
                   <h2 className="text-3xl sm:text-4xl font-semibold text-foreground mt-2">
@@ -213,7 +213,7 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SlideUp>
             <div className="text-center max-w-3xl mx-auto mb-20">
-              <span className="text-sm font-medium tracking-wider text-primary mb-2 block">
+              <span className="text-sm font-medium text-primary mb-2 block">
                 কেন আমরা আলাদা?
               </span>
               <h2 className="text-3xl sm:text-4xl font-semibold text-foreground mt-2">
@@ -232,7 +232,7 @@ export default async function HomePage() {
                   <ShieldCheck className="h-8 w-8 stroke-[1.5]" />
                 </div>
                 <h3 className="text-xl font-medium text-foreground mb-3">নির্ভরযোগ্য ও নিরাপদ</h3>
-                <p className="text-muted-foreground leading-relaxed font-light">
+                <p className="text-muted-foreground font-light">
                   আপনার মূল্যবান ডেটা এবং গ্রাহকের তথ্যের সর্বোচ্চ গোপনীয়তা ও নিরাপত্তা নিশ্চিত করি আমরা। কোনো প্রকার শঙ্কা ছাড়াই ব্যবসা পরিচালনা করুন।
                 </p>
               </div>
@@ -244,7 +244,7 @@ export default async function HomePage() {
                   <Gem className="h-8 w-8 stroke-[1.5]" />
                 </div>
                 <h3 className="text-xl font-medium text-foreground mb-3">আপনার নিজস্ব পরিচয়</h3>
-                <p className="text-muted-foreground leading-relaxed font-light">
+                <p className="text-muted-foreground font-light">
                   আপনার নিজস্ব ব্র্যান্ডিং, লোগো এবং কালার থিম—আপনার এজেন্সি পেজটি হবে পুরোপুরি আপনার। এটি তুলে ধরবে আপনার পেশাদারিত্ব।
                 </p>
               </div>
@@ -256,7 +256,7 @@ export default async function HomePage() {
                   <HeartHandshake className="h-8 w-8 stroke-[1.5]" />
                 </div>
                 <h3 className="text-xl font-medium text-foreground mb-3">গ্রাহকের সাথে সুসম্পর্ক</h3>
-                <p className="text-muted-foreground leading-relaxed font-light">
+                <p className="text-muted-foreground font-light">
                   প্রপার্টির দৃষ্টিনন্দন উপস্থাপন এবং সরাসরি যোগাযোগের সুবিধার মাধ্যমে আপনার গ্রাহকদের দিন এক প্রিমিয়াম ও আস্থার অভিজ্ঞতা।
                 </p>
               </div>
@@ -271,7 +271,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-black/5" />
 
         <SlideUp className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-5xl font-semibold text-primary-foreground tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-semibold text-primary-foreground">
             আপনার ব্যবসাকে ডিজিটাল রূপ দিতে প্রস্তুত?
           </h2>
           <p className="mt-6 text-lg text-primary-foreground/80 max-w-2xl mx-auto font-light">

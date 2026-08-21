@@ -60,7 +60,7 @@ export function DialogTitle({
 }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
     <h2
-      className={cn("text-lg font-semibold leading-none tracking-tight text-card-foreground", className)}
+      className={cn("text-lg font-semibold text-card-foreground", className)}
       {...props}
     />
   );

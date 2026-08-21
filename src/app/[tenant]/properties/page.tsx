@@ -60,7 +60,7 @@ export default async function TenantPropertiesPage({
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <SlideUp distance={16}>
         <div className="mb-8">
-          <h1 className="text-3xl font-extrabold tracking-tight text-foreground">
+          <h1 className="text-3xl font-extrabold text-foreground">
             Property Listings
           </h1>
           <p className="text-sm text-muted-foreground mt-1">

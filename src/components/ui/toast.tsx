@@ -88,7 +88,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 
             <div className="flex-1">
               {t.title && <h5 className="font-semibold text-card-foreground mb-0.5">{t.title}</h5>}
-              <p className="text-muted-foreground leading-snug">{t.message}</p>
+              <p className="text-muted-foreground">{t.message}</p>
             </div>
 
             <button

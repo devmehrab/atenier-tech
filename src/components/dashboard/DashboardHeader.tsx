@@ -129,7 +129,7 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
                 </button>
               </div>
 
-              {/* Public Storefront Link Button */}
+              {/* Public Website Link Button */}
               {user.organizationSlug && (
                 <Link
                   href={`/${user.organizationSlug}`}
@@ -137,7 +137,7 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
                   onClick={() => setMobileOpen(false)}
                   className="flex items-center justify-center gap-1.5 w-full rounded-xl border border-border bg-muted/40 px-3 py-2 text-xs font-semibold text-card-foreground hover:bg-muted hover:text-primary transition-colors"
                 >
-                  <span>View Public Storefront</span>
+                  <span>View Public Website</span>
                   <ExternalLink className="h-3.5 w-3.5" />
                 </Link>
               )}

@@ -126,20 +126,20 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
                     property.status === "SOLD"
                       ? "destructive"
                       : property.status === "RENTED"
-                      ? "warning"
-                      : property.listingType === "RENT"
-                      ? "info"
-                      : "default"
+                        ? "warning"
+                        : property.listingType === "RENT"
+                          ? "info"
+                          : "default"
                   }
-                  className="font-bold tracking-wide uppercase"
+                  className="font-bold uppercase"
                 >
                   {property.status === "SOLD"
                     ? "Sold"
                     : property.status === "RENTED"
-                    ? "Rented"
-                    : property.listingType === "RENT"
-                    ? "For Rent"
-                    : "For Sale"}
+                      ? "Rented"
+                      : property.listingType === "RENT"
+                        ? "For Rent"
+                        : "For Sale"}
                 </Badge>
                 <Badge variant="outline" className="font-semibold">
                   {property.propertyType}
@@ -151,7 +151,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
                 )}
               </div>
 
-              <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground leading-tight">
+              <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground">
                 {property.title}
               </h1>
 
@@ -165,10 +165,10 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
             </div>
 
             <div className="flex flex-col lg:items-end">
-              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              <span className="text-xs font-bold uppercase text-muted-foreground">
                 Listing Price
               </span>
-              <div className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
+              <div className="text-3xl sm:text-4xl font-extrabold text-foreground">
                 {formatPrice(property.price, property.currency, property.pricePeriod)}
               </div>
               {property.priceNegotiable && (
@@ -274,7 +274,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
             <SlideUp delay={0.2}>
               <div className="rounded-2xl border border-border/60 bg-card p-6 sm:p-8 shadow-sm space-y-4">
                 <h2 className="text-lg font-bold text-card-foreground">About This Property</h2>
-                <div className="prose prose-neutral dark:prose-invert max-w-none text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+                <div className="prose prose-neutral dark:prose-invert max-w-none text-sm text-muted-foreground whitespace-pre-line">
                   {property.description}
                 </div>
               </div>

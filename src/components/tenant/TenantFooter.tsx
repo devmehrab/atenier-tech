@@ -15,11 +15,11 @@ export function TenantFooter({ organization }: TenantFooterProps) {
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-foreground">
               <Building className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold tracking-tight text-foreground">
+              <span className="text-xl font-bold text-foreground">
                 {organization.name}
               </span>
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <p className="text-sm text-muted-foreground">
               {organization.description ||
                 "Providing exceptional real estate brokerage services, property acquisitions, leasing, and advisory."}
             </p>
@@ -27,7 +27,7 @@ export function TenantFooter({ organization }: TenantFooterProps) {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-4">
+            <h4 className="text-sm font-semibold uppercase text-foreground mb-4">
               Browse Listings
             </h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
@@ -68,7 +68,7 @@ export function TenantFooter({ organization }: TenantFooterProps) {
 
           {/* Contact Details */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-4">
+            <h4 className="text-sm font-semibold uppercase text-foreground mb-4">
               Office & Contact
             </h4>
             <ul className="space-y-3 text-sm text-muted-foreground">

@@ -168,7 +168,7 @@ export function OrgManagementClient({
                         <Button
                           variant="ghost"
                           size="icon"
-                          title="Visit Public Storefront"
+                          title="Visit Public Website"
                           className="h-8 w-8 text-neutral-600 hover:text-emerald-700"
                         >
                           <ExternalLink className="h-4 w-4" />
@@ -180,11 +180,10 @@ export function OrgManagementClient({
                         size="sm"
                         disabled={isWorking}
                         onClick={() => handleStatusToggle(org._id, org.status)}
-                        className={`h-8 text-xs ${
-                          org.status === "ACTIVE"
+                        className={`h-8 text-xs ${org.status === "ACTIVE"
                             ? "text-amber-700 border-amber-300 hover:bg-amber-50"
                             : "text-emerald-700 border-emerald-300 hover:bg-emerald-50"
-                        }`}
+                          }`}
                       >
                         {org.status === "ACTIVE" ? "Suspend" : "Activate"}
                       </Button>

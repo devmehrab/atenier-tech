@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: TenantLayoutProps) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
   return {
-    title: `${org.name} | Official Real Estate Storefront`,
+    title: `${org.name} | Official website`,
     description:
       org.description ||
       `Explore luxury properties, apartments, villas, and commercial real estate with ${org.name}.`,

@@ -73,7 +73,7 @@ export default async function DashboardPropertyViewPage({
       <div className="rounded-2xl border border-border/60 bg-card p-6 sm:p-8 shadow-sm space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div className="space-y-1.5">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
+            <span className="text-xs font-bold uppercase text-primary">
               {property.propertyType} • {property.listingType}
             </span>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-card-foreground">
@@ -88,7 +88,7 @@ export default async function DashboardPropertyViewPage({
           </div>
 
           <div className="text-left sm:text-right">
-            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground block">
+            <span className="text-xs font-bold uppercase text-muted-foreground block">
               Price
             </span>
             <span className="text-2xl sm:text-3xl font-extrabold text-card-foreground">
@@ -141,7 +141,7 @@ export default async function DashboardPropertyViewPage({
         {/* Description */}
         <div className="space-y-2 pt-2">
           <h3 className="text-sm font-bold text-card-foreground">Description</h3>
-          <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-line">
+          <p className="text-xs text-muted-foreground whitespace-pre-line">
             {property.description}
           </p>
         </div>

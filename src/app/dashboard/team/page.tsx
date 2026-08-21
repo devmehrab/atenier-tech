@@ -13,7 +13,7 @@ export default async function DashboardTeamPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground">
           Team & Agent Management
         </h1>
         <p className="text-sm text-muted-foreground mt-1">

@@ -31,21 +31,24 @@ interface PropertyFormProps {
 }
 
 const COMMON_AMENITIES = [
+  "Full Generator Backup (100%)",
+  "24/7 Security & CCTV Surveillance",
+  "High-Speed Passenger Lift",
+  "Bed / Cargo Lift",
+  "Covered Car Parking",
+  "Dedicated Prayer Room (Namaz Hall)",
+  "Rooftop Garden & Community Hall",
+  "Fitness Center / Gymnasium",
+  "Titas Gas Connection / Central LPG",
+  "Deep Tube-well & Water Filtration",
+  "Intercom & Video Door Phone",
+  "Fire Hydrant & Suppression System",
+  "Driver Waiting Area & Restroom",
   "Swimming Pool",
-  "Fitness Center / Gym",
-  "24/7 Security & CCTV",
-  "Elevator / Lift",
-  "Backup Generator",
-  "Private Balcony",
-  "Landscaped Garden",
-  "Covered Parking",
-  "Central Air Conditioning",
-  "High-Speed Fiber Internet",
-  "Rooftop Terrace",
-  "Pet Friendly",
-  "Smart Home Automation",
-  "Concierge Service",
-  "Fire Suppression System",
+  "Caretaker & Guard Quarter",
+  "Solar Panel Backup System",
+  "South-Facing Open Verandas",
+  "Waste Management Chute",
 ];
 
 export function PropertyForm({
@@ -63,34 +66,39 @@ export function PropertyForm({
     listingType: initialData?.listingType || "SALE",
     propertyType: initialData?.propertyType || "APARTMENT",
     status: initialData?.status || "DRAFT",
-    price: initialData?.price || 500000,
-    currency: initialData?.currency || "USD",
+    price: initialData?.price || 17500000,
+    currency: initialData?.currency || "BDT",
     priceNegotiable: initialData?.priceNegotiable ?? false,
     pricePeriod: initialData?.pricePeriod,
     location: {
       address: initialData?.location?.address || "",
-      city: initialData?.location?.city || "",
+      city: initialData?.location?.city || "Dhaka",
       area: initialData?.location?.area || "",
-      state: initialData?.location?.state || "",
-      country: initialData?.location?.country || "US",
+      state: initialData?.location?.state || "Dhaka Division",
+      country: initialData?.location?.country || "Bangladesh",
       zipCode: initialData?.location?.zipCode || "",
       latitude: initialData?.location?.latitude,
       longitude: initialData?.location?.longitude,
     },
     specifications: {
       bedrooms: initialData?.specifications?.bedrooms ?? 3,
-      bathrooms: initialData?.specifications?.bathrooms ?? 2,
+      bathrooms: initialData?.specifications?.bathrooms ?? 3,
       parkingSpaces: initialData?.specifications?.parkingSpaces ?? 1,
-      propertySize: initialData?.specifications?.propertySize ?? 1850,
+      propertySize: initialData?.specifications?.propertySize ?? 2150,
       propertySizeUnit: initialData?.specifications?.propertySizeUnit || "sqft",
       landSize: initialData?.specifications?.landSize,
-      landSizeUnit: initialData?.specifications?.landSizeUnit,
+      landSizeUnit: initialData?.specifications?.landSizeUnit || "katha",
       floorNumber: initialData?.specifications?.floorNumber,
       totalFloors: initialData?.specifications?.totalFloors,
       yearBuilt: initialData?.specifications?.yearBuilt ?? 2024,
       furnishedStatus: initialData?.specifications?.furnishedStatus || "UNFURNISHED",
     },
-    amenities: initialData?.amenities || ["24/7 Security & CCTV", "Elevator / Lift", "Covered Parking"],
+    amenities: initialData?.amenities || [
+      "Full Generator Backup (100%)",
+      "24/7 Security & CCTV Surveillance",
+      "High-Speed Passenger Lift",
+      "Covered Car Parking",
+    ],
     features: initialData?.features || [],
     images: initialData?.images || [],
     featuredImage: initialData?.featuredImage || "",
@@ -163,7 +171,7 @@ export function PropertyForm({
           </div>
           <div>
             <h3 className="text-base font-bold text-card-foreground">Basic Information</h3>
-            <p className="text-xs text-muted-foreground">Title, category, purpose, and publication status</p>
+            <p className="text-xs text-muted-foreground">Property title, category, purpose, and visibility status</p>
           </div>
         </div>
 
@@ -173,7 +181,7 @@ export function PropertyForm({
               Property Title *
             </label>
             <Input
-              placeholder="e.g. Modern Penthouse with Panoramic City Skyline Views"
+              placeholder="e.g. South-Facing 3BHK Luxury Apartment in Gulshan-2 (Road 104)"
               error={errors.title?.message}
               {...register("title")}
             />
@@ -182,7 +190,7 @@ export function PropertyForm({
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-semibold text-card-foreground mb-1">
-                Listing Purpose *
+                Listing Purpose*
               </label>
               <Select {...register("listingType")}>
                 <option value="SALE">For Sale</option>
@@ -196,13 +204,13 @@ export function PropertyForm({
                 Property Category *
               </label>
               <Select {...register("propertyType")}>
-                <option value="APARTMENT">Apartment / Condominium</option>
-                <option value="HOUSE">House / Single Family Home</option>
-                <option value="VILLA">Luxury Villa</option>
+                <option value="APARTMENT">Apartment / Flat</option>
+                <option value="HOUSE">Independent House / Building</option>
+                <option value="VILLA">Luxury Duplex / Villa</option>
                 <option value="PENTHOUSE">Penthouse</option>
-                <option value="COMMERCIAL">Commercial Real Estate</option>
-                <option value="OFFICE">Office Space</option>
-                <option value="LAND">Land / Plot</option>
+                <option value="COMMERCIAL">Commercial Space / Floor</option>
+                <option value="OFFICE">Corporate Office Space</option>
+                <option value="LAND">Plot / Land</option>
                 <option value="TOWNHOUSE">Townhouse</option>
               </Select>
             </div>
@@ -212,8 +220,8 @@ export function PropertyForm({
                 Listing Status *
               </label>
               <Select {...register("status")}>
-                <option value="DRAFT">Draft (Unlisted)</option>
-                <option value="PUBLISHED">Published (Live on Public Storefront)</option>
+                <option value="DRAFT">Draft</option>
+                <option value="PUBLISHED">Published</option>
                 <option value="SOLD">Sold</option>
                 <option value="RENTED">Rented</option>
                 <option value="UNPUBLISHED">Unpublished</option>
@@ -227,7 +235,7 @@ export function PropertyForm({
             </label>
             <Textarea
               rows={5}
-              placeholder="Highlight architecture, floorplan, interior finishes, sunlight exposure, neighborhood perks..."
+              placeholder="e.g. Luxuriously designed 3 bedroom apartment featuring 3 attached bathrooms, 3 wide verandas, drawing, dining, family living, servant room with bath, modern kitchen with imported fittings, 100% full load backup generator, 2 dedicated car parking spaces in basement. RAJUK approved plan, ready for immediate handover."
               error={errors.description?.message}
               {...register("description")}
             />
@@ -255,21 +263,24 @@ export function PropertyForm({
           </div>
           <div>
             <h3 className="text-base font-bold text-card-foreground">Pricing & Terms</h3>
-            <p className="text-xs text-muted-foreground">Set asking price, currency, and negotiable options</p>
+            <p className="text-xs text-muted-foreground">Set asking price in BDT (Taka), currency, and negotiable options</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label className="block text-xs font-semibold text-card-foreground mb-1">
-              Price Amount *
+              Price / Rent Amount *
             </label>
             <Input
               type="number"
-              placeholder="e.g. 750000"
+              placeholder="e.g. 18500000 (1.85 Cr) or 65000"
               error={errors.price?.message}
               {...register("price")}
             />
+            <span className="text-[11px] text-muted-foreground mt-1 block">
+              Enter numbers (e.g. 15000000 for 1.5 Crore BDT)
+            </span>
           </div>
 
           <div>
@@ -277,13 +288,12 @@ export function PropertyForm({
               Currency
             </label>
             <Select {...register("currency")}>
-              <option value="USD">USD ($)</option>
-              <option value="BDT">BDT (৳)</option>
-              <option value="EUR">EUR (€)</option>
-              <option value="GBP">GBP (£)</option>
-              <option value="CAD">CAD ($)</option>
-              <option value="AUD">AUD ($)</option>
-              <option value="AED">AED (AED)</option>
+              <option value="BDT">BDT (৳) - Bangladeshi Taka</option>
+              <option value="USD">USD ($) - US Dollar</option>
+              <option value="EUR">EUR (€) - Euro</option>
+              <option value="GBP">GBP (£) - British Pound</option>
+              <option value="AED">AED (AED) - UAE Dirham</option>
+              <option value="SAR">SAR (SAR) - Saudi Riyal</option>
             </Select>
           </div>
 
@@ -293,8 +303,8 @@ export function PropertyForm({
                 Rental Period
               </label>
               <Select {...register("pricePeriod")}>
-                <option value="MONTHLY">Monthly (/mo)</option>
-                <option value="YEARLY">Yearly (/yr)</option>
+                <option value="MONTHLY">Monthly</option>
+                <option value="YEARLY">Yearly</option>
               </Select>
             </div>
           )}
@@ -308,7 +318,7 @@ export function PropertyForm({
             {...register("priceNegotiable")}
           />
           <label htmlFor="priceNegotiable" className="text-xs font-semibold text-card-foreground cursor-pointer">
-            Price is negotiable upon viewing
+            Price is negotiable upon discussion
           </label>
         </div>
       </div>
@@ -321,17 +331,17 @@ export function PropertyForm({
           </div>
           <div>
             <h3 className="text-base font-bold text-card-foreground">Property Location</h3>
-            <p className="text-xs text-muted-foreground">Street address, neighborhood, city, and coordinates</p>
+            <p className="text-xs text-muted-foreground">Road, holding address, neighborhood/thana, district, and postal code</p>
           </div>
         </div>
 
         <div className="space-y-4">
           <div>
             <label className="block text-xs font-semibold text-card-foreground mb-1">
-              Street Address *
+              Street / Holding Address *
             </label>
             <Input
-              placeholder="e.g. 142 Manhattan Avenue, Suite 12B"
+              placeholder="e.g. House 42, Road 11, Block D or Plot 12, Road 104"
               error={errors.location?.address?.message}
               {...register("location.address")}
             />
@@ -340,10 +350,10 @@ export function PropertyForm({
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-semibold text-card-foreground mb-1">
-                Area / Neighborhood *
+                Area / Neighborhood / Thana *
               </label>
               <Input
-                placeholder="e.g. Upper West Side / Gulshan-2"
+                placeholder="e.g. Gulshan-2, Banani, Dhanmondi, Uttara, Bashundhara R/A"
                 error={errors.location?.area?.message}
                 {...register("location.area")}
               />
@@ -351,10 +361,10 @@ export function PropertyForm({
 
             <div>
               <label className="block text-xs font-semibold text-card-foreground mb-1">
-                City *
+                City / District *
               </label>
               <Input
-                placeholder="e.g. New York / Dhaka"
+                placeholder="e.g. Dhaka, Chittagong, Sylhet, Cox's Bazar, Rajshahi"
                 error={errors.location?.city?.message}
                 {...register("location.city")}
               />
@@ -365,8 +375,30 @@ export function PropertyForm({
                 Country
               </label>
               <Input
-                placeholder="US"
+                placeholder="Bangladesh"
                 {...register("location.country")}
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-semibold text-card-foreground mb-1">
+                Division / Region
+              </label>
+              <Input
+                placeholder="e.g. Dhaka Division, Chittagong Division"
+                {...register("location.state")}
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-card-foreground mb-1">
+                Postal / Zip Code
+              </label>
+              <Input
+                placeholder="e.g. 1212, 1213, 1205, 1230, 4000"
+                {...register("location.zipCode")}
               />
             </div>
           </div>
@@ -381,7 +413,7 @@ export function PropertyForm({
           </div>
           <div>
             <h3 className="text-base font-bold text-card-foreground">Specifications & Dimensions</h3>
-            <p className="text-xs text-muted-foreground">Rooms, bathrooms, floor area, floor level, and furnishing</p>
+            <p className="text-xs text-muted-foreground">Rooms, attached baths, floor area, floor level, and furnishing details</p>
           </div>
         </div>
 
@@ -390,21 +422,21 @@ export function PropertyForm({
             <label className="block text-xs font-semibold text-card-foreground mb-1">
               Bedrooms *
             </label>
-            <Input type="number" min="0" {...register("specifications.bedrooms")} />
+            <Input type="number" min="0" placeholder="e.g. 3" {...register("specifications.bedrooms")} />
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-card-foreground mb-1">
               Bathrooms *
             </label>
-            <Input type="number" min="0" step="0.5" {...register("specifications.bathrooms")} />
+            <Input type="number" min="0" step="0.5" placeholder="e.g. 3" {...register("specifications.bathrooms")} />
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-card-foreground mb-1">
               Floor Area *
             </label>
-            <Input type="number" min="1" {...register("specifications.propertySize")} />
+            <Input type="number" min="1" placeholder="e.g. 2150" {...register("specifications.propertySize")} />
           </div>
 
           <div>
@@ -413,29 +445,30 @@ export function PropertyForm({
             </label>
             <Select {...register("specifications.propertySizeUnit")}>
               <option value="sqft">Square Feet (sq ft)</option>
+              <option value="katha">Katha</option>
               <option value="sqm">Square Meters (m²)</option>
             </Select>
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-card-foreground mb-1">
-              Parking Spaces
+              Car Parking
             </label>
-            <Input type="number" min="0" {...register("specifications.parkingSpaces")} />
+            <Input type="number" min="0" placeholder="e.g. 1 or 2" {...register("specifications.parkingSpaces")} />
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-card-foreground mb-1">
-              Floor Number
+              Floor Level
             </label>
-            <Input type="number" placeholder="e.g. 14" {...register("specifications.floorNumber")} />
+            <Input type="number" placeholder="e.g. 6 (6th Floor)" {...register("specifications.floorNumber")} />
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-card-foreground mb-1">
-              Total Floors
+              Total Building Floors
             </label>
-            <Input type="number" placeholder="e.g. 25" {...register("specifications.totalFloors")} />
+            <Input type="number" placeholder="e.g. 14 (G+13)" {...register("specifications.totalFloors")} />
           </div>
 
           <div>
@@ -443,10 +476,37 @@ export function PropertyForm({
               Furnishing
             </label>
             <Select {...register("specifications.furnishedStatus")}>
-              <option value="UNFURNISHED">Unfurnished</option>
-              <option value="SEMI_FURNISHED">Semi-Furnished</option>
-              <option value="FULLY_FURNISHED">Fully Furnished</option>
+              <option value="UNFURNISHED">Unfurnished </option>
+              <option value="SEMI_FURNISHED">Semi-Furnished </option>
+              <option value="FULLY_FURNISHED">Fully Furnished </option>
             </Select>
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-card-foreground mb-1">
+              Land / Plot Size (Optional)
+            </label>
+            <Input type="number" step="0.01" placeholder="e.g. 5" {...register("specifications.landSize")} />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-card-foreground mb-1">
+              Land Unit
+            </label>
+            <Select {...register("specifications.landSizeUnit")}>
+              <option value="katha">Katha </option>
+              <option value="decimal">Decimal / Shatak </option>
+              <option value="bigha">Bigha </option>
+              <option value="sqft">Square Feet (sq ft)</option>
+              <option value="acre">Acre</option>
+            </Select>
+          </div>
+
+          <div className="sm:col-span-2">
+            <label className="block text-xs font-semibold text-card-foreground mb-1">
+              Handover / Construction Year
+            </label>
+            <Input type="number" placeholder="e.g. 2024 (Handover 2025)" {...register("specifications.yearBuilt")} />
           </div>
         </div>
       </div>
@@ -458,8 +518,8 @@ export function PropertyForm({
             <ImageIcon className="h-4 w-4" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-card-foreground">Property Imagery (Cloudinary)</h3>
-            <p className="text-xs text-muted-foreground">Upload multiple photos, reorder, set primary cover</p>
+            <h3 className="text-base font-bold text-card-foreground">Property Imagery</h3>
+            <p className="text-xs text-muted-foreground">Upload high resolution photos of interior, exterior, verandas, floor plans</p>
           </div>
         </div>
 
@@ -486,8 +546,8 @@ export function PropertyForm({
             <CheckCircle className="h-4 w-4" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-card-foreground">Amenities & Features</h3>
-            <p className="text-xs text-muted-foreground">Select all building amenities and conveniences</p>
+            <h3 className="text-base font-bold text-card-foreground">Amenities & Facilities</h3>
+            <p className="text-xs text-muted-foreground">Select all building amenities, backup utilities, and conveniences</p>
           </div>
         </div>
 
@@ -499,18 +559,16 @@ export function PropertyForm({
                 type="button"
                 key={amenity}
                 onClick={() => toggleAmenity(amenity)}
-                className={`flex items-center gap-2 rounded-xl border p-3 text-left text-xs font-semibold transition-all ${
-                  isChecked
-                    ? "border-primary bg-primary/10 text-primary shadow-sm"
-                    : "border-border/60 bg-muted/40 text-card-foreground hover:bg-muted"
-                }`}
+                className={`flex items-center gap-2 rounded-xl border p-3 text-left text-xs font-semibold transition-all ${isChecked
+                  ? "border-primary bg-primary/10 text-primary shadow-sm"
+                  : "border-border/60 bg-muted/40 text-card-foreground hover:bg-muted"
+                  }`}
               >
                 <div
-                  className={`flex h-4 w-4 items-center justify-center rounded border ${
-                    isChecked
-                      ? "border-primary bg-primary text-primary-foreground"
-                      : "border-input bg-background"
-                  }`}
+                  className={`flex h-4 w-4 items-center justify-center rounded border ${isChecked
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-input bg-background"
+                    }`}
                 >
                   {isChecked && <CheckCircle className="h-3 w-3" />}
                 </div>

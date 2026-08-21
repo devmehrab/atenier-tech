@@ -29,7 +29,7 @@ export function StatsCard({
   return (
     <div className="rounded-2xl border border-border/60 bg-card p-5 sm:p-6 shadow-sm">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+        <span className="text-xs font-bold uppercase text-muted-foreground">
           {title}
         </span>
         <div
@@ -43,7 +43,7 @@ export function StatsCard({
       </div>
 
       <div className="mt-4 flex items-baseline gap-2">
-        <span className="text-2xl sm:text-3xl font-extrabold tracking-tight text-card-foreground">
+        <span className="text-2xl sm:text-3xl font-extrabold text-card-foreground">
           {value}
         </span>
         {trend && (

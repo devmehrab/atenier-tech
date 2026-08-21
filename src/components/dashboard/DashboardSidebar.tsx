@@ -48,25 +48,25 @@ export const getDashboardNavigation = (isOwnerOrAdmin: boolean) => [
   },
   ...(isOwnerOrAdmin
     ? [
-        {
-          name: "Team & Agents",
-          href: "/dashboard/team",
-          icon: Users,
-          exact: true,
-        },
-        {
-          name: "Agency Branding",
-          href: "/dashboard/profile",
-          icon: Building,
-          exact: true,
-        },
-        {
-          name: "Settings",
-          href: "/dashboard/settings",
-          icon: Settings,
-          exact: true,
-        },
-      ]
+      {
+        name: "Team & Agents",
+        href: "/dashboard/team",
+        icon: Users,
+        exact: true,
+      },
+      {
+        name: "Agency Branding",
+        href: "/dashboard/profile",
+        icon: Building,
+        exact: true,
+      },
+      {
+        name: "Settings",
+        href: "/dashboard/settings",
+        icon: Settings,
+        exact: true,
+      },
+    ]
     : []),
 ];
 
@@ -94,14 +94,14 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
             </div>
           </div>
 
-          {/* Public Storefront Link Button */}
+          {/* Public Website Link Button */}
           {user.organizationSlug && (
             <Link
               href={`/${user.organizationSlug}`}
               target="_blank"
               className="mt-3 flex items-center justify-center gap-1.5 w-full rounded-lg border border-border bg-muted/40 px-3 py-1.5 text-xs font-semibold text-card-foreground hover:bg-muted hover:text-primary transition-colors"
             >
-              <span>View Public Storefront</span>
+              <span>View Public Website</span>
               <ExternalLink className="h-3.5 w-3.5" />
             </Link>
           )}

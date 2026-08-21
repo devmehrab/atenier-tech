@@ -24,7 +24,7 @@ export default async function SystemAdminOverviewPage() {
             <ShieldAlert className="h-3.5 w-3.5" />
             Global Platform Admin
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-neutral-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-neutral-900">
             System Administration Console
           </h1>
           <p className="text-sm text-neutral-500 mt-1">

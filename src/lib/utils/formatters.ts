@@ -1,27 +1,34 @@
 export function formatPrice(
   amount: number,
-  currency: string = "USD",
+  currency: string = "BDT",
   period?: "MONTHLY" | "YEARLY"
 ): string {
-  if (amount === undefined || amount === null) return "$0";
+  if (amount === undefined || amount === null) return "৳0";
 
-  const formatted = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: currency.toUpperCase() === "BDT" ? "BDT" : currency.toUpperCase() === "EUR" ? "EUR" : currency.toUpperCase() === "GBP" ? "GBP" : "USD",
-    maximumFractionDigits: 0,
-  }).format(amount);
+  const curr = (currency || "BDT").toUpperCase();
+  const locale = curr === "BDT" ? "en-BD" : "en-US";
 
-  if (period) {
-    const periodLabel = period === "MONTHLY" ? "/mo" : "/yr";
-    return `${formatted}${periodLabel}`;
+  try {
+    const formatted = new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency: curr,
+      maximumFractionDigits: 0,
+    }).format(amount);
+
+    if (period) {
+      const periodLabel = period === "MONTHLY" ? "/mo" : "/yr";
+      return `${formatted}${periodLabel}`;
+    }
+
+    return formatted;
+  } catch {
+    return `${curr} ${amount.toLocaleString()}${period ? (period === "MONTHLY" ? "/mo" : "/yr") : ""}`;
   }
-
-  return formatted;
 }
 
 export function formatArea(
   value: number,
-  unit: "sqft" | "sqm" | "katha" | "acre" = "sqft"
+  unit: "sqft" | "sqm" | "katha" | "acre" | "decimal" | "bigha" = "sqft"
 ): string {
   if (!value) return "0 sq ft";
   const formattedNum = new Intl.NumberFormat("en-US").format(value);
@@ -32,6 +39,10 @@ export function formatArea(
       return `${formattedNum} m²`;
     case "katha":
       return `${formattedNum} Katha`;
+    case "decimal":
+      return `${formattedNum} Decimal`;
+    case "bigha":
+      return `${formattedNum} Bigha`;
     case "acre":
       return `${formattedNum} Acres`;
     default:

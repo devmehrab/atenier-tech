@@ -46,10 +46,10 @@ export default function LoginPage() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-extrabold text-foreground tracking-tight">
+        <h2 className="text-2xl font-extrabold text-foreground">
           এজেন্সি পোর্টালে লগইন
         </h2>
-        <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed">
+        <p className="mt-1.5 text-xs text-muted-foreground">
           আপনার রিয়েল এস্টেট এজেন্সি ড্যাশবোর্ড, প্রপার্টি লিস্টিং ও লিড ম্যানেজমেন্টে প্রবেশ করুন
         </p>
       </div>
@@ -99,7 +99,7 @@ export default function LoginPage() {
 
       {/* Quick Demo Logins Section */}
       <div className="pt-5 border-t border-border/50">
-        <span className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground text-center mb-3">
+        <span className="block text-[11px] font-bold uppercase text-muted-foreground text-center mb-3">
           ১-ক্লিকে টেস্ট ডেমো অ্যাকাউন্ট লগইন
         </span>
         <div className="grid grid-cols-2 gap-2.5 text-xs">

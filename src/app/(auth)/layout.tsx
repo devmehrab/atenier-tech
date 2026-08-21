@@ -19,7 +19,7 @@ export default function AuthLayout({
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground font-bold shadow-md group-hover:scale-105 transition-transform">
             <Building2 className="h-6 w-6" />
           </div>
-          <span className="text-2xl font-extrabold tracking-tight text-foreground">
+          <span className="text-2xl font-extrabold text-foreground">
             <span className="text-primary">ATENIER</span>
           </span>
         </Link>

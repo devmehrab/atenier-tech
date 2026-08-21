@@ -44,16 +44,16 @@ export function TenantHero({ organization }: TenantHeroProps) {
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 py-20 text-center sm:px-6 lg:px-8">
-        <div className="inline-flex items-center gap-2 rounded-full bg-muted/80 px-4 py-1.5 text-xs font-semibold tracking-wide uppercase text-primary backdrop-blur-md border border-border/50 mb-6">
-          <span>Official Real Estate Storefront</span>
+        <div className="inline-flex items-center gap-2 rounded-full bg-muted/80 px-4 py-1.5 text-xs font-semibold uppercase text-primary backdrop-blur-md border border-border/50 mb-6">
+          <span>Official Real Estate Website</span>
         </div>
 
-        <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-foreground drop-shadow-sm max-w-4xl mx-auto leading-tight">
+        <h1 className="text-4xl font-extrabold sm:text-5xl lg:text-6xl text-foreground drop-shadow-sm max-w-4xl mx-auto">
           Find Your Dream Property with{" "}
           <span className="text-primary">{organization.name}</span>
         </h1>
 
-        <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
           {organization.description ||
             `Browse premier residential apartments, luxury villas, and prime commercial developments curated by ${organization.name}.`}
         </p>
@@ -65,33 +65,30 @@ export function TenantHero({ organization }: TenantHeroProps) {
             <button
               type="button"
               onClick={() => setListingType("ALL")}
-              className={`rounded-lg px-4 py-1.5 text-xs font-bold transition-all ${
-                listingType === "ALL"
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "text-muted-foreground hover:bg-muted"
-              }`}
+              className={`rounded-lg px-4 py-1.5 text-xs font-bold transition-all ${listingType === "ALL"
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "text-muted-foreground hover:bg-muted"
+                }`}
             >
               All Listings
             </button>
             <button
               type="button"
               onClick={() => setListingType("SALE")}
-              className={`rounded-lg px-4 py-1.5 text-xs font-bold transition-all ${
-                listingType === "SALE"
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "text-muted-foreground hover:bg-muted"
-              }`}
+              className={`rounded-lg px-4 py-1.5 text-xs font-bold transition-all ${listingType === "SALE"
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "text-muted-foreground hover:bg-muted"
+                }`}
             >
               Buy
             </button>
             <button
               type="button"
               onClick={() => setListingType("RENT")}
-              className={`rounded-lg px-4 py-1.5 text-xs font-bold transition-all ${
-                listingType === "RENT"
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "text-muted-foreground hover:bg-muted"
-              }`}
+              className={`rounded-lg px-4 py-1.5 text-xs font-bold transition-all ${listingType === "RENT"
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "text-muted-foreground hover:bg-muted"
+                }`}
             >
               Rent
             </button>

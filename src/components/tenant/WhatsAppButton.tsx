@@ -28,7 +28,7 @@ export function WhatsAppButton({
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full bg-primary px-5 py-3.5 text-sm font-bold text-primary-foreground shadow-2xl transition-all hover:bg-primary/90 hover:scale-105"
+        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full bg-primary px-3.5 md:px-5 py-3.5 text-sm font-bold text-primary-foreground shadow-2xl transition-all hover:bg-primary/90 hover:scale-105"
         aria-label="Chat on WhatsApp"
       >
         <MessageSquare className="h-5 w-5" />

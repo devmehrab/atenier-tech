@@ -23,11 +23,11 @@ export default async function DashboardLeadsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground">
           Inquiries & Buyer Leads
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
-          Direct messages and viewing inquiries received from your public storefront ({leads.length} total)
+          Direct messages and viewing inquiries received from your public website ({leads.length} total)
         </p>
       </div>
 
@@ -38,7 +38,7 @@ export default async function DashboardLeadsPage() {
           </div>
           <h3 className="text-base font-bold text-card-foreground">No leads received yet</h3>
           <p className="text-xs text-muted-foreground max-w-sm mt-1">
-            When visitors inquire about your properties on your public storefront, their contact info and messages will appear here.
+            When visitors inquire about your properties on your public website, their contact info and messages will appear here.
           </p>
         </div>
       ) : (
@@ -88,7 +88,7 @@ export default async function DashboardLeadsPage() {
                   </TableCell>
 
                   <TableCell className="max-w-md">
-                    <p className="text-xs text-card-foreground line-clamp-3 leading-relaxed">
+                    <p className="text-xs text-card-foreground line-clamp-3">
                       {lead.message}
                     </p>
                   </TableCell>

@@ -71,7 +71,7 @@ export function AgentCard({ agent, organization }: AgentCardProps) {
             className="flex items-center justify-center gap-2 w-full rounded-xl border border-border/60 bg-muted/50 py-2 px-4 text-xs font-medium text-muted-foreground hover:bg-muted transition-colors"
           >
             <Mail className="h-3.5 w-3.5" />
-            Email Agent
+            Email Us
           </a>
         )}
       </div>

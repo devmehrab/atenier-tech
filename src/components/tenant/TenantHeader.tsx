@@ -37,7 +37,7 @@ export function TenantHeader({ organization }: TenantHeaderProps) {
               </div>
             )}
             <div>
-              <h1 className="text-xl font-bold tracking-tight text-foreground leading-tight">
+              <h1 className="text-xl font-bold text-foreground">
                 {organization.name}
               </h1>
               {organization.branding?.tagline && (

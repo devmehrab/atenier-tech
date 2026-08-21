@@ -30,7 +30,7 @@ export default async function SystemAdminOrgsPage({
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-neutral-900 tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-neutral-900">
           Agencies & Organizations
         </h1>
         <p className="text-sm text-neutral-500 mt-1">

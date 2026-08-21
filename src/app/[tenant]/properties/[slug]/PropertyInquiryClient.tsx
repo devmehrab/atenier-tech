@@ -27,8 +27,8 @@ export function PropertyInquiryClient({
   const cleanWhatsApp = whatsapp?.replace(/[^0-9]/g, "");
   const whatsappUrl = cleanWhatsApp
     ? `https://wa.me/${cleanWhatsApp}?text=${encodeURIComponent(
-        `Hello ${organizationName}, I am inquiring about "${propertyTitle}". Is it still available?`
-      )}`
+      `Hello ${organizationName}, I am inquiring about "${propertyTitle}". Is it still available?`
+    )}`
     : null;
 
   return (
@@ -37,7 +37,7 @@ export function PropertyInquiryClient({
         <h3 className="text-base font-bold text-card-foreground">
           Interested in this property?
         </h3>
-        <p className="text-xs text-muted-foreground leading-relaxed">
+        <p className="text-xs text-muted-foreground">
           Request a private tour or direct consultation with the listing agent.
         </p>
 

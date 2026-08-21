@@ -1,10 +1,12 @@
+import React, { Suspense } from "react";
 import Link from "next/link";
 import { requireOrganizationAccess } from "@/lib/auth/guards";
 import { listProperties } from "@/lib/services/property.service";
 import { PropertyTable } from "@/components/dashboard/PropertyTable";
+import { PropertySearchBar } from "@/components/dashboard/PropertySearchBar";
 import { Pagination } from "@/components/shared/Pagination";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, Search, Filter } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import { PropertyStatus } from "@/lib/types";
 
 interface PropertiesPageProps {
@@ -50,7 +52,7 @@ export default async function DashboardPropertiesPage({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground">
             Property Listings
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
@@ -81,8 +83,8 @@ export default async function DashboardPropertiesPage({
                 key={sf.label}
                 href={href}
                 className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${isActive
-                    ? "bg-primary text-primary-foreground shadow-sm"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   }`}
               >
                 {sf.label}
@@ -91,20 +93,10 @@ export default async function DashboardPropertiesPage({
           })}
         </div>
 
-        {/* Keyword Search */}
-        <form className="relative flex-1 sm:max-w-xs">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <input
-            type="text"
-            name="search"
-            defaultValue={search}
-            placeholder="Search by title, location..."
-            className="w-full h-9 pl-9 pr-3 rounded-lg border border-input bg-background text-foreground text-xs placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-          />
-          {currentStatus && (
-            <input type="hidden" name="status" value={currentStatus} />
-          )}
-        </form>
+        {/* Live Debounced Search Bar */}
+        <Suspense fallback={<div className="h-9 w-full sm:max-w-xs rounded-lg bg-muted animate-pulse" />}>
+          <PropertySearchBar placeholder="Search by title, location, area..." />
+        </Suspense>
       </div>
 
       {/* Table */}

@@ -24,11 +24,11 @@ export default async function EditPropertyPage({ params }: EditPropertyPageProps
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
-          Edit Property: {property.title}
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground">
+          প্রপার্টি সম্পাদনা করুন: {property.title}
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
-          Update specifications, pricing, imagery, and listing status
+          স্পেসিফিকেশন, মূল্য, সুযোগ-সুবিধা, ছবি এবং লিস্টিং স্ট্যাটাস আপডেট করুন
         </p>
       </div>
 
