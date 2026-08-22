@@ -95,12 +95,15 @@ export function generateBrochureHtml({
     }
 
     .brochure-container {
-      max-width: 800px;
+      width: 794px;
+      min-width: 794px;
+      max-width: 794px;
       margin: 0 auto;
       background: #ffffff;
       padding: 24px;
       border: 1px solid #e2e8f0;
       border-radius: 16px;
+      box-sizing: border-box;
     }
 
     @media print {
@@ -491,7 +494,7 @@ export function generateBrochureHtml({
       <div class="agency-branding">
         ${
           logoUrl
-            ? `<img src="${escapeHtml(logoUrl)}" alt="${escapeHtml(orgName)}" class="agency-logo" />`
+            ? `<img src="${escapeHtml(logoUrl)}" alt="${escapeHtml(orgName)}" class="agency-logo" crossorigin="anonymous" />`
             : `<div class="agency-logo-placeholder">${escapeHtml(orgName.charAt(0))}</div>`
         }
         <div>
@@ -534,7 +537,7 @@ export function generateBrochureHtml({
     <!-- Image Showcase -->
     <div class="image-showcase">
       <div class="main-image-wrapper">
-        <img src="${escapeHtml(mainImage)}" alt="${escapeHtml(property.title)}" />
+        <img src="${escapeHtml(mainImage)}" alt="${escapeHtml(property.title)}" crossorigin="anonymous" />
       </div>
       ${
         galleryImages.length > 0
@@ -542,7 +545,7 @@ export function generateBrochureHtml({
               ${galleryImages
                 .map(
                   (img) =>
-                    `<div class="gallery-item"><img src="${escapeHtml(img.secureUrl)}" alt="${escapeHtml(property.title)}" /></div>`
+                    `<div class="gallery-item"><img src="${escapeHtml(img.secureUrl)}" alt="${escapeHtml(property.title)}" crossorigin="anonymous" /></div>`
                 )
                 .join("")}
             </div>`
@@ -627,7 +630,7 @@ export function generateBrochureHtml({
       <div class="agent-profile">
         ${
           agent?.avatar
-            ? `<img src="${escapeHtml(agent.avatar)}" alt="${escapeHtml(agent.name || "Agent")}" class="agent-avatar" />`
+            ? `<img src="${escapeHtml(agent.avatar)}" alt="${escapeHtml(agent.name || "Agent")}" class="agent-avatar" crossorigin="anonymous" />`
             : `<div class="agent-avatar-placeholder">${escapeHtml((agent?.name || orgName).charAt(0))}</div>`
         }
         <div>

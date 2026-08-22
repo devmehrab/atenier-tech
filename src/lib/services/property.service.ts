@@ -8,6 +8,7 @@ import {
   IPropertyFilterParams,
   ISessionUser,
   PropertyStatus,
+  PropertyType,
 } from "@/lib/types";
 import { slugify, generateRandomSuffix } from "@/lib/utils/slugify";
 import { PropertyFormValues } from "@/lib/validations/property";
@@ -450,3 +451,39 @@ export async function getDashboardStats(organizationId: string) {
     })),
   };
 }
+
+/**
+ * Returns the list of property types that actually have published properties for an organization,
+ * along with the count of properties for each type.
+ */
+export async function getAvailablePropertyTypesForOrganization(
+  organizationId: string
+): Promise<{ propertyType: PropertyType; count: number }[]> {
+  await connectToDatabase();
+  const orgObjectId = new mongoose.Types.ObjectId(organizationId);
+
+  const results = await Property.aggregate([
+    {
+      $match: {
+        organizationId: orgObjectId,
+        status: "PUBLISHED",
+        propertyType: { $exists: true, $ne: null },
+      },
+    },
+    {
+      $group: {
+        _id: "$propertyType",
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $sort: { count: -1 },
+    },
+  ]);
+
+  return results.map((r) => ({
+    propertyType: r._id as PropertyType,
+    count: r.count as number,
+  }));
+}
+

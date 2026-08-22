@@ -6,7 +6,7 @@ import { PropertyTable } from "@/components/dashboard/PropertyTable";
 import { PropertySearchBar } from "@/components/dashboard/PropertySearchBar";
 import { Pagination } from "@/components/shared/Pagination";
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, Sparkles } from "lucide-react";
 import { PropertyStatus } from "@/lib/types";
 
 interface PropertiesPageProps {
@@ -60,12 +60,21 @@ export default async function DashboardPropertiesPage({
           </p>
         </div>
 
-        <Link href="/dashboard/properties/new">
-          <Button className="gap-1.5 shadow-sm">
-            <PlusCircle className="h-4 w-4" />
-            Add New Property
-          </Button>
-        </Link>
+        <div className="flex items-center gap-2.5">
+          <Link href="/dashboard/properties/import">
+            <Button variant="outline" className="gap-1.5 shadow-sm border-primary/30 text-primary hover:bg-primary/5">
+              <Sparkles className="h-4 w-4" />
+              <span>AI Bulk Import</span>
+            </Button>
+          </Link>
+
+          <Link href="/dashboard/properties/new">
+            <Button className="gap-1.5 shadow-sm">
+              <PlusCircle className="h-4 w-4" />
+              <span>Add New Property</span>
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {/* Filters and Search Bar */}

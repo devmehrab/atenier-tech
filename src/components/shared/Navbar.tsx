@@ -115,30 +115,37 @@ export function Navbar({ user }: NavbarProps) {
             </div>
           ) : (
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="sm" className="font-medium hover:text-primary rounded-full">
-
-                <Link href="/login">লগইন
-                </Link>
-              </Button>
-              <Button size="sm" className="shadow-sm rounded-full font-medium px-5">
-                <Link href="/register-organization">
+              <Link href="/login">
+                <Button variant="ghost" size="sm" className="font-medium hover:text-primary rounded-full">
+                  লগইন
+                </Button>
+              </Link>
+              <Link href="/register-organization">
+                <Button size="sm" className="shadow-sm rounded-full font-medium px-5">
                   এজেন্সি ওয়েবসাইট শুরু করুন
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </div>
           )}
         </div>
 
-        {/* Mobile menu trigger */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden p-2 text-muted-foreground hover:text-primary flex items-center gap-2 transition-colors"
-          aria-label="Toggle Navigation"
-        >
+        {/* Mobile Actions */}
+        <div className="flex md:hidden items-center gap-1.5">
           <ThemeToggle />
-
-          {mobileOpen ? <X className="h-6 w-6 stroke-[1.5]" /> : <Menu className="h-6 w-6 stroke-[1.5]" />}
-        </button>
+          <button
+            type="button"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-full transition-colors focus:outline-none"
+            aria-label={mobileOpen ? "মেনু বন্ধ করুন" : "মেনু খুলুন"}
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? (
+              <X className="h-6 w-6 stroke-[1.5]" />
+            ) : (
+              <Menu className="h-6 w-6 stroke-[1.5]" />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Drawer */}

@@ -4,13 +4,20 @@ import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { IProperty, IOrganization, IUser } from "@/lib/types";
 import { generateBrochureHtml } from "./generateBrochureHtml";
+import { downloadBrochurePdf } from "./generateBrochurePdf";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/toast";
 import {
   FileText,
+  Download,
   Printer,
   Loader2,
   X,
+  ZoomIn,
+  ZoomOut,
+  Maximize2,
   CheckCircle2,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 
@@ -36,13 +43,32 @@ export function BrochureDownloadButton({
   showIcon = true,
 }: BrochureDownloadButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [containerWidth, setContainerWidth] = useState(800);
+  const [zoomLevel, setZoomLevel] = useState<number | null>(null); // null = auto-fit
+  const previewContainerRef = useRef<HTMLDivElement | null>(null);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const { success, error: toastError } = useToast();
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Update container width for responsive scaling
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const updateDimensions = () => {
+      if (previewContainerRef.current) {
+        setContainerWidth(previewContainerRef.current.clientWidth);
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, [isOpen]);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -50,6 +76,7 @@ export function BrochureDownloadButton({
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
+      setZoomLevel(null);
     }
     return () => {
       document.body.style.overflow = "";
@@ -76,122 +103,226 @@ export function BrochureDownloadButton({
     });
   };
 
-  const handleDirectPrintOrSave = () => {
-    setIsGenerating(true);
+  // Base A4 dimensions in px (210mm x 297mm at 96 DPI)
+  const A4_WIDTH = 794;
+  const A4_HEIGHT = 1123;
+
+  // Compute responsive fit scale
+  const autoScale = Math.min(1, Math.max(0.32, (containerWidth - 32) / A4_WIDTH));
+  const activeScale = zoomLevel !== null ? zoomLevel : autoScale;
+
+  const handleDownloadPdf = async () => {
+    setIsDownloading(true);
 
     try {
-      const html = getHtml();
+      await downloadBrochurePdf({
+        property,
+        organization,
+        agent,
+        publicUrl: typeof window !== "undefined" ? window.location.href : "",
+      });
 
-      // Create or reuse hidden iframe
-      let iframe = iframeRef.current;
-      if (!iframe) {
-        iframe = document.createElement("iframe");
-        iframe.style.position = "fixed";
-        iframe.style.right = "0";
-        iframe.style.bottom = "0";
-        iframe.style.width = "0";
-        iframe.style.height = "0";
-        iframe.style.border = "0";
-        iframe.style.visibility = "hidden";
-        document.body.appendChild(iframe);
-        iframeRef.current = iframe;
-      }
-
-      const doc = iframe.contentWindow?.document;
-      if (doc) {
-        doc.open();
-        doc.write(html);
-        doc.close();
-
-        // Allow images & fonts to load before triggering print
-        setTimeout(() => {
-          setIsGenerating(false);
-          iframe?.contentWindow?.focus();
-          iframe?.contentWindow?.print();
-        }, 500);
-      } else {
-        setIsGenerating(false);
-      }
+      success("ব্রোশিওর PDF সফলভাবে ডাউনলোড হয়েছে!");
     } catch (err) {
-      console.error("Failed to generate brochure:", err);
-      setIsGenerating(false);
+      console.error("PDF generation error:", err);
+      toastError("PDF ডাউনলোড করতে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।");
+    } finally {
+      setIsDownloading(false);
     }
   };
 
-  const handleOpenPreview = () => {
-    setIsOpen(true);
+  const handlePrint = () => {
+    const iframe = iframeRef.current;
+    if (iframe?.contentWindow) {
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+    }
+  };
+
+  const handleZoomIn = () => {
+    setZoomLevel((prev) => {
+      const current = prev !== null ? prev : autoScale;
+      return Math.min(1.2, +(current + 0.15).toFixed(2));
+    });
+  };
+
+  const handleZoomOut = () => {
+    setZoomLevel((prev) => {
+      const current = prev !== null ? prev : autoScale;
+      return Math.max(0.35, +(current - 0.15).toFixed(2));
+    });
+  };
+
+  const handleResetZoom = () => {
+    setZoomLevel(null);
   };
 
   const modalContent = isOpen && mounted ? (
     <div className="fixed inset-0 z-[99999] flex items-center justify-center p-2 sm:p-4 md:p-6 animate-in fade-in duration-200">
       <div
-        className="fixed inset-0 bg-black/70 backdrop-blur-sm"
+        className="fixed inset-0 bg-black/75 backdrop-blur-sm"
         onClick={() => setIsOpen(false)}
       />
 
-      <div className="relative z-10 flex flex-col h-[92vh] max-h-[950px] w-full max-w-4xl overflow-hidden rounded-2xl bg-card border border-border/80 shadow-2xl animate-in zoom-in-95 duration-200">
+      <div className="relative z-10 flex flex-col h-[94vh] max-h-[960px] w-full max-w-5xl overflow-hidden rounded-2xl bg-card border border-border/80 shadow-2xl animate-in zoom-in-95 duration-200">
         {/* Modal Top Bar */}
-        <div className="flex items-center justify-between border-b border-border/60 bg-muted/40 px-4 py-3 sm:px-6">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 bg-muted/50 px-4 py-3 sm:px-6">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
-              <FileText className="h-4 w-4" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-sm">
+              <FileText className="h-5 w-5" />
             </div>
             <div>
               <h3 className="text-sm sm:text-base font-bold text-foreground line-clamp-1">
-                Property Brochure Preview
+                Executive Property Brochure
               </h3>
               <p className="text-xs text-muted-foreground hidden sm:block">
-                Ready to save as PDF or print
+                A4 Printable Layout • Powered by Atenier PDF Engine
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Zoom controls for mobile & desktop */}
+            <div className="hidden sm:flex items-center rounded-lg border border-border/70 bg-card p-0.5 text-xs">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleZoomOut}
+                disabled={activeScale <= 0.4}
+                className="h-7 w-7 rounded-md"
+                title="Zoom Out"
+              >
+                <ZoomOut className="h-3.5 w-3.5" />
+              </Button>
+              <button
+                type="button"
+                onClick={handleResetZoom}
+                className="px-2 py-1 font-mono text-[11px] font-medium text-muted-foreground hover:text-foreground"
+                title="Fit to window"
+              >
+                {Math.round(activeScale * 100)}%
+              </button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleZoomIn}
+                disabled={activeScale >= 1.2}
+                className="h-7 w-7 rounded-md"
+                title="Zoom In"
+              >
+                <ZoomIn className="h-3.5 w-3.5" />
+              </Button>
+            </div>
+
+            {/* Direct Print (Desktop) */}
             <Button
+              variant="outline"
               size="sm"
-              onClick={handleDirectPrintOrSave}
-              disabled={isGenerating}
-              className="gap-1.5 shadow-sm font-medium"
+              onClick={handlePrint}
+              className="hidden md:flex gap-1.5 shadow-sm font-medium h-9"
+              title="Browser Print"
             >
-              {isGenerating ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Printer className="h-4 w-4" />
-              )}
-              <span>Print / Save PDF</span>
+              <Printer className="h-4 w-4" />
+              <span>Print</span>
             </Button>
 
+            {/* Primary Download PDF Button */}
+            <Button
+              size="sm"
+              onClick={handleDownloadPdf}
+              disabled={isDownloading}
+              className="gap-2 shadow-md font-semibold h-9 px-4 bg-primary text-primary-foreground hover:bg-primary/90"
+            >
+              {isDownloading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Download className="h-4 w-4" />
+              )}
+              <span>{isDownloading ? "Generating PDF..." : "Download PDF"}</span>
+            </Button>
+
+            {/* Close */}
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(false)}
-              className="h-8 w-8 rounded-lg text-muted-foreground hover:text-foreground"
+              className="h-9 w-9 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted"
             >
-              <X className="h-4 w-4" />
+              <X className="h-5 w-5" />
             </Button>
           </div>
         </div>
 
-        {/* Modal Body / Iframe Preview */}
-        <div className="flex-1 overflow-y-auto bg-neutral-100 p-2 sm:p-6 dark:bg-neutral-900/50">
-          <div className="mx-auto max-w-[800px] overflow-hidden rounded-xl bg-white shadow-xl border border-neutral-200">
+        {/* Modal Body / Responsive Scaled A4 Preview */}
+        <div
+          ref={previewContainerRef}
+          className="flex-1 overflow-y-auto overflow-x-auto bg-neutral-200/70 p-3 sm:p-6 dark:bg-neutral-950/80 flex flex-col items-center"
+        >
+          {/* Scaled A4 Document Container */}
+          <div
+            className="transition-transform duration-200 ease-out origin-top shadow-2xl rounded-xl bg-white border border-neutral-300 dark:border-neutral-800"
+            style={{
+              width: `${A4_WIDTH}px`,
+              height: `${A4_HEIGHT}px`,
+              transform: `scale(${activeScale})`,
+              transformOrigin: "top center",
+              marginBottom: `${Math.max(0, A4_HEIGHT * (activeScale - 1))}px`,
+            }}
+          >
             <iframe
+              ref={iframeRef}
               title="Brochure Preview"
               srcDoc={getHtml()}
-              className="w-full min-h-[900px] border-0"
-              style={{ height: "1050px" }}
+              className="w-full h-full border-0 rounded-xl"
+              style={{
+                width: "100%",
+                height: "100%",
+                backgroundColor: "#ffffff",
+              }}
             />
           </div>
         </div>
 
-        {/* Modal Footer Note */}
-        <div className="border-t border-border/60 bg-card px-4 py-2.5 sm:px-6 flex items-center justify-between text-xs text-muted-foreground font-sans">
+        {/* Modal Footer */}
+        <div className="border-t border-border/60 bg-card px-4 py-3 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground font-sans">
           <div className="flex items-center gap-1.5">
-            <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
-            <span>Executive A4 Format with High-Resolution Imagery</span>
+            <CheckCircle2 className="h-4 w-4 text-primary shrink-0" />
+            <span>High-resolution A4 PDF ready to share with clients via WhatsApp or Email</span>
           </div>
-          <div className="hidden sm:block">
-            Choose <strong className="text-foreground">&quot;Save as PDF&quot;</strong> in your print dialog destination
+
+          <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+            <div className="flex sm:hidden items-center gap-1">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleZoomOut}
+                className="h-8 px-2 text-xs"
+              >
+                <ZoomOut className="h-3 w-3 mr-1" /> Zoom -
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleZoomIn}
+                className="h-8 px-2 text-xs"
+              >
+                <ZoomIn className="h-3 w-3 mr-1" /> Zoom +
+              </Button>
+            </div>
+
+            <Button
+              size="sm"
+              onClick={handleDownloadPdf}
+              disabled={isDownloading}
+              className="sm:hidden gap-1.5 h-8 text-xs font-semibold"
+            >
+              {isDownloading ? (
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              ) : (
+                <Download className="h-3.5 w-3.5" />
+              )}
+              Download PDF
+            </Button>
           </div>
         </div>
       </div>
@@ -203,10 +334,10 @@ export function BrochureDownloadButton({
       <Button
         variant={variant}
         size={size}
-        onClick={handleOpenPreview}
+        onClick={() => setIsOpen(true)}
         className={cn("gap-2 shadow-sm font-semibold transition-all", className)}
       >
-        {isGenerating ? (
+        {isDownloading ? (
           <Loader2 className="h-4 w-4 animate-spin" />
         ) : showIcon ? (
           <FileText className="h-4 w-4 text-primary shrink-0" />

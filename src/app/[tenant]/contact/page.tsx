@@ -37,7 +37,7 @@ export default async function TenantContactPage({ params }: TenantContactPagePro
             যোগাযোগ
           </span>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground">
-            আমরা আছি <span className="text-primary italic font-light">আপনার অপেক্ষায়</span>
+            আমরা আছি <span className="text-primary font-semibold">আপনার অপেক্ষায়</span>
           </h1>
           <p className="text-base text-muted-foreground mt-5 font-light">
             আপনার স্বপ্নের প্রপার্টি কেনা, বেচা কিংবা লিজ নেওয়ার বিষয়ে যেকোনো তথ্যের জন্য আমাদের সাথে সরাসরি যোগাযোগ করুন। আমাদের অভিজ্ঞ প্রতিনিধিরা আপনাকে সাহায্য করতে সর্বদা প্রস্তুত।

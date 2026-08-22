@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getOrganizationBySlug } from "@/lib/services/organization.service";
-import { listProperties } from "@/lib/services/property.service";
+import {
+  listProperties,
+  getAvailablePropertyTypesForOrganization,
+} from "@/lib/services/property.service";
 import { listTeamMembers } from "@/lib/services/user.service";
 import { TenantHero } from "@/components/tenant/TenantHero";
 import { PropertyGrid } from "@/components/tenant/PropertyGrid";
@@ -9,8 +12,10 @@ import { AgentCard } from "@/components/tenant/AgentCard";
 import { WhatsAppButton } from "@/components/tenant/WhatsAppButton";
 import { Button } from "@/components/ui/button";
 import { FadeIn, SlideUp, StaggerContainer, StaggerItem } from "@/components/motion";
+import { PropertyType } from "@/lib/types";
 import {
   Building2,
+  Building,
   Home,
   ShieldCheck,
   Award,
@@ -18,7 +23,57 @@ import {
   MapPin,
   Phone,
   Mail,
+  Sparkles,
+  Store,
+  Briefcase,
+  Trees,
 } from "lucide-react";
+
+const PROPERTY_TYPE_META: Record<
+  string,
+  { name: string; subtitle: string; icon: React.ComponentType<{ className?: string }> }
+> = {
+  APARTMENT: {
+    name: "ফ্ল্যাট ও অ্যাপার্টমেন্ট",
+    subtitle: "রেসিডেনশিয়াল ইউনিট",
+    icon: Building2,
+  },
+  HOUSE: {
+    name: "বাড়ি ও আবাসিক ভবন",
+    subtitle: "ফ্যামিলি লিভিং",
+    icon: Home,
+  },
+  VILLA: {
+    name: "লাক্সারি ভিলা ও ডুপ্লেক্স",
+    subtitle: "প্রিমিয়াম লাইফস্টাইল",
+    icon: Sparkles,
+  },
+  PENTHOUSE: {
+    name: "লাক্সারি পেন্টহাউস",
+    subtitle: "টপ ফ্লোর লাক্সারি",
+    icon: Building,
+  },
+  COMMERCIAL: {
+    name: "বাণিজ্যিক ও শপ স্পেস",
+    subtitle: "বিজনেস ও ইনভেস্টমেন্ট",
+    icon: Store,
+  },
+  OFFICE: {
+    name: "অফিস ও কর্পোরেট স্পেস",
+    subtitle: "প্রফেশনাল স্পেস",
+    icon: Briefcase,
+  },
+  LAND: {
+    name: "জমি ও প্লট",
+    subtitle: "ডেভেলপমেন্ট ও ইনভেস্টমেন্ট",
+    icon: Trees,
+  },
+  TOWNHOUSE: {
+    name: "টাউনহাউস",
+    subtitle: "মডার্ন কমিউনিটি লিভিং",
+    icon: Home,
+  },
+};
 
 interface TenantHomePageProps {
   params: Promise<{ tenant: string }>;
@@ -32,8 +87,12 @@ export default async function TenantHomePage({ params }: TenantHomePageProps) {
     notFound();
   }
 
-  // Fetch featured properties and latest properties strictly scoped to this tenant
-  const [{ properties: featured }, { properties: latest }] = await Promise.all([
+  // Fetch featured properties, latest properties, and available categories strictly scoped to this tenant
+  const [
+    { properties: featured },
+    { properties: latest },
+    availableCategoriesData,
+  ] = await Promise.all([
     listProperties(
       { limit: 3, status: "PUBLISHED" },
       organization._id
@@ -42,14 +101,23 @@ export default async function TenantHomePage({ params }: TenantHomePageProps) {
       { limit: 6, status: "PUBLISHED", sortBy: "newest" },
       organization._id
     ),
+    getAvailablePropertyTypesForOrganization(organization._id),
   ]);
 
-  const categories = [
-    { name: "ফ্ল্যাট ও অ্যাপার্টমেন্ট", type: "APARTMENT", count: "রেসিডেনশিয়াল ইউনিট" },
-    { name: "বাড়ি ও ডুপ্লেক্স ভিলা", type: "HOUSE", count: "ফ্যামিলি লিভিং" },
-    { name: "কমার্শিয়াল ও অফিস স্পেস", type: "COMMERCIAL", count: "বিজনেস স্পেস" },
-    { name: "লাক্সারি পেন্টহাউস", type: "PENTHOUSE", count: "প্রিমিয়াম লাইফস্টাইল" },
-  ];
+  const categories = availableCategoriesData.map((item) => {
+    const meta = PROPERTY_TYPE_META[item.propertyType] || {
+      name: item.propertyType,
+      subtitle: "প্রপার্টি লিস্টিং",
+      icon: Home,
+    };
+    return {
+      type: item.propertyType,
+      name: meta.name,
+      subtitle: meta.subtitle,
+      count: item.count,
+      icon: meta.icon,
+    };
+  });
 
   return (
     <div className="space-y-16 pb-16">
@@ -90,40 +158,53 @@ export default async function TenantHomePage({ params }: TenantHomePageProps) {
         </section>
       )}
 
-      {/* Property Categories Quick Browse */}
-      <section className="bg-muted/30 py-16 border-y border-border/50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SlideUp>
-            <div className="text-center max-w-2xl mx-auto mb-10">
-              <span className="text-xs font-bold uppercase text-primary">
-                ক্যাটাগরি অনুযায়ী প্রপার্টি
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground mt-1">
-                আপনার পছন্দের ধরন বেছে নিন
-              </h2>
-            </div>
-          </SlideUp>
+      {/* Property Categories Quick Browse - Dynamic based on agency's available listings */}
+      {categories.length > 0 && (
+        <section className="bg-muted/30 py-16 border-y border-border/50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <SlideUp>
+              <div className="text-center max-w-2xl mx-auto mb-10">
+                <span className="text-xs font-bold uppercase text-primary">
+                  ক্যাটাগরি অনুযায়ী প্রপার্টি
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground mt-1">
+                  আপনার পছন্দের ধরন বেছে নিন
+                </h2>
+              </div>
+            </SlideUp>
 
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" staggerDelay={0.08}>
-            {categories.map((cat) => (
-              <StaggerItem key={cat.type}>
-                <Link
-                  href={`/${organization.slug}/properties?propertyType=${cat.type}`}
-                  className="group block rounded-2xl border border-border/60 bg-card p-6 shadow-sm transition-all duration-300 hover:border-primary hover:shadow-md hover:-translate-y-0.5 h-full"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                    <Home className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-base font-bold text-card-foreground group-hover:text-primary transition-colors">
-                    {cat.name}
-                  </h3>
-                  <p className="mt-1 text-xs text-muted-foreground">{cat.count}</p>
-                </Link>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        </div>
-      </section>
+            <StaggerContainer
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+              staggerDelay={0.08}
+            >
+              {categories.map((cat) => {
+                const IconComponent = cat.icon;
+                return (
+                  <StaggerItem key={cat.type}>
+                    <Link
+                      href={`/${organization.slug}/properties?propertyType=${cat.type}`}
+                      className="group block rounded-2xl border border-border/60 bg-card p-6 shadow-sm transition-all duration-300 hover:border-primary hover:shadow-md hover:-translate-y-0.5 h-full"
+                    >
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                        <IconComponent className="h-5 w-5" />
+                      </div>
+                      <h3 className="text-base font-bold text-card-foreground group-hover:text-primary transition-colors">
+                        {cat.name}
+                      </h3>
+                      <div className="mt-1 flex items-center justify-between text-xs text-muted-foreground">
+                        <span>{cat.subtitle}</span>
+                        <span className="font-semibold text-primary/80">
+                          {cat.count}টি লিস্টিং
+                        </span>
+                      </div>
+                    </Link>
+                  </StaggerItem>
+                );
+              })}
+            </StaggerContainer>
+          </div>
+        </section>
+      )}
 
       {/* Latest Listings */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

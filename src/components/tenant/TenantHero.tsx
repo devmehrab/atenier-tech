@@ -80,7 +80,7 @@ export function TenantHero({ organization }: TenantHeroProps) {
                 : "text-muted-foreground hover:bg-muted"
                 }`}
             >
-              ক্রয় (Buy)
+              Buy
             </button>
             <button
               type="button"
@@ -90,7 +90,7 @@ export function TenantHero({ organization }: TenantHeroProps) {
                 : "text-muted-foreground hover:bg-muted"
                 }`}
             >
-              ভাড়া (Rent)
+              Rent
             </button>
           </div>
 
@@ -110,7 +110,7 @@ export function TenantHero({ organization }: TenantHeroProps) {
               <MapPin className="absolute left-3.5 h-4 w-4 text-muted-foreground" />
               <input
                 type="text"
-                placeholder="শহর / এলাকা (উদাঃ গুলশান)"
+                placeholder="শহর / এলাকা (e.g. Gulshan)"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 className="w-full h-11 pl-10 pr-3 rounded-xl border border-input bg-background text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:bg-background transition-colors"

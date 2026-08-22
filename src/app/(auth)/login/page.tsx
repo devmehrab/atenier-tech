@@ -117,7 +117,7 @@ export default function LoginPage() {
             </div>
           </button>
 
-          <button
+          {/* <button
             type="button"
             onClick={() => fillCredentials("apex@apexrealty.com", "password123")}
             className="flex items-center gap-2 p-2.5 rounded-xl border border-border/60 bg-card/60 hover:border-primary hover:bg-primary/10 text-left transition-all group"
@@ -129,7 +129,7 @@ export default function LoginPage() {
               <span className="font-bold text-foreground block truncate">এপেক্স রিয়েলটি</span>
               <span className="text-[10px] text-muted-foreground">এজেন্সি ওনার</span>
             </div>
-          </button>
+          </button> */}
 
           <button
             type="button"
@@ -145,7 +145,7 @@ export default function LoginPage() {
             </div>
           </button>
 
-          <button
+          {/* <button
             type="button"
             onClick={() => fillCredentials("admin@estatesphere.io", "admin123")}
             className="flex items-center gap-2 p-2.5 rounded-xl border border-destructive/30 bg-destructive/10 hover:bg-destructive/20 text-left transition-all group"
@@ -157,7 +157,7 @@ export default function LoginPage() {
               <span className="font-bold text-foreground block truncate">সুপার অ্যাডমিন</span>
               <span className="text-[10px] text-destructive">প্ল্যাটফর্ম রুট</span>
             </div>
-          </button>
+          </button> */}
         </div>
       </div>
 

@@ -9,6 +9,7 @@ import {
   LayoutDashboard,
   Home,
   PlusCircle,
+  Sparkles,
   Users,
   Building,
   Settings,
@@ -32,12 +33,18 @@ export const getDashboardNavigation = (isOwnerOrAdmin: boolean) => [
     name: "Properties",
     href: "/dashboard/properties",
     icon: Home,
-    exact: false,
+    exact: true,
   },
   {
     name: "Add Property",
     href: "/dashboard/properties/new",
     icon: PlusCircle,
+    exact: true,
+  },
+  {
+    name: "Import Properties",
+    href: "/dashboard/properties/import",
+    icon: Sparkles,
     exact: true,
   },
   {
