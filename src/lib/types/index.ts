@@ -49,6 +49,8 @@ export interface IUser {
   phone?: string;
   avatar?: string;
   status: UserStatus;
+  isEmailVerified?: boolean;
+  emailVerifiedAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -180,6 +182,7 @@ export interface ISessionUser {
   organizationId?: string | null;
   organizationSlug?: string | null;
   organizationName?: string | null;
+  isEmailVerified?: boolean;
 }
 
 export interface IPropertyFilterParams {

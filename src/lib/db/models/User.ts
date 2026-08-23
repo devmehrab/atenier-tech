@@ -10,6 +10,14 @@ export interface IUserDocument extends Document {
   phone?: string;
   avatar?: string;
   status: UserStatus;
+  isEmailVerified: boolean;
+  emailVerificationToken?: string | null;
+  emailVerificationOtp?: string | null;
+  emailVerificationExpires?: Date | null;
+  emailVerifiedAt?: Date | null;
+  passwordResetToken?: string | null;
+  passwordResetOtp?: string | null;
+  passwordResetExpires?: Date | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -58,6 +66,34 @@ const UserSchema = new Schema<IUserDocument>(
       default: "ACTIVE",
       index: true,
     },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+      index: true,
+    },
+    emailVerificationToken: {
+      type: String,
+      index: true,
+    },
+    emailVerificationOtp: {
+      type: String,
+    },
+    emailVerificationExpires: {
+      type: Date,
+    },
+    emailVerifiedAt: {
+      type: Date,
+    },
+    passwordResetToken: {
+      type: String,
+      index: true,
+    },
+    passwordResetOtp: {
+      type: String,
+    },
+    passwordResetExpires: {
+      type: Date,
+    },
   },
   {
     timestamps: true,
@@ -69,6 +105,10 @@ const UserSchema = new Schema<IUserDocument>(
           ret.organizationId = ret.organizationId.toString();
         }
         delete ret.passwordHash;
+        delete ret.emailVerificationToken;
+        delete ret.emailVerificationOtp;
+        delete ret.passwordResetToken;
+        delete ret.passwordResetOtp;
         delete ret.__v;
         return ret;
       },

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -8,17 +8,37 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/toast";
 import { registerOrgAction } from "@/lib/actions/auth.actions";
 import { slugify } from "@/lib/utils/slugify";
-import { Building, User, Mail, Lock, Phone, Globe, ArrowRight } from "lucide-react";
+import { isDisposableEmail } from "@/lib/utils/email-validator";
+import {
+  PasswordStrengthMeter,
+  checkPasswordStrength,
+} from "@/components/auth/PasswordStrengthMeter";
+import {
+  Building,
+  User,
+  Mail,
+  Lock,
+  Phone,
+  ArrowRight,
+  Eye,
+  EyeOff,
+  AlertCircle,
+  ShieldAlert,
+} from "lucide-react";
 
 export default function RegisterOrgPage() {
   const router = useRouter();
-  const { success, error } = useToast();
+  const { success, error, info } = useToast();
   const [loading, setLoading] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
     password: "",
+    confirmPassword: "",
     phone: "",
     organizationName: "",
     organizationSlug: "",
@@ -34,16 +54,53 @@ export default function RegisterOrgPage() {
     }));
   };
 
+  // Real-time email validation check for disposable / temporary domains
+  const emailDisposableCheck = useMemo(() => {
+    if (!formData.email || !formData.email.includes("@")) {
+      return { isDisposable: false };
+    }
+    return isDisposableEmail(formData.email);
+  }, [formData.email]);
+
+  // Password strength check
+  const passwordStatus = useMemo(() => {
+    return checkPasswordStrength(formData.password);
+  }, [formData.password]);
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 1. Check disposable email
+    if (emailDisposableCheck.isDisposable) {
+      error(
+        emailDisposableCheck.reason ||
+          "ডিসপোজেবল বা ফেক ইমেইল গ্রহণযোগ্য নয়। অনুগ্রহ করে আপনার আসল ইমেইল ব্যবহার করুন।"
+      );
+      return;
+    }
+
+    // 2. Force strong password
+    if (!passwordStatus.isStrong) {
+      error(
+        "অনুগ্রহ করে শক্তিশালী পাসওয়ার্ড ব্যবহার করুন (কমপক্ষে ৮ অক্ষর, বড় ও ছোট হাতের অক্ষর, সংখ্যা এবং বিশেষ চিহ্ন আবশ্যক)"
+      );
+      return;
+    }
+
+    // 3. Confirm password check
+    if (formData.password !== formData.confirmPassword) {
+      error("পাসওয়ার্ড এবং কনফার্ম পাসওয়ার্ড মিলছে না!");
+      return;
+    }
+
     setLoading(true);
 
     try {
       const res = await registerOrgAction(formData);
       if (res.success && res.data) {
-        success("এজেন্সি সফলভাবে তৈরি হয়েছে!");
+        success(res.message || "এজেন্সি সফলভাবে তৈরি হয়েছে!");
+        info("আপনার ইমেইলে পাঠানো ভেরিফিকেশন কোড দিয়ে অ্যাকাউন্ট ভেরিফাই করুন।");
         router.push(res.data.redirectUrl);
-        router.refresh();
       } else {
         error(res.message || "এজেন্সি রেজিস্ট্রেশন ব্যর্থ হয়েছে");
       }
@@ -132,10 +189,11 @@ export default function RegisterOrgPage() {
 
         <div className="pt-4 border-t border-border/50">
           <span className="block text-xs font-bold text-foreground mb-3">
-            এজেন্সি ওনার অ্যাকাউন্ট তথ্য
+            এজেন্সি ওনার অ্যাকাউন্ট ও নিরাপত্তা তথ্য
           </span>
 
           <div className="space-y-3.5">
+            {/* Full Name */}
             <div>
               <label className="block text-xs font-semibold text-foreground mb-1.5">
                 আপনার পুরো নাম *
@@ -152,40 +210,129 @@ export default function RegisterOrgPage() {
               </div>
             </div>
 
+            {/* Email Address with Disposable Email Warning */}
             <div>
-              <label className="block text-xs font-semibold text-foreground mb-1.5">
-                অফিসিয়াল ইমেইল এড্রেস *
-              </label>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block text-xs font-semibold text-foreground">
+                  অফিসিয়াল ইমেইল এড্রেস *
+                </label>
+                <span className="text-[10px] text-muted-foreground">
+                  (Gmail, Outlook, Yahoo বা অফিসিয়াল ডোমেইন)
+                </span>
+              </div>
               <div className="relative">
                 <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="email"
                   required
-                  placeholder="owner@agency.com"
-                  className="pl-10 h-11 bg-background border-input text-foreground text-sm"
+                  placeholder="owner@agency.com বা owner@gmail.com"
+                  className={`pl-10 h-11 bg-background text-foreground text-sm ${
+                    emailDisposableCheck.isDisposable
+                      ? "border-destructive focus-visible:ring-destructive"
+                      : "border-input"
+                  }`}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
               </div>
+
+              {emailDisposableCheck.isDisposable && (
+                <div className="mt-1.5 flex items-start gap-1.5 text-xs text-destructive bg-destructive/10 p-2 rounded-lg border border-destructive/20">
+                  <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
+                  <span>{emailDisposableCheck.reason}</span>
+                </div>
+              )}
             </div>
 
+            {/* Strong Password */}
             <div>
               <label className="block text-xs font-semibold text-foreground mb-1.5">
-                পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর) *
+                শক্তিশালী পাসওয়ার্ড *
               </label>
               <div className="relative">
                 <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   required
                   placeholder="••••••••"
-                  className="pl-10 h-11 bg-background border-input text-foreground text-sm"
+                  className="pl-10 pr-10 h-11 bg-background border-input text-foreground text-sm"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </button>
               </div>
+
+              {/* Real-time Password Strength Meter */}
+              <PasswordStrengthMeter
+                password={formData.password}
+                confirmPassword={formData.confirmPassword}
+                showMatchIndicator={false}
+              />
             </div>
 
+            {/* Confirm Password */}
+            <div>
+              <label className="block text-xs font-semibold text-foreground mb-1.5">
+                পাসওয়ার্ড নিশ্চিত করুন (Confirm Password) *
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type={showConfirmPassword ? "text" : "password"}
+                  required
+                  placeholder="••••••••"
+                  className={`pl-10 pr-10 h-11 bg-background text-foreground text-sm ${
+                    formData.confirmPassword &&
+                    formData.password !== formData.confirmPassword
+                      ? "border-destructive focus-visible:ring-destructive"
+                      : "border-input"
+                  }`}
+                  value={formData.confirmPassword}
+                  onChange={(e) =>
+                    setFormData({ ...formData, confirmPassword: e.target.value })
+                  }
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
+
+              {/* Match Feedback */}
+              {formData.confirmPassword && (
+                <div className="mt-1.5 text-xs">
+                  {formData.password === formData.confirmPassword ? (
+                    <span className="text-emerald-500 font-medium flex items-center gap-1">
+                      ✓ পাসওয়ার্ড মিলেছে (Passwords match)
+                    </span>
+                  ) : (
+                    <span className="text-destructive font-medium flex items-center gap-1">
+                      <AlertCircle className="h-3.5 w-3.5" />
+                      পাসওয়ার্ড মিলছে না (Passwords do not match)
+                    </span>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Phone Number */}
             <div>
               <label className="block text-xs font-semibold text-foreground mb-1.5">
                 মোবাইল / হোয়াটসঅ্যাপ নম্বর
@@ -204,8 +351,13 @@ export default function RegisterOrgPage() {
           </div>
         </div>
 
-        <Button type="submit" isLoading={loading} size="lg" className="w-full h-11 text-sm font-bold shadow-md gap-2 mt-4">
-          <span>এজেন্সি তৈরি ও লঞ্চ করুন</span>
+        <Button
+          type="submit"
+          isLoading={loading}
+          size="lg"
+          className="w-full h-11 text-sm font-bold shadow-md gap-2 mt-4"
+        >
+          <span>এজেন্সি তৈরি ও ইমেইল ভেরিফাই করুন</span>
           <ArrowRight className="h-4 w-4" />
         </Button>
       </form>
@@ -219,4 +371,3 @@ export default function RegisterOrgPage() {
     </div>
   );
 }
-

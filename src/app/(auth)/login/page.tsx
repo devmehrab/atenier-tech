@@ -7,28 +7,45 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/toast";
 import { loginAction } from "@/lib/actions/auth.actions";
-import { Lock, Mail, ArrowRight, Shield, Building, UserCheck } from "lucide-react";
+import {
+  Lock,
+  Mail,
+  ArrowRight,
+  Shield,
+  Building,
+  UserCheck,
+  Eye,
+  EyeOff,
+  AlertTriangle,
+} from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { success, error } = useToast();
+  const { success, error, info } = useToast();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
+  const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setUnverifiedEmail(null);
 
     try {
       const res = await loginAction(formData);
       if (res.success && res.data) {
         success("সফলভাবে লগইন হয়েছে!");
-        router.push(res.data.redirectUrl);
+        router.push(res.data.redirectUrl || "/dashboard");
         router.refresh();
+      } else if (res.requiresVerification) {
+        setUnverifiedEmail(res.unverifiedEmail || formData.email);
+        error(res.message || "আপনার ইমেইল ভেরিফাই করা আবশ্যক");
       } else {
         error(res.message || "লগইন ব্যর্থ হয়েছে, সঠিক তথ্য প্রদান করুন");
       }
@@ -54,6 +71,28 @@ export default function LoginPage() {
         </p>
       </div>
 
+      {unverifiedEmail && (
+        <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs space-y-2.5">
+          <div className="flex items-start gap-2 text-amber-600 dark:text-amber-400 font-semibold">
+            <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
+            <span>ইমেইল ভেরিফিকেশন সম্পন্ন হয়নি</span>
+          </div>
+          <p className="text-muted-foreground text-[11px]">
+            আপনার একাউন্ট ব্যবহারের পূর্বে ইমেইল ভেরিফাই করুন। আমরা আপনার ইমেইলে ভেরিফিকেশন ওটিপি পাঠিয়েছি।
+          </p>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() =>
+              router.push(`/verify-email?email=${encodeURIComponent(unverifiedEmail)}`)
+            }
+            className="w-full h-8 text-xs font-bold border-amber-500/40 text-amber-600 dark:text-amber-400 hover:bg-amber-500/10"
+          >
+            এখনই ইমেইল ভেরিফাই করুন →
+          </Button>
+        </div>
+      )}
+
       <form onSubmit={handleLogin} className="space-y-4">
         <div>
           <label className="block text-xs font-semibold text-foreground mb-1.5">
@@ -77,21 +116,43 @@ export default function LoginPage() {
             <label className="block text-xs font-semibold text-foreground">
               পাসওয়ার্ড
             </label>
+            <Link
+              href="/forgot-password"
+              className="text-xs font-semibold text-primary hover:underline"
+            >
+              পাসওয়ার্ড ভুলে গেছেন?
+            </Link>
           </div>
           <div className="relative">
             <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              type="password"
+              type={showPassword ? "text" : "password"}
               required
               placeholder="••••••••"
-              className="pl-10 h-11 bg-background border-input text-foreground text-sm"
+              className="pl-10 pr-10 h-11 bg-background border-input text-foreground text-sm"
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+            </button>
           </div>
         </div>
 
-        <Button type="submit" isLoading={loading} size="lg" className="w-full h-11 text-sm font-bold shadow-md gap-2 mt-2">
+        <Button
+          type="submit"
+          isLoading={loading}
+          size="lg"
+          className="w-full h-11 text-sm font-bold shadow-md gap-2 mt-2"
+        >
           <span>ড্যাশবোর্ডে প্রবেশ করুন</span>
           <ArrowRight className="h-4 w-4" />
         </Button>
@@ -117,20 +178,6 @@ export default function LoginPage() {
             </div>
           </button>
 
-          {/* <button
-            type="button"
-            onClick={() => fillCredentials("apex@apexrealty.com", "password123")}
-            className="flex items-center gap-2 p-2.5 rounded-xl border border-border/60 bg-card/60 hover:border-primary hover:bg-primary/10 text-left transition-all group"
-          >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-              <Building className="h-4 w-4" />
-            </div>
-            <div className="truncate">
-              <span className="font-bold text-foreground block truncate">এপেক্স রিয়েলটি</span>
-              <span className="text-[10px] text-muted-foreground">এজেন্সি ওনার</span>
-            </div>
-          </button> */}
-
           <button
             type="button"
             onClick={() => fillCredentials("agent@rahmanproperties.com", "password123")}
@@ -144,20 +191,6 @@ export default function LoginPage() {
               <span className="text-[10px] text-muted-foreground">স্টাফ অ্যাকাউন্ট</span>
             </div>
           </button>
-
-          {/* <button
-            type="button"
-            onClick={() => fillCredentials("admin@estatesphere.io", "admin123")}
-            className="flex items-center gap-2 p-2.5 rounded-xl border border-destructive/30 bg-destructive/10 hover:bg-destructive/20 text-left transition-all group"
-          >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-destructive/20 text-destructive shrink-0">
-              <Shield className="h-4 w-4" />
-            </div>
-            <div className="truncate">
-              <span className="font-bold text-foreground block truncate">সুপার অ্যাডমিন</span>
-              <span className="text-[10px] text-destructive">প্ল্যাটফর্ম রুট</span>
-            </div>
-          </button> */}
         </div>
       </div>
 
@@ -173,4 +206,3 @@ export default function LoginPage() {
     </div>
   );
 }
-

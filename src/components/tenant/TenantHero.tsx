@@ -49,8 +49,8 @@ export function TenantHero({ organization }: TenantHeroProps) {
         </div>
 
         <h1 className="text-4xl font-extrabold sm:text-5xl lg:text-6xl text-foreground drop-shadow-sm max-w-4xl mx-auto">
-          খুঁজে নিন আপনার পছন্দের প্রপার্টি —{" "}
-          <span className="text-primary">{organization.name}</span>
+          খুঁজে নিন আপনার পছন্দের প্রপার্টি {" "}
+          <span className="text-primary uppercase">{organization.name}</span>
         </h1>
 
         <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto font-light">

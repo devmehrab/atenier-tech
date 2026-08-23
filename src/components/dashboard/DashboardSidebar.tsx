@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ISessionUser } from "@/lib/types";
 import { cn } from "@/lib/utils/cn";
+import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import {
   LayoutDashboard,
   Home,
@@ -159,14 +160,17 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
           </Link>
         )}
 
-        <div className="px-3 py-1">
-          <div className="text-xs font-bold text-card-foreground truncate">{user.name}</div>
-          <div className="text-[11px] text-muted-foreground truncate">{user.email}</div>
-          <div className="mt-1">
-            <span className="inline-block rounded-md bg-muted px-2 py-0.5 text-[10px] font-extrabold uppercase text-muted-foreground">
-              {user.role}
-            </span>
+        <div className="px-3 py-1 flex items-center justify-between">
+          <div className="min-w-0">
+            <div className="text-xs font-bold text-card-foreground truncate">{user.name}</div>
+            <div className="text-[11px] text-muted-foreground truncate">{user.email}</div>
+            <div className="mt-1">
+              <span className="inline-block rounded-md bg-muted px-2 py-0.5 text-[10px] font-extrabold uppercase text-muted-foreground">
+                {user.role}
+              </span>
+            </div>
           </div>
+          <ThemeToggle />
         </div>
       </div>
     </aside>

@@ -41,6 +41,8 @@ async function seed() {
     passwordHash: adminPasswordHash,
     role: "SYSTEM_ADMIN",
     status: "ACTIVE",
+    isEmailVerified: true,
+    emailVerifiedAt: new Date(),
   });
   console.log(" System Admin created: admin@estatesphere.io");
 
@@ -53,6 +55,8 @@ async function seed() {
     passwordHash: defaultPasswordHash,
     role: "OWNER",
     status: "ACTIVE",
+    isEmailVerified: true,
+    emailVerifiedAt: new Date(),
     avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=256&q=80",
   });
 
@@ -115,6 +119,8 @@ async function seed() {
     role: "AGENT",
     organizationId: orgRahman._id as any,
     status: "ACTIVE",
+    isEmailVerified: true,
+    emailVerifiedAt: new Date(),
     avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=256&q=80",
   });
 
@@ -466,6 +472,8 @@ async function seed() {
     passwordHash: defaultPasswordHash,
     role: "OWNER",
     status: "ACTIVE",
+    isEmailVerified: true,
+    emailVerifiedAt: new Date(),
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80",
   });
 

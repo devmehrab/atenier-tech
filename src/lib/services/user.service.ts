@@ -64,6 +64,7 @@ export async function inviteTeamMember(
     role: input.role,
     organizationId: sessionUser.organizationId,
     status: "ACTIVE",
+    isEmailVerified: true,
   });
 
   const json = newUser.toJSON();

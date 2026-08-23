@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { logoutAction } from "@/lib/actions/auth.actions";
 import { useToast } from "@/components/ui/toast";
 import { cn } from "@/lib/utils/cn";
+import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { getDashboardNavigation } from "./DashboardSidebar";
 import {
   LogOut,
@@ -63,6 +64,8 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
+          <ThemeToggle />
+
           {user.organizationSlug && (
             <Link href={`/${user.organizationSlug}`} target="_blank">
               <Button variant="outline" size="sm" className="hidden sm:inline-flex gap-1.5 text-muted-foreground hover:text-foreground">
@@ -119,14 +122,17 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
                   </div>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => setMobileOpen(false)}
-                  className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-                  aria-label="Close Mobile Menu"
-                >
-                  <X className="h-5 w-5" />
-                </button>
+                <div className="flex items-center gap-1">
+                  <ThemeToggle />
+                  <button
+                    type="button"
+                    onClick={() => setMobileOpen(false)}
+                    className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                    aria-label="Close Mobile Menu"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
               </div>
 
               {/* Public Website Link Button */}

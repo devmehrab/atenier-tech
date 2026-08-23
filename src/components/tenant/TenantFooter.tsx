@@ -63,6 +63,14 @@ export function TenantFooter({ organization }: TenantFooterProps) {
                   লাক্সারি ভিলা ও ডুপ্লেক্স
                 </Link>
               </li>
+              <li className="pt-2 border-t border-border/40">
+                <Link
+                  href="/dashboard"
+                  className="hover:text-primary transition-colors font-semibold text-foreground/90 flex items-center gap-1.5"
+                >
+                  <span>এজেন্সি ড্যাশবোর্ড</span>
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -116,6 +124,10 @@ export function TenantFooter({ organization }: TenantFooterProps) {
         <div className="mt-12 pt-8 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
           <p>© {new Date().getFullYear()} {organization.name}. সর্বস্বত্ব সংরক্ষিত।</p>
           <div className="flex items-center gap-4">
+            <Link href="/dashboard" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+              এজেন্সি লগইন / ড্যাশবোর্ড
+            </Link>
+            <span>•</span>
             <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
               Powered by Atenier
             </Link>

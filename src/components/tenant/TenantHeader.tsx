@@ -16,6 +16,7 @@ import {
   Key,
   Compass,
   Mail,
+  LayoutDashboard,
 } from "lucide-react";
 
 interface TenantHeaderProps {
@@ -108,8 +109,18 @@ export function TenantHeader({ organization }: TenantHeaderProps) {
         </nav>
 
         {/* Right: Desktop Actions */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2.5">
           <ThemeToggle />
+
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-card-foreground hover:border-primary hover:text-primary transition-colors shadow-sm"
+            title="এজেন্সি ড্যাশবোর্ড (Dashboard)"
+          >
+            <LayoutDashboard className="h-4 w-4 text-primary" />
+            <span>ড্যাশবোর্ড</span>
+          </Link>
+
           {organization.whatsapp && (
             <a
               href={`https://wa.me/${organization.whatsapp.replace(/[^0-9]/g, "")}?text=Hello%20${encodeURIComponent(
@@ -137,6 +148,15 @@ export function TenantHeader({ organization }: TenantHeaderProps) {
         {/* Mobile Actions (ThemeToggle + Phone/WhatsApp + Menu Trigger) */}
         <div className="flex md:hidden items-center gap-1.5 shrink-0">
           <ThemeToggle />
+
+          <Link
+            href="/dashboard"
+            className="p-2 text-muted-foreground hover:text-primary hover:bg-muted/50 rounded-full transition-colors"
+            title="ড্যাশবোর্ড"
+            aria-label="Dashboard"
+          >
+            <LayoutDashboard className="h-5 w-5 text-primary stroke-[1.5]" />
+          </Link>
 
           {organization.phone && (
             <a
@@ -185,8 +205,16 @@ export function TenantHeader({ organization }: TenantHeaderProps) {
             })}
           </nav>
 
-          {/* Quick Contact Buttons on Mobile Drawer */}
+          {/* Quick Dashboard & Contact Buttons on Mobile Drawer */}
           <div className="pt-4 border-t border-border/50 flex flex-col gap-2.5">
+            <Link
+              href="/dashboard"
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center justify-center gap-2 rounded-xl border border-primary/30 bg-primary/10 py-3 px-4 text-sm font-bold text-primary hover:bg-primary/20 transition-colors shadow-sm"
+            >
+              <LayoutDashboard className="h-4 w-4" />
+              <span>এজেন্সি ড্যাশবোর্ড (Dashboard)</span>
+            </Link>
             {organization.whatsapp && (
               <a
                 href={`https://wa.me/${organization.whatsapp.replace(/[^0-9]/g, "")}?text=Hello%20${encodeURIComponent(
