@@ -29,7 +29,7 @@ function getTransporter() {
 const FROM_EMAIL =
   process.env.MAIL_FROM || "ATENIER Real Estate <no-reply@atenier.com>";
 const APP_URL =
-  process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  process.env.NEXT_PUBLIC_APP_URL || "https://atenier.com";
 
 /**
  * Generic send email function via Mailtrap
@@ -117,7 +117,7 @@ export async function sendVerificationEmail({
 <body>
   <div class="container">
     <div class="header">
-      <div class="logo">🏢 ATENIER</div>
+      <div class="logo">ATENIER</div>
       <div class="logo-sub">Enterprise Real Estate Cloud Platform</div>
     </div>
     <div class="content">
@@ -215,7 +215,7 @@ export async function sendPasswordResetEmail({
 <body>
   <div class="container">
     <div class="header">
-      <div class="logo">🏢 ATENIER</div>
+      <div class="logo">ATENIER</div>
       <div class="logo-sub">Account Security & Password Reset</div>
     </div>
     <div class="content">
@@ -225,7 +225,7 @@ export async function sendPasswordResetEmail({
       </p>
 
       <div class="button-wrap">
-        <a href="${resetUrl}" class="button" target="_blank">🔑 পাসওয়ার্ড রিসেট করুন (Reset Password)</a>
+        <a href="${resetUrl}" class="button" target="_blank">পাসওয়ার্ড রিসেট করুন (Reset Password)</a>
       </div>
 
       <div class="otp-card">
