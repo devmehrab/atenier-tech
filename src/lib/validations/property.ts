@@ -37,8 +37,14 @@ export const propertyFormSchema = z.object({
     state: z.string().optional(),
     country: z.string().default("Bangladesh"),
     zipCode: z.string().optional(),
-    latitude: z.coerce.number().optional(),
-    longitude: z.coerce.number().optional(),
+    latitude: z.preprocess(
+      (val) => (val === "" || val === null || val === undefined || isNaN(Number(val)) ? undefined : Number(val)),
+      z.number().optional()
+    ),
+    longitude: z.preprocess(
+      (val) => (val === "" || val === null || val === undefined || isNaN(Number(val)) ? undefined : Number(val)),
+      z.number().optional()
+    ),
   }),
   specifications: z.object({
     bedrooms: z.coerce.number().min(0).default(1),

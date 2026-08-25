@@ -8,6 +8,7 @@ import { propertyFormSchema, PropertyFormValues } from "@/lib/validations/proper
 import { createPropertyAction, updatePropertyAction } from "@/lib/actions/property.actions";
 import { useToast } from "@/components/ui/toast";
 import { ImageUploadManager } from "./ImageUploadManager";
+import { OpenFreeMapPicker } from "./OpenFreeMapPicker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -401,6 +402,21 @@ export function PropertyForm({
                 {...register("location.zipCode")}
               />
             </div>
+          </div>
+
+          {/* Interactive OpenFreeMap Location Picker */}
+          <div className="pt-4 border-t border-border/50">
+            <OpenFreeMapPicker
+              latitude={watch("location.latitude")}
+              longitude={watch("location.longitude")}
+              address={watch("location.address")}
+              area={watch("location.area")}
+              city={watch("location.city")}
+              onChange={({ latitude: newLat, longitude: newLng }) => {
+                setValue("location.latitude", newLat, { shouldValidate: true, shouldDirty: true });
+                setValue("location.longitude", newLng, { shouldValidate: true, shouldDirty: true });
+              }}
+            />
           </div>
         </div>
       </div>

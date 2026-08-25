@@ -42,12 +42,12 @@ export const getDashboardNavigation = (isOwnerOrAdmin: boolean) => [
     icon: PlusCircle,
     exact: true,
   },
-  {
-    name: "Import Properties",
-    href: "/dashboard/properties/import",
-    icon: Sparkles,
-    exact: true,
-  },
+  // {
+  //   name: "Import Properties",
+  //   href: "/dashboard/properties/import",
+  //   icon: Sparkles,
+  //   exact: true,
+  // },
   {
     name: "Inquiries & Leads",
     href: "/dashboard/leads",

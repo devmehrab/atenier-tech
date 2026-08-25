@@ -166,20 +166,28 @@ export const getPublicPropertyBySlug = cache(
         .lean();
     }
 
-    const { _id, ...rest } = propertyDoc;
+    const rawProperty = JSON.parse(JSON.stringify(propertyDoc));
     const property = {
-      _id: _id.toString(),
-      ...rest,
+      ...rawProperty,
+      _id: propertyDoc._id.toString(),
+      organizationId: propertyDoc.organizationId?.toString() || "",
+      createdBy: propertyDoc.createdBy?.toString() || "",
+      assignedAgent: propertyDoc.assignedAgent ? propertyDoc.assignedAgent.toString() : null,
     } as unknown as IProperty;
 
     return {
       property,
       organization: {
-        ...organization,
+        ...JSON.parse(JSON.stringify(organization)),
         _id: organization._id.toString(),
         ownerId: organization.ownerId.toString(),
       },
-      agent: agent ? { ...agent, _id: agent._id.toString() } : null,
+      agent: agent
+        ? {
+            ...JSON.parse(JSON.stringify(agent)),
+            _id: agent._id.toString(),
+          }
+        : null,
     };
   }
 );
@@ -202,10 +210,13 @@ export async function getPropertyById(
   const propertyDoc = await Property.findOne(query).lean();
   if (!propertyDoc) return null;
 
-  const { _id, ...rest } = propertyDoc;
+  const rawProperty = JSON.parse(JSON.stringify(propertyDoc));
   return {
-    _id: _id.toString(),
-    ...rest,
+    ...rawProperty,
+    _id: propertyDoc._id.toString(),
+    organizationId: propertyDoc.organizationId?.toString() || "",
+    createdBy: propertyDoc.createdBy?.toString() || "",
+    assignedAgent: propertyDoc.assignedAgent ? propertyDoc.assignedAgent.toString() : null,
   } as unknown as IProperty;
 }
 

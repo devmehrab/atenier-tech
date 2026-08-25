@@ -10,6 +10,7 @@ import { PropertyCard } from "@/components/tenant/PropertyCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PropertyInquiryClient } from "./PropertyInquiryClient";
+import { PropertyMapSection } from "@/components/tenant/PropertyMapSection";
 import { BrochureDownloadButton } from "@/components/brochure";
 import { FadeIn, SlideUp, StaggerContainer, StaggerItem } from "@/components/motion";
 import {
@@ -306,6 +307,17 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
                 </div>
               </SlideUp>
             )}
+
+            {/* OpenFreeMap Location & Map Section */}
+            <SlideUp delay={0.3}>
+              <PropertyMapSection
+                location={property.location}
+                propertyTitle={property.title}
+                priceFormatted={formatPrice(property.price, property.currency, property.pricePeriod)}
+                listingType={property.listingType}
+                propertyType={property.propertyType}
+              />
+            </SlideUp>
           </div>
 
           {/* Sidebar CTA & Agent Details */}

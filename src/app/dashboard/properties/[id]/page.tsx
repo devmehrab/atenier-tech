@@ -9,6 +9,7 @@ import { getBaseUrl } from "@/lib/utils/seo";
 import { StatusBadge } from "@/components/dashboard/StatusBadge";
 import { BrochureDownloadButton } from "@/components/brochure";
 import { CopyFacebookCaptionButton } from "@/components/dashboard/CopyFacebookCaptionButton";
+import { PropertyMapSection } from "@/components/tenant/PropertyMapSection";
 import { Button } from "@/components/ui/button";
 import {
   ExternalLink,
@@ -182,6 +183,17 @@ export default async function DashboardPropertyViewPage({
             </div>
           </div>
         )}
+
+        {/* Location & OpenFreeMap Section */}
+        <div className="pt-4 border-t border-border/50">
+          <PropertyMapSection
+            location={property.location}
+            propertyTitle={property.title}
+            priceFormatted={formatPrice(property.price, property.currency, property.pricePeriod)}
+            listingType={property.listingType}
+            propertyType={property.propertyType}
+          />
+        </div>
       </div>
     </div>
   );
