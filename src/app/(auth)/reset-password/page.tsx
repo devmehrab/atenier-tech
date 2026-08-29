@@ -169,7 +169,7 @@ function ResetPasswordContent() {
                 required
                 maxLength={6}
                 placeholder="যেমন: 481920"
-                className="h-11 bg-background border-input text-foreground text-sm font-mono tracking-wider"
+                className="h-11 bg-background border-input text-foreground text-sm font-mono"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.replace(/[^0-9]/g, ""))}
               />
@@ -224,11 +224,10 @@ function ResetPasswordContent() {
               type={showConfirmPassword ? "text" : "password"}
               required
               placeholder="••••••••"
-              className={`pl-10 pr-10 h-11 bg-background text-foreground text-sm ${
-                confirmPassword && password !== confirmPassword
+              className={`pl-10 pr-10 h-11 bg-background text-foreground text-sm ${confirmPassword && password !== confirmPassword
                   ? "border-destructive focus-visible:ring-destructive"
                   : "border-input"
-              }`}
+                }`}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />

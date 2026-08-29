@@ -644,44 +644,40 @@ export function OpenFreeMapPicker({
           <button
             type="button"
             onClick={() => handleStyleChange("bright")}
-            className={`px-2.5 py-1 rounded-lg transition-all ${
-              mapStyle === "bright"
-                ? "bg-primary text-primary-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+            className={`px-2.5 py-1 rounded-lg transition-all ${mapStyle === "bright"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
+              }`}
           >
             Bright
           </button>
           <button
             type="button"
             onClick={() => handleStyleChange("liberty")}
-            className={`px-2.5 py-1 rounded-lg transition-all ${
-              mapStyle === "liberty"
-                ? "bg-primary text-primary-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+            className={`px-2.5 py-1 rounded-lg transition-all ${mapStyle === "liberty"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
+              }`}
           >
             OSM
           </button>
           <button
             type="button"
             onClick={() => handleStyleChange("positron")}
-            className={`px-2.5 py-1 rounded-lg transition-all ${
-              mapStyle === "positron"
-                ? "bg-primary text-primary-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+            className={`px-2.5 py-1 rounded-lg transition-all ${mapStyle === "positron"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
+              }`}
           >
             Positron
           </button>
           <button
             type="button"
             onClick={() => handleStyleChange("dark")}
-            className={`px-2.5 py-1 rounded-lg transition-all ${
-              mapStyle === "dark"
-                ? "bg-primary text-primary-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+            className={`px-2.5 py-1 rounded-lg transition-all ${mapStyle === "dark"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
+              }`}
           >
             Dark
           </button>
@@ -697,8 +693,8 @@ export function OpenFreeMapPicker({
       {/* Manual Latitude & Longitude Coordinate Inputs with Two-Way Binding */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
         <div>
-          <label className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
-            Latitude (অক্ষাংশ)
+          <label className="block text-[11px] font-bold uppercase text-muted-foreground mb-1">
+            Latitude
           </label>
           <div className="relative">
             <Input
@@ -718,8 +714,8 @@ export function OpenFreeMapPicker({
         </div>
 
         <div>
-          <label className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
-            Longitude (দ্রাঘিমাংশ)
+          <label className="block text-[11px] font-bold uppercase text-muted-foreground mb-1">
+            Longitude
           </label>
           <div className="relative">
             <Input

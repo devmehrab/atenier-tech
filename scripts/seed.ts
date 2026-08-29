@@ -12,9 +12,8 @@ import { Property } from "../src/lib/db/models/Property";
 import { Lead } from "../src/lib/db/models/Lead";
 import { hashPassword } from "../src/lib/auth/password";
 
-// const MONGODB_URI =
-// process.env.MONGODB_URI || "mongodb://localhost:27017/real_estate_saas";
-const MONGODB_URI = "mongodb+srv://devmehrabhossain_db_user:pXGH0PoRVyGLNcDp@cluster0.ej9egor.mongodb.net/?appName=Cluster0";
+const MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/real_estate_saas";
 
 async function seed() {
   console.log("🌱 Connecting to MongoDB:", MONGODB_URI);

@@ -243,7 +243,7 @@ export function PropertyGallery({ images, title, className }: PropertyGalleryPro
               <span>HD Gallery</span>
             </span>
             {currentImage.isFeatured && (
-              <span className="hidden sm:inline-flex items-center gap-1 rounded-full bg-amber-500/80 px-2.5 py-1 text-[11px] font-bold tracking-wide text-white uppercase backdrop-blur-md shadow-sm">
+              <span className="hidden sm:inline-flex items-center gap-1 rounded-full bg-amber-500/80 px-2.5 py-1 text-[11px] font-bold  -wide text-white uppercase backdrop-blur-md shadow-sm">
                 <Sparkles className="h-3 w-3" /> Featured
               </span>
             )}

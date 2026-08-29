@@ -268,7 +268,7 @@ export function PropertyReviewCard({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-border/50">
             {/* Pricing */}
             <div className="space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+              <h4 className="text-xs font-bold uppercase  -wider text-muted-foreground flex items-center gap-1.5">
                 <DollarSign className="h-3.5 w-3.5 text-primary" />
                 Pricing Details
               </h4>
@@ -327,7 +327,7 @@ export function PropertyReviewCard({
 
             {/* Location */}
             <div className="space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+              <h4 className="text-xs font-bold uppercase  -wider text-muted-foreground flex items-center gap-1.5">
                 <MapPin className="h-3.5 w-3.5 text-primary" />
                 Location
               </h4>
@@ -379,7 +379,7 @@ export function PropertyReviewCard({
 
           {/* Section 3: Specifications */}
           <div className="space-y-3 pt-4 border-t border-border/50">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+            <h4 className="text-xs font-bold uppercase  -wider text-muted-foreground flex items-center gap-1.5">
               <ListChecks className="h-3.5 w-3.5 text-primary" />
               Specifications & Room Layout
             </h4>
@@ -464,7 +464,7 @@ export function PropertyReviewCard({
 
           {/* Section 4: Amenities Tags */}
           <div className="space-y-3 pt-4 border-t border-border/50">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+            <h4 className="text-xs font-bold uppercase  -wider text-muted-foreground flex items-center gap-1.5">
               <Sparkles className="h-3.5 w-3.5 text-primary" />
               Building Amenities & Backup Facilities
             </h4>
@@ -500,7 +500,7 @@ export function PropertyReviewCard({
           {/* Attached Photos Preview */}
           {card.localImages.length > 0 && (
             <div className="pt-4 border-t border-border/50 space-y-2">
-              <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
+              <label className="text-xs font-bold text-muted-foreground uppercase  -wider flex items-center gap-1.5">
                 <ImageIcon className="h-3.5 w-3.5 text-primary" />
                 Attached Photos ({card.localImages.length})
               </label>

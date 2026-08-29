@@ -420,7 +420,7 @@ export function PropertyMapSection({
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors shadow-sm"
           >
             <Navigation className="h-3.5 w-3.5" />
-            দিকনির্দেশনা (Directions)
+            Directions
           </a>
 
           <a
@@ -452,18 +452,18 @@ export function PropertyMapSection({
             type="button"
             onClick={() => handleStyleChange("bright")}
             className={`px-2.5 py-1 rounded-lg transition-all ${mapStyle === "bright"
-                ? "bg-primary text-primary-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
               }`}
           >
-            উজ্জ্বল (Bright)
+            Bright
           </button>
           <button
             type="button"
             onClick={() => handleStyleChange("liberty")}
             className={`px-2.5 py-1 rounded-lg transition-all ${mapStyle === "liberty"
-                ? "bg-primary text-primary-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
               }`}
           >
             OSM
@@ -472,21 +472,21 @@ export function PropertyMapSection({
             type="button"
             onClick={() => handleStyleChange("positron")}
             className={`px-2.5 py-1 rounded-lg transition-all ${mapStyle === "positron"
-                ? "bg-primary text-primary-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
               }`}
           >
-            পজিট্রন (Positron)
+            Positron
           </button>
           <button
             type="button"
             onClick={() => handleStyleChange("dark")}
             className={`px-2.5 py-1 rounded-lg transition-all ${mapStyle === "dark"
-                ? "bg-primary text-primary-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
               }`}
           >
-            ডার্ক (Dark)
+            Dark
           </button>
         </div>
 
@@ -516,17 +516,14 @@ export function PropertyMapSection({
         </div>
 
         {/* Bottom Left: OpenFreeMap Badge */}
-        <div className="absolute bottom-3 left-3 z-10 hidden sm:flex items-center gap-2 rounded-xl bg-card/90 backdrop-blur-md px-3 py-1.5 text-[11px] font-semibold text-card-foreground border border-border/70 shadow-sm">
-          <Sparkles className="h-3.5 w-3.5 text-primary" />
-          <span>OpenFreeMap / OSM মানচিত্র</span>
-        </div>
+
       </div>
 
       {/* Location Details Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
         <div className="p-4 rounded-xl bg-muted/40 border border-border/60">
-          <span className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
-            এলাকা / নেইবারহুড
+          <span className="block text-[11px] font-bold uppercase  -wider text-muted-foreground mb-1">
+            এলাকা
           </span>
           <span className="text-sm font-bold text-card-foreground">
             {location.area || "N/A"}
@@ -534,7 +531,7 @@ export function PropertyMapSection({
         </div>
 
         <div className="p-4 rounded-xl bg-muted/40 border border-border/60">
-          <span className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
+          <span className="block text-[11px] font-bold uppercase  -wider text-muted-foreground mb-1">
             শহর / জেলা
           </span>
           <span className="text-sm font-bold text-card-foreground">
@@ -544,7 +541,7 @@ export function PropertyMapSection({
         </div>
 
         <div className="p-4 rounded-xl bg-muted/40 border border-border/60">
-          <span className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
+          <span className="block text-[11px] font-bold uppercase  -wider text-muted-foreground mb-1">
             হোল্ডিং / রোড ঠিকানা
           </span>
           <span
@@ -556,7 +553,7 @@ export function PropertyMapSection({
         </div>
 
         <div className="p-4 rounded-xl bg-muted/40 border border-border/60">
-          <span className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
+          <span className="block text-[11px] font-bold uppercase  -wider text-muted-foreground mb-1">
             মানচিত্র কোঅর্ডিনেটস
           </span>
           <span className="text-sm font-bold text-card-foreground font-mono">
