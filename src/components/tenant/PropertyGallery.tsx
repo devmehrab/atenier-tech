@@ -648,7 +648,7 @@ export function PropertyGallery({ images, title, className }: PropertyGalleryPro
                 <div>
                   <h3 className="text-lg font-bold text-white flex items-center gap-2">
                     <Grid className="h-5 w-5 text-primary" />
-                    সমস্ত ছবি গ্যালারি ({displayImages.length})
+                    All Property Photos ({displayImages.length})
                   </h3>
                   <p className="text-xs text-neutral-400 mt-0.5">{title}</p>
                 </div>

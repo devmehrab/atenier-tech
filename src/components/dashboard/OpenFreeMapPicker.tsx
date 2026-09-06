@@ -60,8 +60,6 @@ const BRIGHT_STYLE: StyleSpecification = {
         "https://d.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
       ],
       tileSize: 256,
-      attribution:
-        '© <a href="https://openfreemap.org" target="_blank" rel="noopener noreferrer">OpenFreeMap</a> / <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>',
     },
   },
   layers: [

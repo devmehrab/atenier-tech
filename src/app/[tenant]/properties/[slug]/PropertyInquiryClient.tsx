@@ -27,7 +27,7 @@ export function PropertyInquiryClient({
   const cleanWhatsApp = whatsapp?.replace(/[^0-9]/g, "");
   const whatsappUrl = cleanWhatsApp
     ? `https://wa.me/${cleanWhatsApp}?text=${encodeURIComponent(
-      `আসসালামু আলাইকুম ${organizationName}, আমি "${propertyTitle}" প্রপার্টি সম্পর্কে বিস্তারিত জানতে আগ্রহী। এটি কি এখনো এভেইলেবল আছে?`
+      `Hello ${organizationName}, I am interested in learning more about "${propertyTitle}". Is it currently available for viewing?`
     )}`
     : null;
 
@@ -35,10 +35,10 @@ export function PropertyInquiryClient({
     <>
       <div className="rounded-2xl border border-border/60 bg-card p-6 shadow-sm space-y-4">
         <h3 className="text-base font-bold text-card-foreground">
-          এই প্রপার্টি সম্পর্কে জানতে চান?
+          Interested in this property?
         </h3>
         <p className="text-xs text-muted-foreground">
-          সরাসরি কথা বলুন অথবা সাইট ভিজিটের জন্য মেসেজ পাঠান।
+          Connect directly with the broker or schedule a private viewing.
         </p>
 
         <div className="space-y-2.5">
@@ -48,7 +48,7 @@ export function PropertyInquiryClient({
             className="w-full h-11 text-sm font-semibold shadow gap-2"
           >
             <Calendar className="h-4 w-4" />
-            ভিজিট শিডিউল / মেসেজ পাঠান
+            Schedule Tour / Send Inquiry
           </Button>
 
           {whatsappUrl && (
@@ -59,7 +59,7 @@ export function PropertyInquiryClient({
               className="flex items-center justify-center gap-2 w-full rounded-xl bg-primary py-2.5 px-4 text-sm font-semibold text-primary-foreground hover:bg-primary/90 shadow transition-colors"
             >
               <MessageSquare className="h-4 w-4" />
-              WhatsApp-এ সরাসরি চ্যাট
+              Chat on WhatsApp
             </a>
           )}
 
@@ -69,7 +69,7 @@ export function PropertyInquiryClient({
               className="flex items-center justify-center gap-2 w-full rounded-xl border border-border/60 bg-muted/50 py-2.5 px-4 text-xs font-semibold text-card-foreground hover:bg-muted transition-colors"
             >
               <Phone className="h-3.5 w-3.5 text-primary" />
-              সরাসরি কল: {phone}
+              Call Broker: {phone}
             </a>
           )}
         </div>

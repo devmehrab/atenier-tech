@@ -31,8 +31,8 @@ export function generatePropertyJsonLd(
   const images = property.images?.length
     ? property.images.map((img) => img.secureUrl)
     : property.featuredImage
-    ? [property.featuredImage]
-    : [];
+      ? [property.featuredImage]
+      : [];
 
   return {
     "@context": "https://schema.org",
@@ -50,8 +50,8 @@ export function generatePropertyJsonLd(
         property.status === "PUBLISHED"
           ? "https://schema.org/InStock"
           : property.status === "SOLD"
-          ? "https://schema.org/Discontinued"
-          : "https://schema.org/OutOfStock",
+            ? "https://schema.org/Discontinued"
+            : "https://schema.org/OutOfStock",
       businessFunction:
         property.listingType === "RENT"
           ? "https://schema.org/LeaseOut"
@@ -67,10 +67,10 @@ export function generatePropertyJsonLd(
     },
     geo: property.location.latitude && property.location.longitude
       ? {
-          "@type": "GeoCoordinates",
-          latitude: property.location.latitude,
-          longitude: property.location.longitude,
-        }
+        "@type": "GeoCoordinates",
+        latitude: property.location.latitude,
+        longitude: property.location.longitude,
+      }
       : undefined,
     numberOfRooms: property.specifications?.bedrooms || 0,
     numberOfBathroomsTotal: property.specifications?.bathrooms || 0,
@@ -105,11 +105,11 @@ export function generateOrganizationJsonLd(
     email: organization.email,
     address: organization.address
       ? {
-          "@type": "PostalAddress",
-          streetAddress: organization.address,
-          addressLocality: organization.city || "",
-          addressCountry: organization.country || "",
-        }
+        "@type": "PostalAddress",
+        streetAddress: organization.address,
+        addressLocality: organization.city || "",
+        addressCountry: organization.country || "",
+      }
       : undefined,
     sameAs: Object.values(organization.socialLinks || {}).filter(Boolean),
   };
@@ -126,17 +126,17 @@ export function generatePlatformJsonLd(baseUrl: string = getBaseUrl()) {
         url: origin,
         name: "Atenier",
         description:
-          "রিয়েল এস্টেট এজেন্সির জন্য নিজস্ব প্রপার্টি লিস্টিং ও ওয়েবসাইট প্ল্যাটফর্ম",
-        inLanguage: "bn-BD",
+          "Modern real estate platform for brokerage agencies to create branded property websites and showcase exclusive listings.",
+        inLanguage: "en-US",
       },
       {
         "@type": "Organization",
         "@id": `${origin}/#organization`,
-        name: "Atenier Technologies",
+        name: "Atenier",
         url: origin,
         logo: `${origin}/favicon.png`,
         description:
-          "Digital platform enabling Bangladeshi real-estate agencies and agents to create a professional online presence and showcase properties.",
+          "Enterprise real estate platform enabling brokerages and property professionals to build a distinguished digital presence and showcase properties globally.",
       },
     ],
   };

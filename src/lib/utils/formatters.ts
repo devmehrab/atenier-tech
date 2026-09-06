@@ -1,12 +1,12 @@
 export function formatPrice(
   amount: number,
-  currency: string = "BDT",
+  currency: string = "USD",
   period?: "MONTHLY" | "YEARLY"
 ): string {
-  if (amount === undefined || amount === null) return "৳0";
+  if (amount === undefined || amount === null) return "$0";
 
-  const curr = (currency || "BDT").toUpperCase();
-  const locale = curr === "BDT" ? "en-BD" : "en-US";
+  const curr = (currency || "USD").toUpperCase();
+  const locale = curr === "EUR" ? "de-DE" : curr === "GBP" ? "en-GB" : curr === "BDT" ? "en-BD" : "en-US";
 
   try {
     const formatted = new Intl.NumberFormat(locale, {

@@ -26,8 +26,8 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
       onClick={toggleTheme}
       size="sm"
       variant="ghost"
-      title="থিম পরিবর্তন করুন"
-      aria-label="থিম পরিবর্তন করুন"
+      title="Toggle theme"
+      aria-label="Toggle theme"
     >
       <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 text-amber-500 dark:text-muted-foreground" />
       <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 text-sky-400" />

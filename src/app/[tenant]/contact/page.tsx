@@ -12,11 +12,11 @@ interface TenantContactPageProps {
 export async function generateMetadata({ params }: TenantContactPageProps) {
   const { tenant } = await params;
   const org = await getOrganizationBySlug(tenant);
-  if (!org) return { title: "এজেন্সি পাওয়া যায়নি" };
+  if (!org) return { title: "Agency Not Found" };
 
   return {
-    title: `যোগাযোগ করুন | ${org.name}`,
-    description: `${org.city}-তে আপনার পছন্দের প্রপার্টি কেনা, বেচা বা ভাড়া নেওয়ার জন্য ${org.name} এর সাথে যোগাযোগ করুন।`,
+    title: `Contact Us | ${org.name}`,
+    description: `Get in touch with ${org.name} for bespoke property acquisitions, sales, and leasing advisory in ${org.city}.`,
   };
 }
 
@@ -33,14 +33,14 @@ export default async function TenantContactPage({ params }: TenantContactPagePro
       {/* Hero Section */}
       <SlideUp distance={20}>
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-sm font-medium uppercase text-primary block mb-3">
-            যোগাযোগ
+          <span className="text-sm font-medium uppercase text-primary block mb-3 tracking-wider">
+            Contact
           </span>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground">
-            আমরা আছি <span className="text-primary font-semibold">আপনার অপেক্ষায়</span>
+            We Are Here to <span className="text-primary font-semibold">Assist You</span>
           </h1>
-          <p className="text-base text-muted-foreground mt-5 font-light">
-            আপনার স্বপ্নের প্রপার্টি কেনা, বেচা কিংবা লিজ নেওয়ার বিষয়ে যেকোনো তথ্যের জন্য আমাদের সাথে সরাসরি যোগাযোগ করুন। আমাদের অভিজ্ঞ প্রতিনিধিরা আপনাকে সাহায্য করতে সর্বদা প্রস্তুত।
+          <p className="text-base text-muted-foreground mt-5 font-light leading-relaxed">
+            Whether you are looking to acquire luxury residences, list premier estates, or seek institutional commercial investments, our advisory team is at your service.
           </p>
         </div>
       </SlideUp>
@@ -52,7 +52,7 @@ export default async function TenantContactPage({ params }: TenantContactPagePro
         <SlideUp className="space-y-8" delay={0.1}>
           <div>
             <h2 className="text-2xl font-medium text-foreground mb-6 border-b border-border/50 pb-4">
-              অফিসের তথ্য
+              Office Information
             </h2>
 
             <StaggerContainer className="space-y-6" staggerDelay={0.08}>
@@ -63,8 +63,8 @@ export default async function TenantContactPage({ params }: TenantContactPagePro
                       <MapPin className="h-5 w-5 stroke-[1.5]" />
                     </div>
                     <div className="pt-1">
-                      <span className="block text-xs font-semibold text-muted-foreground uppercase mb-1">
-                        ঠিকানা
+                      <span className="block text-xs font-semibold text-muted-foreground uppercase mb-1 tracking-wider">
+                        Address
                       </span>
                       <span className="text-base font-medium text-foreground">
                         {organization.address}, {organization.city}, {organization.country}
@@ -81,8 +81,8 @@ export default async function TenantContactPage({ params }: TenantContactPagePro
                       <Phone className="h-5 w-5 stroke-[1.5]" />
                     </div>
                     <div className="pt-1">
-                      <span className="block text-xs font-semibold text-muted-foreground uppercase mb-1">
-                        ফোন নম্বর
+                      <span className="block text-xs font-semibold text-muted-foreground uppercase mb-1 tracking-wider">
+                        Telephone
                       </span>
                       <a href={`tel:${organization.phone}`} className="text-base font-medium text-primary hover:opacity-80 transition-opacity">
                         {organization.phone}
@@ -99,8 +99,8 @@ export default async function TenantContactPage({ params }: TenantContactPagePro
                       <Mail className="h-5 w-5 stroke-[1.5]" />
                     </div>
                     <div className="pt-1">
-                      <span className="block text-xs font-semibold text-muted-foreground uppercase mb-1">
-                        ইমেইল এড্রেস
+                      <span className="block text-xs font-semibold text-muted-foreground uppercase mb-1 tracking-wider">
+                        Email Address
                       </span>
                       <a href={`mailto:${organization.email}`} className="text-base font-medium text-primary hover:opacity-80 transition-opacity">
                         {organization.email}
@@ -116,12 +116,12 @@ export default async function TenantContactPage({ params }: TenantContactPagePro
                     <Clock className="h-5 w-5 stroke-[1.5]" />
                   </div>
                   <div className="pt-1">
-                    <span className="block text-xs font-semibold text-muted-foreground uppercase mb-1">
-                      অফিস সময়
+                    <span className="block text-xs font-semibold text-muted-foreground uppercase mb-1 tracking-wider">
+                      Business Hours
                     </span>
                     <span className="text-base font-medium text-foreground">
-                      শনিবার - বৃহস্পতিবার <br />
-                      সকাল ৯:০০ - সন্ধ্যা ৭:০০
+                      Monday – Saturday <br />
+                      9:00 AM – 7:00 PM
                     </span>
                   </div>
                 </div>

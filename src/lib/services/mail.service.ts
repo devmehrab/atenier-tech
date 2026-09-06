@@ -91,11 +91,11 @@ export async function sendVerificationEmail({
 
   const html = `
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>আপনার ইমেইল ভেরিফাই করুন - ATENIER</title>
+  <title>Verify Your Email - ATENIER</title>
   <style>
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; padding: 0; }
     .container { max-width: 580px; margin: 30px auto; background: #1e293b; border-radius: 16px; overflow: hidden; border: 1px solid #334155; }
@@ -121,28 +121,28 @@ export async function sendVerificationEmail({
       <div class="logo-sub">Enterprise Real Estate Cloud Platform</div>
     </div>
     <div class="content">
-      <div class="greeting">স্বাগতম, ${name || "ইউজার"}!</div>
+      <div class="greeting">Welcome, ${name || "Associate"}!</div>
       <p class="text">
-        ATENIER প্ল্যাটফর্মে আপনার এজেন্সি একাউন্ট রেজিস্ট্রেশনের জন্য ধন্যবাদ। আপনার একাউন্টের নিরাপত্তা নিশ্চিত করতে অনুগ্রহ করে নিচের বাটনে ক্লিক করে ইমেইল ভেরিফাই করুন:
+        Thank you for registering your brokerage account on ATENIER. To verify your email and activate your digital storefront, please click the verification button below:
       </p>
 
       <div class="button-wrap">
-        <a href="${verifyUrl}" class="button" target="_blank">✓ ইমেইল ভেরিফাই করুন (Verify Email)</a>
+        <a href="${verifyUrl}" class="button" target="_blank">✓ Verify Email Address</a>
       </div>
 
       <div class="otp-card">
-        <div class="otp-label">অথবা ৬-সংখ্যার ভেরিফিকেশন ওটিপি (OTP) কোড ব্যবহার করুন:</div>
+        <div class="otp-label">Or enter this 6-digit verification code (OTP):</div>
         <div class="otp-code">${otp}</div>
-        <div style="font-size: 11px; color: #94a3b8; margin-top: 8px;">(এই কোডটি আগামী ১৫ মিনিট পর্যন্ত কার্যকর থাকবে)</div>
+        <div style="font-size: 11px; color: #94a3b8; margin-top: 8px;">(This security code expires in 15 minutes)</div>
       </div>
 
       <p class="text" style="font-size: 12px; color: #94a3b8;">
-        যদি উপরের বাটনটি কাজ না করে, নিচের লিংকটি কপি করে আপনার ব্রাউজারে পেস্ট করুন:<br>
+        If the button above does not work, copy and paste this link into your browser:<br>
         <a href="${verifyUrl}" class="link-alt">${verifyUrl}</a>
       </p>
     </div>
     <div class="footer">
-      নিরাপত্তা সতর্কতা: আপনি যদি এই একাউন্ট তৈরি না করে থাকেন, তবে এই ইমেইলটি উপেক্ষা করুন।<br>
+      Security Notice: If you did not create this account, please disregard this email.<br>
       © ${new Date().getFullYear()} ATENIER. All rights reserved.
     </div>
   </div>
@@ -151,21 +151,21 @@ export async function sendVerificationEmail({
   `;
 
   const text = `
-স্বাগতম ${name || "ইউজার"},
+Welcome ${name || "Associate"},
 
-ATENIER প্ল্যাটফর্মে আপনার ইমেইল ভেরিফাই করতে নিচের লিংকে প্রবেশ করুন:
+To verify your email address and activate your ATENIER account, please visit:
 ${verifyUrl}
 
-আপনার ৬-সংখ্যার ভেরিফিকেশন OTP কোড: ${otp}
-(কোডটির মেয়াদ ১৫ মিনিট)
+Or enter your 6-digit verification code: ${otp}
+(Expires in 15 minutes)
 
-ধন্যবাদ,
+Best regards,
 ATENIER Real Estate Cloud Platform
   `;
 
   return sendEmail({
     to,
-    subject: "আপনার ইমেইল ভেরিফাই করুন - ATENIER Real Estate",
+    subject: "Verify your email address - ATENIER Real Estate",
     html,
     text,
   });
@@ -189,11 +189,11 @@ export async function sendPasswordResetEmail({
 
   const html = `
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>পাসওয়ার্ড রিসেট করুন - ATENIER</title>
+  <title>Reset Your Password - ATENIER</title>
   <style>
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; padding: 0; }
     .container { max-width: 580px; margin: 30px auto; background: #1e293b; border-radius: 16px; overflow: hidden; border: 1px solid #334155; }
@@ -216,31 +216,31 @@ export async function sendPasswordResetEmail({
   <div class="container">
     <div class="header">
       <div class="logo">ATENIER</div>
-      <div class="logo-sub">Account Security & Password Reset</div>
+      <div class="logo-sub">Account Security & Password Recovery</div>
     </div>
     <div class="content">
-      <div class="greeting">প্রিয় ${name || "ইউজার"},</div>
+      <div class="greeting">Hello ${name || "Associate"},</div>
       <p class="text">
-        আমরা আপনার ATENIER একাউন্টের জন্য একটি পাসওয়ার্ড রিসেট রিকোয়েস্ট পেয়েছি। পাসওয়ার্ড পরিবর্তন করতে নিচের বাটনে ক্লিক করুন:
+        We received a request to reset the password for your ATENIER account. Click the button below to choose a new password:
       </p>
 
       <div class="button-wrap">
-        <a href="${resetUrl}" class="button" target="_blank">পাসওয়ার্ড রিসেট করুন (Reset Password)</a>
+        <a href="${resetUrl}" class="button" target="_blank">Reset Password</a>
       </div>
 
       <div class="otp-card">
-        <div class="otp-label">অথবা ৬-সংখ্যার পাসওয়ার্ড রিসেট ওটিপি কোড ব্যবহার করুন:</div>
+        <div class="otp-label">Or enter this 6-digit recovery code (OTP):</div>
         <div class="otp-code">${otp}</div>
-        <div style="font-size: 11px; color: #94a3b8; margin-top: 8px;">(এই কোডটি আগামী ১ ঘণ্টা পর্যন্ত কার্যকর থাকবে)</div>
+        <div style="font-size: 11px; color: #94a3b8; margin-top: 8px;">(This recovery code expires in 1 hour)</div>
       </div>
 
       <p class="text" style="font-size: 12px; color: #94a3b8;">
-        যদি উপরের বাটনটি কাজ না করে, নিচের লিংকটি কপি করে আপনার ব্রাউজারে পেস্ট করুন:<br>
+        If the button above does not work, copy and paste this link into your browser:<br>
         <a href="${resetUrl}" class="link-alt">${resetUrl}</a>
       </p>
     </div>
     <div class="footer">
-      নিরাপত্তা সতর্কতা: আপনি যদি এই পাসওয়ার্ড রিসেট রিকোয়েস্ট না করে থাকেন, তবে দ্রুত আমাদের জানান অথবা আপনার একাউন্ট নিরাপদ রাখুন।<br>
+      Security Notice: If you did not request a password reset, you can safely ignore this email.<br>
       © ${new Date().getFullYear()} ATENIER. All rights reserved.
     </div>
   </div>
@@ -249,23 +249,23 @@ export async function sendPasswordResetEmail({
   `;
 
   const text = `
-প্রিয় ${name || "ইউজার"},
+Hello ${name || "Associate"},
 
-আপনার ATENIER একাউন্টের পাসওয়ার্ড রিসেট করতে নিচের লিংকে যান:
+To reset your ATENIER account password, please visit:
 ${resetUrl}
 
-আপনার ৬-সংখ্যার রিসেট কোড: ${otp}
-(কোডটির মেয়াদ ১ ঘণ্টা)
+Or enter your 6-digit recovery code: ${otp}
+(Expires in 1 hour)
 
-যদি আপনি এই রিকোয়েস্ট না করে থাকেন তবে এই ইমেইলটি উপেক্ষা করুন।
+If you did not request this password reset, please ignore this email.
 
-ধন্যবাদ,
+Best regards,
 ATENIER Security Team
   `;
 
   return sendEmail({
     to,
-    subject: "আপনার পাসওয়ার্ড রিসেট করুন - ATENIER Real Estate",
+    subject: "Reset your password - ATENIER Real Estate",
     html,
     text,
   });

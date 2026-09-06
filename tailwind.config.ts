@@ -70,7 +70,7 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-hind-siliguri)", ...fontFamily.sans],
+        sans: ["var(--font-inter)", ...fontFamily.sans],
         serif: ["var(--font-serif)", "Georgia", "serif"],
       },
     },

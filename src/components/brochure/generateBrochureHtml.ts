@@ -40,7 +40,7 @@ export function generateBrochureHtml({
   const specs = property.specifications || ({} as any);
   const formattedPrice = formatPrice(
     property.price,
-    property.currency || "BDT",
+    property.currency || "USD",
     property.pricePeriod
   );
   const formattedSize = formatArea(specs.propertySize || 0, specs.propertySizeUnit || "sqft");

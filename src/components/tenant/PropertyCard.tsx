@@ -48,12 +48,12 @@ export function PropertyCard({ property, tenantSlug }: PropertyCardProps) {
             className="font-bold uppercase shadow-sm"
           >
             {property.status === "SOLD"
-              ? "বিক্রি"
+              ? "Sold"
               : property.status === "RENTED"
-                ? "ভাড়া"
+                ? "Rented"
                 : property.listingType === "RENT"
-                  ? "ভাড়ার জন্য"
-                  : "বিক্রির জন্য"}
+                  ? "For Rent"
+                  : "For Sale"}
           </Badge>
 
           <span className="rounded-md bg-background/80 px-2 py-0.5 text-xs font-semibold text-foreground backdrop-blur-sm">
@@ -68,7 +68,7 @@ export function PropertyCard({ property, tenantSlug }: PropertyCardProps) {
               {formatPrice(property.price, property.currency, property.pricePeriod)}
             </span>
             {property.priceNegotiable && (
-              <span className="ml-1.5 text-xs text-neutral-200 font-medium">(আলোচনা সাপেক্ষ)</span>
+              <span className="ml-1.5 text-xs text-neutral-200 font-medium">(Negotiable)</span>
             )}
           </div>
         </div>
@@ -95,17 +95,17 @@ export function PropertyCard({ property, tenantSlug }: PropertyCardProps) {
 
         {/* Specs footer */}
         <div className="mt-auto pt-4 border-t border-border/50 flex items-center justify-between text-xs text-muted-foreground font-medium">
-          <div className="flex items-center gap-1.5" title="বেডরুম">
+          <div className="flex items-center gap-1.5" title="Bedrooms">
             <Bed className="h-4 w-4 text-muted-foreground/70" />
-            <span>{property.specifications.bedrooms} বেড</span>
+            <span>{property.specifications.bedrooms} Beds</span>
           </div>
 
-          <div className="flex items-center gap-1.5" title="বাথরুম">
+          <div className="flex items-center gap-1.5" title="Bathrooms">
             <Bath className="h-4 w-4 text-muted-foreground/70" />
-            <span>{property.specifications.bathrooms} বাথ</span>
+            <span>{property.specifications.bathrooms} Baths</span>
           </div>
 
-          <div className="flex items-center gap-1.5" title="আয়তন">
+          <div className="flex items-center gap-1.5" title="Total Area">
             <Square className="h-4 w-4 text-muted-foreground/70" />
             <span>
               {formatArea(

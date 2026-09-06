@@ -65,15 +65,15 @@ function VerifyEmailContent() {
       const res = await verifyEmailAction({ token });
       if (res.success) {
         setIsVerified(true);
-        success("আপনার ইমেইল সফলভাবে ভেরিফাই হয়েছে!");
+        success("Your email has been verified successfully!");
         setTimeout(() => {
           router.push(res.data?.redirectUrl || "/dashboard");
         }, 2000);
       } else {
-        error(res.message || "ভেরিফিকেশন ব্যর্থ হয়েছে। অনুগ্রহ করে ওটিপি দিয়ে চেষ্টা করুন।");
+        error(res.message || "Verification failed. Please try with your 6-digit OTP.");
       }
     } catch (err: any) {
-      error(err.message || "ভেরিফিকেশন ত্রুটি ঘটেছে");
+      error(err.message || "Verification error occurred");
     } finally {
       setAutoVerifying(false);
     }
@@ -122,12 +122,12 @@ function VerifyEmailContent() {
     const fullOtp = otp.join("");
 
     if (!email) {
-      error("অনুগ্রহ করে আপনার ইমেইল প্রদান করুন");
+      error("Please enter your email address");
       return;
     }
 
     if (fullOtp.length !== 6) {
-      error("অনুগ্রহ করে ৬-সংখ্যার ওটিপি কোডটি সম্পূর্ণ পূরণ করুন");
+      error("Please enter the complete 6-digit code");
       return;
     }
 
@@ -141,15 +141,15 @@ function VerifyEmailContent() {
 
       if (res.success) {
         setIsVerified(true);
-        success("আপনার ইমেইল সফলভাবে ভেরিফাই হয়েছে!");
+        success("Your email has been verified successfully!");
         setTimeout(() => {
           router.push(res.data?.redirectUrl || "/dashboard");
         }, 1500);
       } else {
-        error(res.message || "ভেরিফিকেশন ব্যর্থ হয়েছে");
+        error(res.message || "Email verification failed");
       }
     } catch (err: any) {
-      error(err.message || "একটি অনাকাঙ্ক্ষিত ত্রুটি ঘটেছে");
+      error(err.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -158,7 +158,7 @@ function VerifyEmailContent() {
   // Resend Verification Email
   const handleResend = async () => {
     if (!email) {
-      error("ইমেইল অ্যাড্রেস প্রদান করা আবশ্যক");
+      error("Email address is required");
       return;
     }
 
@@ -166,15 +166,15 @@ function VerifyEmailContent() {
     try {
       const res = await resendVerificationAction(email);
       if (res.success) {
-        info("নতুন ভেরিফিকেশন কোড আপনার ইমেইলে পাঠানো হয়েছে। ইনবক্স বা স্প্যাম ফোল্ডার চেক করুন।");
+        info("A new verification code has been sent to your email.");
         setCountdown(60);
         setOtp(["", "", "", "", "", ""]);
         inputRefs.current[0]?.focus();
       } else {
-        error(res.message || "কোড পুনরায় পাঠানো যায়নি");
+        error(res.message || "Failed to resend code");
       }
     } catch (err: any) {
-      error(err.message || "কোড পুনরায় পাঠাতে সমস্যা হয়েছে");
+      error(err.message || "Error resending code");
     } finally {
       setResending(false);
     }
@@ -187,10 +187,10 @@ function VerifyEmailContent() {
           <RefreshCw className="h-12 w-12 text-primary animate-spin" />
         </div>
         <h3 className="text-xl font-bold text-foreground">
-          ইমেইল স্বয়ংক্রিয়ভাবে ভেরিফাই করা হচ্ছে...
+          Verifying your email address...
         </h3>
         <p className="text-xs text-muted-foreground">
-          অনুগ্রহ করে কয়েক সেকেন্ড অপেক্ষা করুন
+          Please wait a few moments
         </p>
       </div>
     );
@@ -205,17 +205,17 @@ function VerifyEmailContent() {
           </div>
         </div>
         <h3 className="text-2xl font-black text-foreground">
-          ইমেইল ভেরিফিকেশন সফল!
+          Email Verified Successfully!
         </h3>
         <p className="text-xs text-muted-foreground max-w-sm mx-auto">
-          আপনার অ্যাকাউন্ট সক্রিয় হয়েছে। ড্যাশবোর্ডে প্রবেশ করা হচ্ছে...
+          Your account is now active. Redirecting to dashboard...
         </p>
         <div className="pt-3">
           <Button
             onClick={() => router.push("/dashboard")}
             className="w-full h-11 text-sm font-bold gap-2"
           >
-            <span>সরাসরি ড্যাশবোর্ডে যান</span>
+            <span>Proceed to Dashboard</span>
             <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
@@ -229,15 +229,14 @@ function VerifyEmailContent() {
         <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-3">
           <MailCheck className="h-6 w-6" />
         </div>
-        <h2 className="text-2xl font-extrabold text-foreground">
-          ইমেইল ভেরিফিকেশন
+        <h2 className="text-2xl font-extrabold text-foreground tracking-tight">
+          Email Verification
         </h2>
         <p className="mt-1.5 text-xs text-muted-foreground max-w-sm mx-auto">
-          আপনার অ্যাকাউন্টের সুরক্ষার জন্য আমরা{" "}
+          To secure your brokerage account, we sent a 6-digit code to{" "}
           <span className="font-semibold text-foreground">
-            {email || "আপনার ইমেইলে"}
-          </span>{" "}
-          একটি ৬-সংখ্যার ওটিপি ও ভেরিফিকেশন লিংক পাঠিয়েছি (Mailtrap Inbox)।
+            {email || "your email address"}
+          </span>.
         </p>
       </div>
 
@@ -245,7 +244,7 @@ function VerifyEmailContent() {
         {/* Email Field (Editable if needed) */}
         <div>
           <label className="block text-xs font-semibold text-foreground mb-1.5">
-            অফিসিয়াল ইমেইল এড্রেস
+            Work Email Address
           </label>
           <div className="relative">
             <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -263,7 +262,7 @@ function VerifyEmailContent() {
         {/* 6-Digit OTP Boxes */}
         <div>
           <label className="block text-xs font-semibold text-foreground text-center mb-2.5">
-            ৬-সংখ্যার ভেরিফিকেশন কোড (OTP) লিখুন
+            Enter 6-Digit Verification Code
           </label>
           <div className="flex justify-between gap-2 max-w-sm mx-auto">
             {otp.map((digit, idx) => (
@@ -290,14 +289,14 @@ function VerifyEmailContent() {
           size="lg"
           className="w-full h-11 text-sm font-bold shadow-md gap-2"
         >
-          <span>কোড যাচাই করুন</span>
+          <span>Verify Email & Continue</span>
           <ArrowRight className="h-4 w-4" />
         </Button>
       </form>
 
       {/* Resend Code Section */}
       <div className="text-center pt-2 text-xs space-y-2 border-t border-border/50">
-        <p className="text-muted-foreground">ইমেইল বা কোড পাননি?</p>
+        <p className="text-muted-foreground">Didn't receive the email code?</p>
         <button
           type="button"
           disabled={resending || countdown > 0}
@@ -308,15 +307,15 @@ function VerifyEmailContent() {
             className={`h-3.5 w-3.5 ${resending ? "animate-spin" : ""}`}
           />
           {countdown > 0
-            ? `পুনরায় কোড পাঠান (${countdown} সেকেন্ড পর)`
-            : "নতুন ভেরিফিকেশন কোড পাঠান"}
+            ? `Resend code in ${countdown}s`
+            : "Resend verification code"}
         </button>
       </div>
 
       <div className="text-center text-xs text-muted-foreground">
-        অন্য একাউন্টে লগইন করতে চান?{" "}
+        Need to switch accounts?{" "}
         <Link href="/login" className="font-bold text-primary hover:underline">
-          লগইন পেজে যান
+          Back to sign in
         </Link>
       </div>
     </div>
@@ -328,7 +327,7 @@ export default function VerifyEmailPage() {
     <Suspense
       fallback={
         <div className="text-center p-8 text-muted-foreground text-xs">
-          লোড হচ্ছে...
+          Loading...
         </div>
       }
     >

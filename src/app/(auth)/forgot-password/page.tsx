@@ -19,7 +19,7 @@ export default function ForgotPasswordPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
-      error("অনুগ্রহ করে আপনার ইমেইল প্রদান করুন");
+      error("Please enter your email address");
       return;
     }
 
@@ -29,13 +29,13 @@ export default function ForgotPasswordPage() {
       const res = await forgotPasswordAction({ email });
       if (res.success) {
         setEmailSent(true);
-        success("পাসওয়ার্ড রিসেট লিংক ও কোড আপনার ইমেইলে পাঠানো হয়েছে!");
-        info("আপনার Mailtrap ইনবক্স চেক করুন।");
+        success("Password reset instructions have been sent to your email!");
+        info("Please check your email inbox for the reset code.");
       } else {
-        error(res.message || "পাসওয়ার্ড রিসেট রিকোয়েস্ট ব্যর্থ হয়েছে");
+        error(res.message || "Failed to process password reset request");
       }
     } catch (err: any) {
-      error(err.message || "একটি অনাকাঙ্ক্ষিত ত্রুটি ঘটেছে");
+      error(err.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -50,10 +50,10 @@ export default function ForgotPasswordPage() {
           </div>
         </div>
         <h3 className="text-xl font-bold text-foreground">
-          পাসওয়ার্ড রিসেট লিংক পাঠানো হয়েছে!
+          Password Reset Code Dispatched
         </h3>
         <p className="text-xs text-muted-foreground leading-relaxed">
-          আমরা <span className="font-semibold text-foreground">{email}</span> ঠিকানায় একটি পাসওয়ার্ড রিসেট লিংক ও ৬-সংখ্যার ওটিপি কোড পাঠিয়েছি।
+          We sent password reset instructions and a 6-digit code to <span className="font-semibold text-foreground">{email}</span>.
         </p>
 
         <div className="pt-3 space-y-2.5">
@@ -63,7 +63,7 @@ export default function ForgotPasswordPage() {
             }
             className="w-full h-11 text-sm font-bold gap-2"
           >
-            <span>পাসওয়ার্ড রিসেট পেজে যান</span>
+            <span>Proceed to Reset Password</span>
             <ArrowRight className="h-4 w-4" />
           </Button>
 
@@ -72,7 +72,7 @@ export default function ForgotPasswordPage() {
             onClick={() => setEmailSent(false)}
             className="w-full h-10 text-xs font-semibold"
           >
-            অন্য ইমেইল দিয়ে চেষ্টা করুন
+            Try another email address
           </Button>
         </div>
       </div>
@@ -85,18 +85,18 @@ export default function ForgotPasswordPage() {
         <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-3">
           <KeyRound className="h-6 w-6" />
         </div>
-        <h2 className="text-2xl font-extrabold text-foreground">
-          পাসওয়ার্ড রিসেট
+        <h2 className="text-2xl font-extrabold text-foreground tracking-tight">
+          Forgot Password
         </h2>
         <p className="mt-1.5 text-xs text-muted-foreground">
-          আপনার অ্যাকাউন্টের অফিসিয়াল ইমেইল লিখুন। আমরা আপনাকে পাসওয়ার্ড পরিবর্তন করার নিরাপদ লিংক পাঠাব।
+          Enter your registered email address and we will dispatch a secure recovery code
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-xs font-semibold text-foreground mb-1.5">
-            অফিসিয়াল ইমেইল এড্রেস
+            Registered Email Address
           </label>
           <div className="relative">
             <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -117,7 +117,7 @@ export default function ForgotPasswordPage() {
           size="lg"
           className="w-full h-11 text-sm font-bold shadow-md gap-2"
         >
-          <span>পাসওয়ার্ড রিসেট লিংক পাঠান</span>
+          <span>Send Recovery Code</span>
           <ArrowRight className="h-4 w-4" />
         </Button>
       </form>
@@ -128,7 +128,7 @@ export default function ForgotPasswordPage() {
           className="font-bold text-primary hover:underline inline-flex items-center gap-1.5"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
-          <span>লগইন পেজে ফিরে যান</span>
+          <span>Back to sign in</span>
         </Link>
       </div>
     </div>

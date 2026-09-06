@@ -40,17 +40,17 @@ export default function LoginPage() {
     try {
       const res = await loginAction(formData);
       if (res.success && res.data) {
-        success("সফলভাবে লগইন হয়েছে!");
+        success("Signed in successfully!");
         router.push(res.data.redirectUrl || "/dashboard");
         router.refresh();
       } else if (res.requiresVerification) {
         setUnverifiedEmail(res.unverifiedEmail || formData.email);
-        error(res.message || "আপনার ইমেইল ভেরিফাই করা আবশ্যক");
+        error(res.message || "Email verification required");
       } else {
-        error(res.message || "লগইন ব্যর্থ হয়েছে, সঠিক তথ্য প্রদান করুন");
+        error(res.message || "Invalid credentials, please check and try again");
       }
     } catch (err: any) {
-      error(err.message || "একটি অনাকাঙ্ক্ষিত ত্রুটি ঘটেছে");
+      error(err.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -63,11 +63,11 @@ export default function LoginPage() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-extrabold text-foreground">
-          এজেন্সি পোর্টালে লগইন
+        <h2 className="text-2xl font-extrabold text-foreground tracking-tight">
+          Sign In to Broker Portal
         </h2>
         <p className="mt-1.5 text-xs text-muted-foreground">
-          আপনার রিয়েল এস্টেট এজেন্সি ড্যাশবোর্ড, প্রপার্টি লিস্টিং ও লিড ম্যানেজমেন্টে প্রবেশ করুন
+          Access your real estate brokerage dashboard, inventory, and client inquiries
         </p>
       </div>
 
@@ -75,10 +75,10 @@ export default function LoginPage() {
         <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs space-y-2.5">
           <div className="flex items-start gap-2 text-amber-600 dark:text-amber-400 font-semibold">
             <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
-            <span>ইমেইল ভেরিফিকেশন সম্পন্ন হয়নি</span>
+            <span>Email verification pending</span>
           </div>
           <p className="text-muted-foreground text-[11px]">
-            আপনার একাউন্ট ব্যবহারের পূর্বে ইমেইল ভেরিফাই করুন। আমরা আপনার ইমেইলে ভেরিফিকেশন ওটিপি পাঠিয়েছি।
+            Please verify your email address to unlock your account. We sent a verification code to your inbox.
           </p>
           <Button
             size="sm"
@@ -88,7 +88,7 @@ export default function LoginPage() {
             }
             className="w-full h-8 text-xs font-bold border-amber-500/40 text-amber-600 dark:text-amber-400 hover:bg-amber-500/10"
           >
-            এখনই ইমেইল ভেরিফাই করুন →
+            Verify Email Now →
           </Button>
         </div>
       )}
@@ -96,7 +96,7 @@ export default function LoginPage() {
       <form onSubmit={handleLogin} className="space-y-4">
         <div>
           <label className="block text-xs font-semibold text-foreground mb-1.5">
-            অফিসিয়াল ইমেইল এড্রেস
+            Work Email Address
           </label>
           <div className="relative">
             <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -114,13 +114,13 @@ export default function LoginPage() {
         <div>
           <div className="flex items-center justify-between mb-1.5">
             <label className="block text-xs font-semibold text-foreground">
-              পাসওয়ার্ড
+              Password
             </label>
             <Link
               href="/forgot-password"
               className="text-xs font-semibold text-primary hover:underline"
             >
-              পাসওয়ার্ড ভুলে গেছেন?
+              Forgot password?
             </Link>
           </div>
           <div className="relative">
@@ -153,54 +153,54 @@ export default function LoginPage() {
           size="lg"
           className="w-full h-11 text-sm font-bold shadow-md gap-2 mt-2"
         >
-          <span>ড্যাশবোর্ডে প্রবেশ করুন</span>
+          <span>Sign In to Dashboard</span>
           <ArrowRight className="h-4 w-4" />
         </Button>
       </form>
 
       {/* Quick Demo Logins Section */}
       <div className="pt-5 border-t border-border/50">
-        <span className="block text-[11px] font-bold uppercase text-muted-foreground text-center mb-3">
-          ১-ক্লিকে টেস্ট ডেমো অ্যাকাউন্ট লগইন
+        <span className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground text-center mb-3">
+          1-Click Demo Showcase Access
         </span>
         <div className="grid grid-cols-2 gap-2.5 text-xs">
           <button
             type="button"
-            onClick={() => fillCredentials("rahman@rahmanproperties.com", "password123")}
+            onClick={() => fillCredentials("alexander@apexrealty.com", "password123")}
             className="flex items-center gap-2 p-2.5 rounded-xl border border-border/60 bg-card/60 hover:border-primary hover:bg-primary/10 text-left transition-all group"
           >
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
               <Building className="h-4 w-4" />
             </div>
             <div className="truncate">
-              <span className="font-bold text-foreground block truncate">রহমান প্রোপার্টিজ</span>
-              <span className="text-[10px] text-muted-foreground">এজেন্সি ওনার</span>
+              <span className="font-bold text-foreground block truncate">Apex Realty</span>
+              <span className="text-[10px] text-muted-foreground">Brokerage Principal</span>
             </div>
           </button>
 
           <button
             type="button"
-            onClick={() => fillCredentials("agent@rahmanproperties.com", "password123")}
+            onClick={() => fillCredentials("sarah@apexrealty.com", "password123")}
             className="flex items-center gap-2 p-2.5 rounded-xl border border-border/60 bg-card/60 hover:border-primary hover:bg-primary/10 text-left transition-all group"
           >
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
               <UserCheck className="h-4 w-4" />
             </div>
             <div className="truncate">
-              <span className="font-bold text-foreground block truncate">ফিল্ড এজেন্ট</span>
-              <span className="text-[10px] text-muted-foreground">স্টাফ অ্যাকাউন্ট</span>
+              <span className="font-bold text-foreground block truncate">Sarah Jenkins</span>
+              <span className="text-[10px] text-muted-foreground">Senior Associate</span>
             </div>
           </button>
         </div>
       </div>
 
       <div className="text-center pt-2 text-xs text-muted-foreground">
-        আপনার নতুন রিয়েল এস্টেট এজেন্সি আছে?{" "}
+        Managing a real estate agency?{" "}
         <Link
           href="/register-organization"
           className="font-bold text-primary hover:underline"
         >
-          নতুন এজেন্সি রেজিস্ট্রেশন করুন
+          Register your brokerage
         </Link>
       </div>
     </div>

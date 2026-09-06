@@ -33,7 +33,7 @@ interface PropertyMapSectionProps {
   propertyType?: string;
 }
 
-const DEFAULT_DHAKA_COORDS: [number, number] = [90.4125, 23.8103]; // [lng, lat]
+const DEFAULT_COORDS: [number, number] = [-73.9855, 40.7484]; // [lng, lat] (Manhattan, NY)
 
 // 1. High-DPI Bright / Voyager Style (Colorful, crisp, detailed streets & landmarks)
 const BRIGHT_STYLE: StyleSpecification = {
@@ -97,9 +97,9 @@ const POSITRON_STYLE: StyleSpecification = {
     "positron-tiles": {
       type: "raster",
       tiles: [
-        "https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
-        "https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
-        "https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
+        "https://a.basemaps.cartocdn.light_all/{z}/{x}/{y}@2x.png",
+        "https://b.basemaps.cartocdn.light_all/{z}/{x}/{y}@2x.png",
+        "https://c.basemaps.cartocdn.light_all/{z}/{x}/{y}@2x.png",
       ],
       tileSize: 256,
       attribution:
@@ -176,15 +176,15 @@ export function PropertyMapSection({
     location.latitude !== 0 &&
     location.longitude !== 0;
 
-  const lat = hasExactCoords ? location.latitude! : DEFAULT_DHAKA_COORDS[1];
-  const lng = hasExactCoords ? location.longitude! : DEFAULT_DHAKA_COORDS[0];
+  const lat = hasExactCoords ? location.latitude! : DEFAULT_COORDS[1];
+  const lng = hasExactCoords ? location.longitude! : DEFAULT_COORDS[0];
 
   const fullAddressString = [
     location.address,
     location.area,
     location.city,
     location.state,
-    location.country || "Bangladesh",
+    location.country || "",
   ]
     .filter(Boolean)
     .join(", ");
@@ -281,8 +281,6 @@ export function PropertyMapSection({
     map.addControl(new NavigationControl({ showCompass: true }), "top-right");
     map.addControl(
       new AttributionControl({
-        customAttribution:
-          '© <a href="https://openfreemap.org" target="_blank" rel="noopener noreferrer">OpenFreeMap</a> / <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>',
         compact: true,
       }),
       "bottom-right"
@@ -381,7 +379,7 @@ export function PropertyMapSection({
               <MapPin className="h-4 w-4" />
             </div>
             <h2 className="text-lg font-bold text-card-foreground">
-              লোকেশন ও আশপাশের মানচিত্র
+              Location & Neighborhood Map
             </h2>
           </div>
           <p className="text-xs text-muted-foreground">
@@ -402,12 +400,12 @@ export function PropertyMapSection({
               {copied ? (
                 <>
                   <Check className="h-3.5 w-3.5 text-emerald-500" />
-                  কপি হয়েছে
+                  Copied
                 </>
               ) : (
                 <>
                   <Copy className="h-3.5 w-3.5" />
-                  কোঅর্ডিনেটস কপি
+                  Copy Coordinates
                 </>
               )}
             </Button>
@@ -522,8 +520,8 @@ export function PropertyMapSection({
       {/* Location Details Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
         <div className="p-4 rounded-xl bg-muted/40 border border-border/60">
-          <span className="block text-[11px] font-bold uppercase  -wider text-muted-foreground mb-1">
-            এলাকা
+          <span className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
+            Neighborhood / Area
           </span>
           <span className="text-sm font-bold text-card-foreground">
             {location.area || "N/A"}
@@ -531,8 +529,8 @@ export function PropertyMapSection({
         </div>
 
         <div className="p-4 rounded-xl bg-muted/40 border border-border/60">
-          <span className="block text-[11px] font-bold uppercase  -wider text-muted-foreground mb-1">
-            শহর / জেলা
+          <span className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
+            City / Region
           </span>
           <span className="text-sm font-bold text-card-foreground">
             {location.city || "N/A"}
@@ -541,8 +539,8 @@ export function PropertyMapSection({
         </div>
 
         <div className="p-4 rounded-xl bg-muted/40 border border-border/60">
-          <span className="block text-[11px] font-bold uppercase  -wider text-muted-foreground mb-1">
-            হোল্ডিং / রোড ঠিকানা
+          <span className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
+            Street Address
           </span>
           <span
             className="text-sm font-bold text-card-foreground truncate block"
@@ -553,11 +551,11 @@ export function PropertyMapSection({
         </div>
 
         <div className="p-4 rounded-xl bg-muted/40 border border-border/60">
-          <span className="block text-[11px] font-bold uppercase  -wider text-muted-foreground mb-1">
-            মানচিত্র কোঅর্ডিনেটস
+          <span className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
+            Geo Coordinates
           </span>
           <span className="text-sm font-bold text-card-foreground font-mono">
-            {hasExactCoords ? `${lat.toFixed(4)}° N, ${lng.toFixed(4)}° E` : "এরিয়া ভিত্তিক"}
+            {hasExactCoords ? `${lat.toFixed(4)}° N, ${lng.toFixed(4)}° W` : "Standard Precision"}
           </span>
         </div>
       </div>

@@ -150,10 +150,10 @@ export function BrochureDownloadButton({
         publicUrl: typeof window !== "undefined" ? window.location.href : "",
       });
 
-      success("ব্রোশিওর PDF সফলভাবে ডাউনলোড হয়েছে!");
+      success("Property brochure PDF downloaded successfully!");
     } catch (err) {
       console.error("PDF generation error:", err);
-      toastError("PDF ডাউনলোড করতে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।");
+      toastError("Failed to generate PDF. Please try again.");
     } finally {
       setIsDownloading(false);
     }

@@ -10,39 +10,39 @@ export function Footer() {
           {/* Brand & Intro */}
           <div className="space-y-5 md:col-span-1">
             <Logo />
-            <p className="text-sm text-muted-foreground font-light">
-              আপনার রিয়েল এস্টেট বিজনেসের সব ফ্ল্যাট ও জমির লিস্টিং সাজিয়ে রাখুন এক জায়গায়। কাস্টমারদের দিন চমৎকার প্রফেশনাল ব্রাউজিং অভিজ্ঞতা।
+            <p className="text-sm text-muted-foreground font-light leading-relaxed">
+              The modern operating platform for real estate agencies. Organize listings, delight buyers, and close transactions faster.
             </p>
             <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground/80">
               <ShieldCheck className="h-4 w-4 text-primary/80" />
-              <span>সহজ, নিরাপদ ও প্রফেশনাল</span>
+              <span>Fast, Secure & Professional</span>
             </div>
           </div>
 
           {/* Marketplace Links */}
           <div>
             <h4 className="text-sm font-medium text-foreground mb-5">
-              প্রপার্টি খুঁজুন
+              Explore Listings
             </h4>
             <ul className="space-y-3.5 text-sm text-muted-foreground font-light">
               <li>
                 <Link href="/explore" className="hover:text-primary transition-colors">
-                  সকল প্রপার্টি
+                  All Properties
                 </Link>
               </li>
               <li>
                 <Link href="/explore?listingType=SALE" className="hover:text-primary transition-colors">
-                  বিক্রয়যোগ্য ফ্ল্যাট ও বাড়ি
+                  Properties for Sale
                 </Link>
               </li>
               <li>
                 <Link href="/explore?listingType=RENT" className="hover:text-primary transition-colors">
-                  ভাড়ার প্রপার্টি
+                  Rental Properties
                 </Link>
               </li>
               <li>
                 <Link href="/#agencies" className="hover:text-primary transition-colors">
-                  পার্টনার এজেন্সিসমূহ
+                  Partner Agencies
                 </Link>
               </li>
             </ul>
@@ -51,27 +51,27 @@ export function Footer() {
           {/* For Agencies Links */}
           <div>
             <h4 className="text-sm font-medium text-foreground mb-5">
-              এজেন্সিগুলোর জন্য
+              For Brokerages
             </h4>
             <ul className="space-y-3.5 text-sm text-muted-foreground font-light">
               <li>
                 <Link href="/register-organization" className="hover:text-primary transition-colors">
-                  এজেন্সি ওয়েবসাইট শুরু করুন
+                  Launch Agency Website
                 </Link>
               </li>
               <li>
                 <Link href="/login" className="hover:text-primary transition-colors">
-                  লগইন করুন
+                  Sign In
                 </Link>
               </li>
               <li>
-                <Link href="/rahman-properties" className="hover:text-primary transition-colors">
-                  ডেমো ওয়েবসাইট দেখুন (রহমান প্রোপার্টিজ)
+                <Link href="/apex-realty" className="hover:text-primary transition-colors">
+                  Demo Storefront (Apex Realty)
                 </Link>
               </li>
               <li>
                 <Link href="/#features" className="hover:text-primary transition-colors">
-                  কেন Atenier?
+                  Why Atenier?
                 </Link>
               </li>
             </ul>
@@ -80,21 +80,21 @@ export function Footer() {
           {/* Promise & Security */}
           <div>
             <h4 className="text-sm font-medium text-foreground mb-5">
-              আমাদের লক্ষ্য
+              Our Mission
             </h4>
-            <p className="text-sm text-muted-foreground mb-4 font-light">
-              আপনার প্রপার্টি ব্যবসাকে সহজ ও স্মার্ট করতে আমরা নিয়ে এসেছি এমন সমাধান, যা আপনার ও আপনার কাস্টমারদের মূল্যবান সময় বাঁচাবে।
+            <p className="text-sm text-muted-foreground mb-4 font-light leading-relaxed">
+              Empowering real estate brokerages and property advisors with the tools they need to present properties impeccably and accelerate client engagement.
             </p>
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div className="mt-16 pt-8 border-t border-border/60 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground font-light">
-          <p>© {new Date().getFullYear()} Atenier Technologies সর্বস্বত্ব সংরক্ষিত।</p>
+          <p>© {new Date().getFullYear()} Atenier. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <Link href="#" className="hover:text-foreground transition-colors">গোপনীয়তা নীতি</Link>
-            <Link href="#" className="hover:text-foreground transition-colors">শর্তাবলী</Link>
-            <Link href="#" className="hover:text-foreground transition-colors">যোগাযোগ</Link>
+            <Link href="#" className="hover:text-foreground transition-colors">Privacy Policy</Link>
+            <Link href="#" className="hover:text-foreground transition-colors">Terms of Service</Link>
+            <Link href="#" className="hover:text-foreground transition-colors">Contact</Link>
           </div>
         </div>
       </div>

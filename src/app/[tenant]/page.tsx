@@ -34,43 +34,43 @@ const PROPERTY_TYPE_META: Record<
   { name: string; subtitle: string; icon: React.ComponentType<{ className?: string }> }
 > = {
   APARTMENT: {
-    name: "ফ্ল্যাট ও অ্যাপার্টমেন্ট",
-    subtitle: "রেসিডেনশিয়াল ইউনিট",
+    name: "Apartments & Condos",
+    subtitle: "Residential Units",
     icon: Building2,
   },
   HOUSE: {
-    name: "বাড়ি ও আবাসিক ভবন",
-    subtitle: "ফ্যামিলি লিভিং",
+    name: "Single Family Homes",
+    subtitle: "Private Residences",
     icon: Home,
   },
   VILLA: {
-    name: "লাক্সারি ভিলা ও ডুপ্লেক্স",
-    subtitle: "প্রিমিয়াম লাইফস্টাইল",
+    name: "Luxury Villas & Estates",
+    subtitle: "Prestigious Living",
     icon: Sparkles,
   },
   PENTHOUSE: {
-    name: "লাক্সারি পেন্টহাউস",
-    subtitle: "টপ ফ্লোর লাক্সারি",
+    name: "Luxury Penthouses",
+    subtitle: "Top-Floor Exclusives",
     icon: Building,
   },
   COMMERCIAL: {
-    name: "বাণিজ্যিক ও শপ স্পেস",
-    subtitle: "বিজনেস ও ইনভেস্টমেন্ট",
+    name: "Commercial Spaces",
+    subtitle: "Retail & Investment",
     icon: Store,
   },
   OFFICE: {
-    name: "অফিস ও কর্পোরেট স্পেস",
-    subtitle: "প্রফেশনাল স্পেস",
+    name: "Corporate Offices",
+    subtitle: "Professional Spaces",
     icon: Briefcase,
   },
   LAND: {
-    name: "জমি ও প্লট",
-    subtitle: "ডেভেলপমেন্ট ও ইনভেস্টমেন্ট",
+    name: "Land & Plots",
+    subtitle: "Development Parcels",
     icon: Trees,
   },
   TOWNHOUSE: {
-    name: "টাউনহাউস",
-    subtitle: "মডার্ন কমিউনিটি লিভিং",
+    name: "Townhouses",
+    subtitle: "Modern Urban Living",
     icon: Home,
   },
 };
@@ -107,7 +107,7 @@ export default async function TenantHomePage({ params }: TenantHomePageProps) {
   const categories = availableCategoriesData.map((item) => {
     const meta = PROPERTY_TYPE_META[item.propertyType] || {
       name: item.propertyType,
-      subtitle: "প্রপার্টি লিস্টিং",
+      subtitle: "Property Listings",
       icon: Home,
     };
     return {
@@ -132,18 +132,18 @@ export default async function TenantHomePage({ params }: TenantHomePageProps) {
           <SlideUp>
             <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8">
               <div>
-                <span className="text-xs font-bold uppercase text-primary">
-                  স্পেশাল কালেকশন
+                <span className="text-xs font-bold uppercase text-primary tracking-wider">
+                  Featured Collection
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground mt-1">
-                  আমাদের সেরা প্রপার্টিসমূহ
+                  Premier Properties
                 </h2>
               </div>
               <Link
                 href={`/${organization.slug}/properties`}
                 className="mt-3 sm:mt-0 inline-flex items-center gap-1 text-sm font-bold text-primary hover:opacity-80 transition-opacity"
               >
-                <span>সব প্রপার্টি দেখুন</span>
+                <span>View All Properties</span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -164,11 +164,11 @@ export default async function TenantHomePage({ params }: TenantHomePageProps) {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <SlideUp>
               <div className="text-center max-w-2xl mx-auto mb-10">
-                <span className="text-xs font-bold uppercase text-primary">
-                  ক্যাটাগরি অনুযায়ী প্রপার্টি
+                <span className="text-xs font-bold uppercase text-primary tracking-wider">
+                  Browse by Category
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground mt-1">
-                  আপনার পছন্দের ধরন বেছে নিন
+                  Find Your Ideal Property Type
                 </h2>
               </div>
             </SlideUp>
@@ -194,7 +194,7 @@ export default async function TenantHomePage({ params }: TenantHomePageProps) {
                       <div className="mt-1 flex items-center justify-between text-xs text-muted-foreground">
                         <span>{cat.subtitle}</span>
                         <span className="font-semibold text-primary/80">
-                          {cat.count}টি লিস্টিং
+                          {cat.count} {cat.count === 1 ? "Listing" : "Listings"}
                         </span>
                       </div>
                     </Link>
@@ -211,11 +211,11 @@ export default async function TenantHomePage({ params }: TenantHomePageProps) {
         <SlideUp>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8">
             <div>
-              <span className="text-xs font-bold uppercase text-primary">
-                নতুন লিস্টিং
+              <span className="text-xs font-bold uppercase text-primary tracking-wider">
+                New Additions
               </span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground mt-1">
-                সদ্য যুক্ত হওয়া প্রপার্টিসমূহ
+                Recently Added Properties
               </h2>
             </div>
             <Link
@@ -223,7 +223,7 @@ export default async function TenantHomePage({ params }: TenantHomePageProps) {
               className="mt-3 sm:mt-0"
             >
               <Button variant="outline" size="sm" className="gap-1.5 font-semibold">
-                সব লিস্টিং দেখুন
+                View All Listings
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
@@ -234,8 +234,8 @@ export default async function TenantHomePage({ params }: TenantHomePageProps) {
           <PropertyGrid
             properties={latest}
             tenantSlug={organization.slug}
-            emptyTitle="বর্তমানে কোনো লিস্টিং এভেইলেবল নেই"
-            emptySubtitle="নতুন প্রপার্টি লিস্টিং প্রস্তুত হচ্ছে। সরাসরি এজেন্সির সাথে যোগাযোগ করে যেকোনো প্রপার্টি সম্পর্কে জানতে পারেন।"
+            emptyTitle="No properties currently available"
+            emptySubtitle="New listings are being prepared. Contact the agency directly to inquire about upcoming inventory."
           />
         </SlideUp>
       </section>
@@ -248,14 +248,14 @@ export default async function TenantHomePage({ params }: TenantHomePageProps) {
               <div className="lg:col-span-7 space-y-4">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary border border-primary/20">
                   <Award className="h-3.5 w-3.5" />
-                  বিশ্বস্ত রিয়েল এস্টেট এজেন্সি
+                  Verified Real Estate Brokerage
                 </span>
                 <h2 className="text-3xl font-extrabold text-foreground">
-                  {organization.name} সম্পর্কে
+                  About {organization.name}
                 </h2>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground leading-relaxed font-light">
                   {organization.description ||
-                    `${organization.city}-তে আপনার স্বপ্নের প্রপার্টি কেনা, বিক্রি বা ভাড়া নেওয়ার জন্য বিশ্বস্ততার সাথে সেবা দিয়ে আসছে ${organization.name}। আমাদের লক্ষ্য ক্রেতা ও বিক্রেতার মাঝে একটি স্বচ্ছ ও নিরাপদ সংযোগ তৈরি করা।`}
+                    `Dedicated to delivering bespoke real estate brokerage, property acquisitions, and tailored advisory across ${organization.city}. Our team connects qualified buyers with extraordinary properties.`}
                 </p>
                 <div className="pt-2 flex flex-wrap gap-4 text-xs text-muted-foreground">
                   {organization.address && (

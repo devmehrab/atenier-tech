@@ -49,20 +49,20 @@ export default async function HomePage() {
           <FadeIn delay={0.1}>
             <div className="inline-flex items-center gap-2 rounded-full bg-muted/80 px-5 py-2 text-sm font-medium text-primary border border-border/50 mb-8 backdrop-blur-md">
               <Sparkles className="h-4 w-4" />
-              <span>স্মার্ট রিয়েল এস্টেট বিজনেস সল্যুশন</span>
+              <span>Smart Real Estate Platform</span>
             </div>
           </FadeIn>
 
           <SlideUp delay={0.2} distance={30}>
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold max-w-5xl mx-auto text-foreground">
-              আপনার রিয়েল এস্টেট ব্যবসাকে দিন <br className="hidden sm:block" />
-              <span className="text-primary font-semibold">এক অনন্য ডিজিটাল পরিচয়</span>
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold max-w-5xl mx-auto text-foreground tracking-tight">
+              Give Your Real Estate Agency <br className="hidden sm:block" />
+              <span className="text-primary font-semibold">A World-Class Digital Flagship</span>
             </h1>
           </SlideUp>
 
           <SlideUp delay={0.3} distance={20}>
-            <p className="mt-8 text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto font-light">
-              কাস্টমারকে WhatsApp-এ ৩০টা ছবি না পাঠিয়ে শেয়ার করুন নিজের এজেন্সির সুন্দর একটি ওয়েবসাইট লিংক। সব ফ্ল্যাট, বাড়ি ও জমির বিস্তারিত থাকবে সাজানো — কাস্টমার দেখবে, পছন্দ করবে, সরাসরি যোগাযোগ করবে।
+            <p className="mt-8 text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
+              Stop sending messy 30-photo chat dumps. Share a stunning, branded property website. Every apartment, luxury villa, and commercial investment organized for serious buyers and global investors.
             </p>
           </SlideUp>
 
@@ -71,7 +71,7 @@ export default async function HomePage() {
               <Link href="/register-organization">
                 <Button size="lg" className="h-14 px-8 text-base shadow-sm gap-2 font-medium w-full sm:w-auto rounded-full">
                   <Building2 className="h-5 w-5" />
-                  এজেন্সি ওয়েবসাইট শুরু করুন
+                  Launch Agency Website
                 </Button>
               </Link>
               <Link href="/explore">
@@ -81,7 +81,7 @@ export default async function HomePage() {
                   className="h-14 px-8 text-base w-full sm:w-auto gap-2 rounded-full bg-background text-primary"
                 >
                   <Compass className="h-5 w-5 text-primary" />
-                  প্রপার্টিসমূহ ঘুরে দেখুন
+                  Explore Properties
                 </Button>
               </Link>
             </div>
@@ -91,19 +91,19 @@ export default async function HomePage() {
             <div className="mt-14 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-sm text-muted-foreground font-medium">
               <span className="flex items-center gap-2">
                 <CheckCircle className="h-5 w-5 text-primary/80" />
-                কোনো কোডিং লাগবে না
+                No coding required
               </span>
               <span className="flex items-center gap-2">
                 <CheckCircle className="h-5 w-5 text-primary/80" />
-                আপনার নিজস্ব ব্র্যান্ড ও লোগো
+                Custom branding & logo
               </span>
               <span className="flex items-center gap-2">
                 <CheckCircle className="h-5 w-5 text-primary/80" />
-                সরাসরি WhatsApp ও ফোন ইনকোয়ারি
+                Direct WhatsApp & call leads
               </span>
               <span className="flex items-center gap-2">
                 <CheckCircle className="h-5 w-5 text-primary/80" />
-                1-ক্লিকে ব্রোশিওর ডাউনলোড
+                1-click PDF brochures
               </span>
             </div>
           </FadeIn>
@@ -115,14 +115,14 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SlideUp>
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-sm font-semibold uppercase text-primary mb-2 block">
-                রিয়েল এস্টেটের নিত্যদিনের ঝামেলা
+              <span className="text-sm font-semibold uppercase text-primary mb-2 block tracking-wider">
+                The Daily Real Estate Struggle
               </span>
               <h2 className="text-3xl sm:text-4xl font-semibold text-foreground">
-                চেনা চেনা লাগছে কি?
+                Does this feel familiar?
               </h2>
               <p className="text-base text-muted-foreground mt-3 font-light">
-                প্রতিদিন কাস্টমারদের সাথে ডিল করতে গিয়ে এই সমস্যাগুলোর মুখোমুখি আপনিও হচ্ছেন না তো?
+                Managing property inquiries and client communications shouldn&apos;t feel chaotic.
               </p>
             </div>
           </SlideUp>
@@ -136,15 +136,15 @@ export default async function HomePage() {
                     <MessageSquare className="h-6 w-6 stroke-[1.5]" />
                   </div>
                   <h3 className="text-xl font-semibold text-card-foreground">
-                    WhatsApp-এ ছবির মেলা?
+                    Endless photo clutter in chat?
                   </h3>
-                  <p className="text-sm text-muted-foreground font-light">
-                    একজন কাস্টমার বললো <span className="font-medium text-foreground">&quot;ভাই, ধানমন্ডিতে ৩ বেডের ফ্ল্যাট দেখান&quot;</span> — তারপর গ্যালারি ঘেঁটে ২৭টা ছবি আর ৮টা ভয়েস মেসেজ পাঠাতে গিয়েই মূল্যবান সময় নষ্ট?
+                  <p className="text-sm text-muted-foreground font-light leading-relaxed">
+                    A prospective buyer asks <span className="font-medium text-foreground">&quot;Can you send details on 3-bed apartments?&quot;</span> — and you spend valuable time scrolling through camera rolls to send 27 photos and 8 voice notes.
                   </p>
                 </div>
                 <div className="pt-4 border-t border-border/40 text-xs font-medium text-primary flex items-start gap-2 bg-primary/5 p-3 rounded-xl">
                   <CheckCircle className="h-4 w-4 shrink-0 mt-0.5" />
-                  <span>Atenier-এ সরাসরি সুন্দর প্রপার্টি লিংক শেয়ার করুন। এক পেজেই ছবি, সাইজ, দাম ও সব ফিচার সাজানো।</span>
+                  <span>Share an elegant Atenier link. High-res photos, floor plans, specs, and pricing organized on one single page.</span>
                 </div>
               </div>
             </SlideUp>
@@ -157,15 +157,15 @@ export default async function HomePage() {
                     <Search className="h-6 w-6 stroke-[1.5]" />
                   </div>
                   <h3 className="text-xl font-semibold text-card-foreground">
-                    Facebook পোস্টে প্রপার্টি হারানো?
+                    Listings lost in social feeds?
                   </h3>
-                  <p className="text-sm text-muted-foreground font-light">
-                    আজকের পোস্ট করা ফ্ল্যাট এক সপ্তাহ পর টাইমলাইনে নিচে চলে যায়। কাস্টমার জিজ্ঞেস করলে <span className="font-medium text-foreground">&quot;এখন Available কী কী আছে?&quot;</span> — নিজেরই সব প্রপার্টি খুঁজে বের করা মুশকিল!
+                  <p className="text-sm text-muted-foreground font-light leading-relaxed">
+                    Social posts get buried within days. When serious buyers ask <span className="font-medium text-foreground">&quot;What is available right now?&quot;</span> — finding active inventory across feeds is time-consuming and unprofessional.
                   </p>
                 </div>
                 <div className="pt-4 border-t border-border/40 text-xs font-medium text-primary flex items-start gap-2 bg-primary/5 p-3 rounded-xl">
                   <CheckCircle className="h-4 w-4 shrink-0 mt-0.5" />
-                  <span>আপনার সব এভেইলেবল ফ্ল্যাট ও জমি থাকবে সুবিন্যস্ত। কাস্টমার এলাকা ও বাজেট অনুযায়ী নিজেই খুঁজে নিতে পারবে।</span>
+                  <span>Maintain a live digital inventory. Clients can easily filter by neighborhood, budget range, and property category.</span>
                 </div>
               </div>
             </SlideUp>
@@ -178,15 +178,15 @@ export default async function HomePage() {
                     <FileText className="h-6 w-6 stroke-[1.5]" />
                   </div>
                   <h3 className="text-xl font-semibold text-card-foreground">
-                    ব্রোশিওর বানাতে ডিজাইনার খোঁজা?
+                    Hiring designers for brochures?
                   </h3>
-                  <p className="text-sm text-muted-foreground font-light">
-                    একজন সিরিয়াস বায়ার বা এনআরআই ক্লায়েন্ট বললো <span className="font-medium text-foreground">&quot;ভাই, প্রপার্টির একটা PDF ফাইল পাঠান&quot;</span> — এখন কি বসে বসে ডকুমেন্ট বা ফাইল বানাবেন?
+                  <p className="text-sm text-muted-foreground font-light leading-relaxed">
+                    A qualified investor asks <span className="font-medium text-foreground">&quot;Can you email a formal PDF brochure?&quot;</span> — leaving you scrambling to create presentation documents manually.
                   </p>
                 </div>
                 <div className="pt-4 border-t border-border/40 text-xs font-medium text-primary flex items-start gap-2 bg-primary/5 p-3 rounded-xl">
                   <CheckCircle className="h-4 w-4 shrink-0 mt-0.5" />
-                  <span>Atenier-এ প্রতিটি লিস্টিংয়ের সাথে ১ ক্লিকেই তৈরি হয়ে যায় আকর্ষণীয় A4 প্রিন্ট-রেডি PDF ব্রোশিওর।</span>
+                  <span>Every listing on Atenier automatically generates an immaculate, print-ready A4 PDF brochure in 1 click.</span>
                 </div>
               </div>
             </SlideUp>
@@ -200,19 +200,19 @@ export default async function HomePage() {
           <SlideUp>
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
               <div className="max-w-2xl">
-                <span className="text-sm font-medium text-primary mb-2 block">
-                  পার্টনার এজেন্সি নেটওয়ার্ক
+                <span className="text-sm font-medium text-primary mb-2 block tracking-wider uppercase">
+                  Brokerage Network
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-semibold text-foreground mt-2">
-                  আমাদের সাথে যুক্ত বিশ্বস্ত এজেন্সিসমূহ
+                  Trusted Partner Brokerages & Agencies
                 </h2>
-                <p className="text-base text-muted-foreground mt-4 font-light">
-                  দেশের সক্রিয় রিয়েল এস্টেট এজেন্সি ও প্রপার্টি কনসালট্যান্টরা Atenier-এ নিজেদের প্রপার্টি লিস্টিং পরিচালনা করছেন।
+                <p className="text-base text-muted-foreground mt-4 font-light leading-relaxed">
+                  Leading brokerages, real estate agencies, and property consultants manage their portfolios and client inquiries on Atenier.
                 </p>
               </div>
               <Link href="/explore" className="mt-6 md:mt-0">
                 <Button variant="ghost" className="gap-2 hover:bg-transparent hover:text-primary px-0 font-medium">
-                  সকল এজেন্সি ও প্রপার্টি দেখুন
+                  Browse all agencies & listings
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
@@ -237,7 +237,7 @@ export default async function HomePage() {
                       {org.name}
                     </h3>
                     <p className="mt-3 text-sm text-muted-foreground line-clamp-2 font-light">
-                      {org.description || "নির্ভরযোগ্য প্রপার্টি সমাধান নিয়ে আমরা আছি আপনার স্বপ্নের আবাসন খোঁজার যাত্রায়।"}
+                      {org.description || "Providing bespoke brokerage advisory and curated property solutions for discerning clients."}
                     </p>
                     <div className="mt-5 text-sm font-medium text-muted-foreground/80 flex items-center gap-2">
                       <span className="h-1.5 w-1.5 rounded-full bg-primary/60" />
@@ -250,14 +250,14 @@ export default async function HomePage() {
                       href={`/${org.slug}`}
                       className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:opacity-80 transition-opacity"
                     >
-                      এজেন্সি সাইট দেখুন
+                      Visit Agency Site
                       <ArrowRight className="h-4 w-4" />
                     </Link>
                     <Link
                       href={`/${org.slug}/properties`}
                       className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      ক্যাটালগ ব্রাউজ করুন
+                      Browse Catalog
                     </Link>
                   </div>
                 </div>
@@ -274,19 +274,19 @@ export default async function HomePage() {
             <SlideUp>
               <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
                 <div className="max-w-2xl">
-                  <span className="text-sm font-medium text-primary mb-2 block">
-                    এক্সক্লুসিভ প্রপার্টি কালেকশন
+                  <span className="text-sm font-medium text-primary mb-2 block tracking-wider uppercase">
+                    Exclusive Property Portfolio
                   </span>
                   <h2 className="text-3xl sm:text-4xl font-semibold text-foreground mt-2">
-                    খুঁজে নিন আপনার স্বপ্নের ফ্ল্যাট বা বাড়ি
+                    Discover Premier Homes & Estates
                   </h2>
-                  <p className="text-base text-muted-foreground mt-4 font-light">
-                    আবাসিক ফ্ল্যাট, লাক্সারি ভিলা কিংবা বাণিজ্যিক স্পেস—এজেন্সিগুলোর সেরা লিস্টিংগুলো এক নজরে।
+                  <p className="text-base text-muted-foreground mt-4 font-light leading-relaxed">
+                    From luxury apartments and penthouses to prime commercial spaces—explore verified listings from premier brokerages.
                   </p>
                 </div>
                 <Link href="/explore">
                   <Button variant="ghost" className="gap-2 hover:bg-transparent hover:text-primary px-0 font-medium">
-                    সব প্রপার্টি দেখুন
+                    View all properties
                     <ArrowRight className="h-4 w-4" />
                   </Button>
                 </Link>
@@ -312,14 +312,14 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SlideUp>
             <div className="text-center max-w-3xl mx-auto mb-20">
-              <span className="text-sm font-semibold uppercase text-primary mb-2 block">
-                কেন আপনার এজেন্সির জন্য Atenier?
+              <span className="text-sm font-semibold uppercase text-primary mb-2 block tracking-wider">
+                Why Atenier for Your Agency?
               </span>
               <h2 className="text-3xl sm:text-4xl font-semibold text-foreground mt-2">
-                Facebook পেজ আছে? এবার নিজের প্রপার্টি ওয়েবসাইট বানিয়ে নিন
+                Have a Social Presence? Now Own Your Dedicated Property Website
               </h2>
-              <p className="text-base sm:text-lg text-muted-foreground mt-4 font-light">
-                ফেসবুক পেজ দিয়ে মানুষ আপনাকে চিনবে, আর Atenier ওয়েবসাইট দিয়ে ক্রেতারা জানবে আপনার কাছে এই মুহূর্তে কী কী প্রপার্টি এভেইলেবল আছে।
+              <p className="text-base sm:text-lg text-muted-foreground mt-4 font-light leading-relaxed">
+                Social media is great for brand awareness, but your Atenier storefront gives buyers a trustworthy, professional platform to browse your active inventory and connect directly.
               </p>
             </div>
           </SlideUp>
@@ -330,9 +330,9 @@ export default async function HomePage() {
                 <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6">
                   <Building2 className="h-8 w-8 stroke-[1.5]" />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">নিজের ব্র্যান্ডেড ওয়েবসাইট</h3>
-                <p className="text-sm text-muted-foreground font-light">
-                  আপনার এজেন্সির নাম ও লোগো সম্বলিত নিজস্ব ওয়েব লিংক (যেমনঃ atenier.com/your-agency)। ক্রেতার কাছে আপনার এজেন্সির গ্রহণযোগ্যতা বাড়বে বহুগুণ।
+                <h3 className="text-xl font-semibold text-foreground mb-3">Branded Agency Website</h3>
+                <p className="text-sm text-muted-foreground font-light leading-relaxed">
+                  Your dedicated web domain (e.g., atenier.com/your-agency) featuring your agency logo and custom colors. Establish immediate prestige and trust with high-net-worth clients.
                 </p>
               </div>
             </StaggerItem>
@@ -342,9 +342,9 @@ export default async function HomePage() {
                 <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6">
                   <Zap className="h-8 w-8 stroke-[1.5]" />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">মুহূর্তে নতুন প্রপার্টি যোগ</h3>
-                <p className="text-sm text-muted-foreground font-light">
-                  মোবাইল বা ল্যাপটপ থেকে মাত্র ২ মিনিটে নতুন ফ্ল্যাট বা জমির ছবি, দাম ও বিবরণ আপলোড করুন। কোনো ডেভেলপার ডাকার ঝামেলা ছাড়াই নিজেই নিয়ন্ত্রণ করুন।
+                <h3 className="text-xl font-semibold text-foreground mb-3">Publish Listings in Minutes</h3>
+                <p className="text-sm text-muted-foreground font-light leading-relaxed">
+                  Upload photos, pricing, specs, and property highlights in 2 minutes from your phone or laptop. Manage your complete catalog without technical complexity.
                 </p>
               </div>
             </StaggerItem>
@@ -354,9 +354,9 @@ export default async function HomePage() {
                 <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6">
                   <PhoneCall className="h-8 w-8 stroke-[1.5]" />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">সরাসরি WhatsApp ও কল লিড</h3>
-                <p className="text-sm text-muted-foreground font-light">
-                  কোনো থার্ড-পার্টি বা কমিশন নেই। প্রপার্টি পছন্দ হলে আগ্রহী বায়ার সরাসরি আপনার WhatsApp বা ফোনে মেসেজ পাঠাবে।
+                <h3 className="text-xl font-semibold text-foreground mb-3">Direct Inquiries & Call Leads</h3>
+                <p className="text-sm text-muted-foreground font-light leading-relaxed">
+                  Zero commission cuts or middleman gatekeepers. When buyers fall in love with a property, inquiries flow directly to your WhatsApp or telephone.
                 </p>
               </div>
             </StaggerItem>
@@ -370,15 +370,15 @@ export default async function HomePage() {
 
         <SlideUp className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl sm:text-5xl font-semibold text-primary-foreground">
-            আপনার প্রপার্টি বিজনেসের জন্য <br /> আজই তৈরি করুন নিজস্ব ওয়েবসাইট
+            Ready to Elevate Your Real Estate Agency? <br /> Launch Your Storefront Today
           </h2>
-          <p className="mt-6 text-lg text-primary-foreground/85 max-w-2xl mx-auto font-light">
-            খুব সহজেই আপনার এজেন্সির প্রোফাইল খুলুন, ফ্ল্যাট ও জমির লিস্টিং আপলোড করুন এবং কাস্টমারদের সাথে প্রফেশনাল লিংক শেয়ার করা শুরু করুন।
+          <p className="mt-6 text-lg text-primary-foreground/85 max-w-2xl mx-auto font-light leading-relaxed">
+            Create your agency profile, upload your exclusive listings, and share professional presentations with buyers worldwide.
           </p>
           <div className="mt-10">
             <Link href="/register-organization">
               <Button size="lg" variant="secondary" className="h-14 px-10 text-base font-semibold rounded-full shadow-lg bg-background text-foreground hover:bg-muted hover:text-foreground">
-                এজেন্সি ওয়েবসাইট শুরু করুন
+                Launch Agency Website
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>

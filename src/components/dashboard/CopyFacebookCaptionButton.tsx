@@ -51,11 +51,11 @@ export function CopyFacebookCaptionButton({
       const caption = generateFacebookCaption(property, organization, publicUrl);
       await navigator.clipboard.writeText(caption);
       setCopied(true);
-      success("ফেসবুক ক্যাপশন ক্লিপবোর্ডে কপি করা হয়েছে!");
+      success("Facebook caption copied to clipboard!");
       setTimeout(() => setCopied(false), 2500);
     } catch (err) {
       console.error("Clipboard copy error:", err);
-      error("ক্লিপবোর্ডে কপি করা সম্ভব হয়নি");
+      error("Failed to copy to clipboard");
     }
   };
 
@@ -69,11 +69,11 @@ export function CopyFacebookCaptionButton({
     try {
       await navigator.clipboard.writeText(customText);
       setCopied(true);
-      success("ফেসবুক ক্যাপশন কপি করা হয়েছে!");
+      success("Facebook caption copied!");
       setPreviewOpen(false);
       setTimeout(() => setCopied(false), 2500);
     } catch (err) {
-      error("কপি করতে সমস্যা হয়েছে");
+      error("Failed to copy caption");
     }
   };
 
@@ -90,14 +90,14 @@ export function CopyFacebookCaptionButton({
             copied ? "text-primary bg-primary/5" : "text-card-foreground hover:bg-muted",
             className
           )}
-          title="ফেসবুকে পোস্ট করার জন্য রেডিমেড ক্যাপশন কপি করুন"
+          title="Copy ready-to-post Facebook caption"
         >
           {copied ? (
             <Check className="h-4 w-4 text-primary animate-in zoom-in-75 duration-200" />
           ) : (
             <Share2 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
           )}
-          <span>{copied ? "কপি হয়েছে!" : "Facebook Caption"}</span>
+          <span>{copied ? "Copied!" : "Facebook Caption"}</span>
         </Button>
 
         <div className="h-4 w-[1px] bg-border/60" />
@@ -108,7 +108,7 @@ export function CopyFacebookCaptionButton({
           size={size}
           onClick={handleOpenPreview}
           className="px-2 border-0 rounded-l-none text-muted-foreground hover:text-foreground hover:bg-muted"
-          title="ক্যাপশন প্রিভিউ ও এডিট করুন"
+          title="Preview and edit caption"
         >
           <FileText className="h-3.5 w-3.5" />
         </Button>
@@ -124,7 +124,7 @@ export function CopyFacebookCaptionButton({
             <div>
               <DialogTitle>Facebook Post Caption</DialogTitle>
               <DialogDescription>
-                ডাটাবেসের রিয়েল প্রপার্টি তথ্য দিয়ে তৈরি রেডি-টু-পোস্ট ক্যাপশন
+                Ready-to-post caption generated directly from verified listing data
               </DialogDescription>
             </div>
           </div>
@@ -136,14 +136,14 @@ export function CopyFacebookCaptionButton({
             value={customText}
             onChange={(e) => setCustomText(e.target.value)}
             className="text-xs sm:text-sm font-mono overflow-y-auto bg-muted/30"
-            placeholder="ক্যাপশন তৈরি হচ্ছে..."
+            placeholder="Generating caption..."
           />
           <div className="flex items-center justify-between text-xs text-muted-foreground">
             <span className="flex items-center gap-1">
               <Sparkles className="h-3.5 w-3.5 text-primary" />
-              শুধুমাত্র ডাটাবেসে থাকা তথ্য অন্তর্ভুক্ত করা হয়েছে
+              Includes verified property specs & pricing details
             </span>
-            <span>{customText.length} অক্ষর</span>
+            <span>{customText.length} characters</span>
           </div>
         </div>
 
@@ -153,7 +153,7 @@ export function CopyFacebookCaptionButton({
             variant="outline"
             onClick={() => setPreviewOpen(false)}
           >
-            বন্ধ করুন
+            Cancel
           </Button>
           <Button
             type="button"
@@ -161,7 +161,7 @@ export function CopyFacebookCaptionButton({
             className="gap-2 shadow-sm font-medium"
           >
             <Copy className="h-4 w-4" />
-            ক্যাপশন কপি করুন
+            Copy Caption
           </Button>
         </DialogFooter>
       </Dialog>

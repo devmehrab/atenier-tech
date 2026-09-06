@@ -30,27 +30,27 @@ export function TenantHeader({ organization }: TenantHeaderProps) {
   const navLinks = [
     {
       href: `/${organization.slug}`,
-      label: "হোম",
+      label: "Home",
       icon: Home,
     },
     {
       href: `/${organization.slug}/properties?listingType=SALE`,
-      label: "বিক্রির প্রপার্টি",
+      label: "For Sale",
       icon: Tag,
     },
     {
       href: `/${organization.slug}/properties?listingType=RENT`,
-      label: "ভাড়ার প্রপার্টি",
+      label: "For Rent",
       icon: Key,
     },
     {
       href: `/${organization.slug}/properties`,
-      label: "সকল লিস্টিং",
+      label: "All Listings",
       icon: Compass,
     },
     {
       href: `/${organization.slug}/contact`,
-      label: "যোগাযোগ",
+      label: "Contact",
       icon: Mail,
     },
   ];
@@ -115,10 +115,10 @@ export function TenantHeader({ organization }: TenantHeaderProps) {
           <Link
             href="/dashboard"
             className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-card-foreground hover:border-primary hover:text-primary transition-colors shadow-sm"
-            title="এজেন্সি ড্যাশবোর্ড (Dashboard)"
+            title="Agency Dashboard"
           >
             <LayoutDashboard className="h-4 w-4 text-primary" />
-            <span>ড্যাশবোর্ড</span>
+            <span>Dashboard</span>
           </Link>
 
           {organization.whatsapp && (
@@ -152,7 +152,7 @@ export function TenantHeader({ organization }: TenantHeaderProps) {
           <Link
             href="/dashboard"
             className="p-2 text-muted-foreground hover:text-primary hover:bg-muted/50 rounded-full transition-colors"
-            title="ড্যাশবোর্ড"
+            title="Dashboard"
             aria-label="Dashboard"
           >
             <LayoutDashboard className="h-5 w-5 text-primary stroke-[1.5]" />
@@ -162,7 +162,7 @@ export function TenantHeader({ organization }: TenantHeaderProps) {
             <a
               href={`tel:${organization.phone}`}
               className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-full transition-colors"
-              title="কল করুন"
+              title="Call agency"
               aria-label="Call agency"
             >
               <Phone className="h-5 w-5 text-primary stroke-[1.5]" />
@@ -173,7 +173,7 @@ export function TenantHeader({ organization }: TenantHeaderProps) {
             type="button"
             onClick={() => setMobileOpen(!mobileOpen)}
             className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-full transition-colors focus:outline-none"
-            aria-label={mobileOpen ? "মেনু বন্ধ করুন" : "মেনু খুলুন"}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
           >
             {mobileOpen ? (
@@ -213,7 +213,7 @@ export function TenantHeader({ organization }: TenantHeaderProps) {
               className="flex items-center justify-center gap-2 rounded-xl border border-primary/30 bg-primary/10 py-3 px-4 text-sm font-bold text-primary hover:bg-primary/20 transition-colors shadow-sm"
             >
               <LayoutDashboard className="h-4 w-4" />
-              <span>এজেন্সি ড্যাশবোর্ড (Dashboard)</span>
+              <span>Agency Dashboard</span>
             </Link>
             {organization.whatsapp && (
               <a
@@ -226,7 +226,7 @@ export function TenantHeader({ organization }: TenantHeaderProps) {
                 className="flex items-center justify-center gap-2 rounded-xl bg-emerald-600 dark:bg-emerald-700 py-3 px-4 text-sm font-semibold text-white shadow hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors"
               >
                 <MessageSquare className="h-4 w-4" />
-                WhatsApp এ মেসেজ পাঠান
+                Message on WhatsApp
               </a>
             )}
             {organization.phone && (
@@ -236,7 +236,7 @@ export function TenantHeader({ organization }: TenantHeaderProps) {
                 className="flex items-center justify-center gap-2 rounded-xl border border-border bg-card py-3 px-4 text-sm font-semibold text-card-foreground hover:bg-muted transition-colors shadow-sm"
               >
                 <Phone className="h-4 w-4 text-primary" />
-                <span>কল করুন: {organization.phone}</span>
+                <span>Call: {organization.phone}</span>
               </a>
             )}
           </div>

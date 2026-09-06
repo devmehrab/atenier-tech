@@ -13,18 +13,18 @@ export const passwordStrengthRegex = {
 
 export const strongPasswordSchema = z
   .string()
-  .min(8, "পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে (Password must be at least 8 characters)")
-  .regex(/[A-Z]/, "কমপক্ষে একটি বড় হাতের অক্ষর (A-Z) থাকতে হবে (At least one uppercase letter)")
-  .regex(/[a-z]/, "কমপক্ষে একটি ছোট হাতের অক্ষর (a-z) থাকতে হবে (At least one lowercase letter)")
-  .regex(/[0-9]/, "কমপক্ষে একটি সংখ্যা (0-9) থাকতে হবে (At least one number)")
+  .min(8, "Password must be at least 8 characters")
+  .regex(/[A-Z]/, "Password must contain at least one uppercase letter (A-Z)")
+  .regex(/[a-z]/, "Password must contain at least one lowercase letter (a-z)")
+  .regex(/[0-9]/, "Password must contain at least one numerical digit (0-9)")
   .regex(
     /[!@#$%^&*(),.?":{}|<>_\-+=[\]\\]/,
-    "কমপক্ষে একটি বিশেষ চিহ্ন (@, #, $, %, !, ইত্যাদি) থাকতে হবে (At least one special character)"
+    "Password must contain at least one special symbol (@, #, $, etc.)"
   );
 
 export const genuineEmailSchema = z
   .string()
-  .email("অনুগ্রহ করে একটি সঠিক ইমেইল এড্রেস প্রদান করুন")
+  .email("Please enter a valid email address")
   .refine(
     (email) => {
       const res = isDisposableEmail(email);
@@ -32,13 +32,13 @@ export const genuineEmailSchema = z
     },
     {
       message:
-        "ডিসপোজেবল বা ফেক ইমেইল গ্রহণযোগ্য নয়। অনুগ্রহ করে আপনার আসল ইমেইল ব্যবহার করুন। (Temporary/disposable emails are not allowed)",
+        "Disposable or temporary email addresses are not permitted. Please use a valid work or personal email.",
     }
   );
 
 export const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(1, "পাসওয়ার্ড প্রদান করুন"),
+  password: z.string().min(1, "Password is required"),
 });
 
 export type LoginInput = z.infer<typeof loginSchema>;
@@ -48,11 +48,11 @@ export const registerSchema = z
     name: z.string().min(2, "Name must be at least 2 characters"),
     email: genuineEmailSchema,
     password: strongPasswordSchema,
-    confirmPassword: z.string().min(1, "পাসওয়ার্ড নিশ্চিত করুন (Please confirm password)"),
+    confirmPassword: z.string().min(1, "Please confirm your password"),
     phone: z.string().optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "পাসওয়ার্ড দুটি মিলছে না (Passwords do not match)",
+    message: "Passwords do not match",
     path: ["confirmPassword"],
   });
 
@@ -60,12 +60,12 @@ export type RegisterInput = z.infer<typeof registerSchema>;
 
 export const registerOrgSchema = z
   .object({
-    userName: z.string().min(2, "পুরো নাম কমপক্ষে ২ অক্ষরের হতে হবে"),
+    userName: z.string().min(2, "Full name must be at least 2 characters"),
     email: genuineEmailSchema,
     password: strongPasswordSchema,
-    confirmPassword: z.string().min(1, "পাসওয়ার্ড নিশ্চিত করুন (Please confirm password)"),
+    confirmPassword: z.string().min(1, "Please confirm your password"),
     phone: z.string().optional(),
-    organizationName: z.string().min(2, "এজেন্সির নাম কমপক্ষে ২ অক্ষরের হতে হবে"),
+    organizationName: z.string().min(2, "Agency name must be at least 2 characters"),
     organizationSlug: z
       .string()
       .min(2, "Slug must be at least 2 characters")
@@ -74,11 +74,11 @@ export const registerOrgSchema = z
         /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
         "Slug can only contain lowercase letters, numbers, and hyphens"
       ),
-    city: z.string().min(2, "শহরের নাম আবশ্যক"),
-    country: z.string().default("BD"),
+    city: z.string().min(2, "City / Region is required"),
+    country: z.string().default("US"),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "পাসওয়ার্ড দুটি মিলছে না (Passwords do not match)",
+    message: "Passwords do not match",
     path: ["confirmPassword"],
   });
 
@@ -86,7 +86,7 @@ export type RegisterOrgInput = z.infer<typeof registerOrgSchema>;
 
 // Forgot Password Schema
 export const forgotPasswordSchema = z.object({
-  email: z.string().email("অনুগ্রহ করে একটি সঠিক ইমেইল এড্রেস প্রদান করুন"),
+  email: z.string().email("Please enter a valid email address"),
 });
 
 export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
@@ -94,18 +94,18 @@ export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
 // Reset Password Schema
 export const resetPasswordSchema = z
   .object({
-    email: z.string().email("অনুগ্রহ করে সঠিক ইমেইল প্রদান করুন").optional(),
+    email: z.string().email("Please enter a valid email address").optional(),
     token: z.string().optional(),
     otp: z.string().optional(),
     password: strongPasswordSchema,
-    confirmPassword: z.string().min(1, "পাসওয়ার্ড নিশ্চিত করুন"),
+    confirmPassword: z.string().min(1, "Please confirm your password"),
   })
   .refine((data) => data.token || (data.email && data.otp), {
-    message: "রিসেট টোকেন অথবা ইমেইল ও ওটিপি কোড প্রদান করা আবশ্যক",
+    message: "A reset token or email with OTP code is required",
     path: ["token"],
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "নতুন পাসওয়ার্ড দুটি মিলছে না (Passwords do not match)",
+    message: "Passwords do not match",
     path: ["confirmPassword"],
   });
 
@@ -119,7 +119,7 @@ export const verifyEmailSchema = z
     otp: z.string().optional(),
   })
   .refine((data) => data.token || (data.email && data.otp), {
-    message: "ভেরিফিকেশন টোকেন অথবা ইমেইল ও ওটিপি কোড আবশ্যক",
+    message: "A verification token or email with OTP code is required",
   });
 
 export type VerifyEmailInput = z.infer<typeof verifyEmailSchema>;

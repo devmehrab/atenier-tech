@@ -17,8 +17,8 @@ export function WhatsAppButton({
 
   const cleanPhone = phone.replace(/[^0-9]/g, "");
   const defaultText = propertyTitle
-    ? `আসসালামু আলাইকুম ${agencyName}, আমি "${propertyTitle}" প্রপার্টি সম্পর্কে বিস্তারিত জানতে আগ্রহী।`
-    : `আসসালামু আলাইকুম ${agencyName}, আমি আপনাদের প্রপার্টি লিস্টিং সম্পর্কে বিস্তারিত জানতে আগ্রহী।`;
+    ? `Hello ${agencyName}, I am interested in "${propertyTitle}" and would like to receive more details.`
+    : `Hello ${agencyName}, I would like to inquire about your available property portfolio.`;
 
   const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(defaultText)}`;
 
@@ -32,7 +32,7 @@ export function WhatsAppButton({
         aria-label="Chat on WhatsApp"
       >
         <MessageSquare className="h-5 w-5" />
-        <span className="hidden sm:inline">WhatsApp চ্যাট</span>
+        <span className="hidden sm:inline">WhatsApp Inquiries</span>
       </a>
     );
   }
@@ -45,7 +45,7 @@ export function WhatsAppButton({
       className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow hover:bg-primary/90 transition-all w-full sm:w-auto font-sans"
     >
       <MessageSquare className="h-4 w-4" />
-      WhatsApp-এ চ্যাট করুন
+      Chat on WhatsApp
     </a>
   );
 }

@@ -35,7 +35,7 @@ export default function AuthLayout({
       {/* Security Footer Note */}
       <div className="mt-8 text-center text-xs text-muted-foreground relative z-10 flex items-center justify-center gap-1.5 font-medium">
         <ShieldCheck className="h-4 w-4 text-primary" />
-        <span>নিরাপদ ও নির্ভরযোগ্য এন্টারপ্রাইজ রিয়েল এস্টেট ক্লাউড প্ল্যাটফর্ম</span>
+        <span>Enterprise-grade security & encrypted real estate operations</span>
       </div>
     </div>
   );

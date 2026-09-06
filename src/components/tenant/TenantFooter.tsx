@@ -27,8 +27,8 @@ export function TenantFooter({ organization }: TenantFooterProps) {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold uppercase text-foreground mb-4">
-              লিস্টিং ক্যাটাগরি
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-4">
+              Property Categories
             </h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
@@ -36,7 +36,7 @@ export function TenantFooter({ organization }: TenantFooterProps) {
                   href={`/${organization.slug}/properties?listingType=SALE`}
                   className="hover:text-primary transition-colors"
                 >
-                  বিক্রয়যোগ্য প্রপার্টি
+                  Properties for Sale
                 </Link>
               </li>
               <li>
@@ -44,7 +44,7 @@ export function TenantFooter({ organization }: TenantFooterProps) {
                   href={`/${organization.slug}/properties?listingType=RENT`}
                   className="hover:text-primary transition-colors"
                 >
-                  ভাড়ার প্রপার্টি
+                  Rental Properties
                 </Link>
               </li>
               <li>
@@ -52,7 +52,7 @@ export function TenantFooter({ organization }: TenantFooterProps) {
                   href={`/${organization.slug}/properties?propertyType=APARTMENT`}
                   className="hover:text-primary transition-colors"
                 >
-                  ফ্ল্যাট ও অ্যাপার্টমেন্ট
+                  Flats & Condominiums
                 </Link>
               </li>
               <li>
@@ -60,7 +60,7 @@ export function TenantFooter({ organization }: TenantFooterProps) {
                   href={`/${organization.slug}/properties?propertyType=VILLA`}
                   className="hover:text-primary transition-colors"
                 >
-                  লাক্সারি ভিলা ও ডুপ্লেক্স
+                  Luxury Villas & Penthouses
                 </Link>
               </li>
               <li className="pt-2 border-t border-border/40">
@@ -68,7 +68,7 @@ export function TenantFooter({ organization }: TenantFooterProps) {
                   href="/dashboard"
                   className="hover:text-primary transition-colors font-semibold text-foreground/90 flex items-center gap-1.5"
                 >
-                  <span>এজেন্সি ড্যাশবোর্ড</span>
+                  <span>Agency Portal</span>
                 </Link>
               </li>
             </ul>
@@ -76,8 +76,8 @@ export function TenantFooter({ organization }: TenantFooterProps) {
 
           {/* Contact Details */}
           <div>
-            <h4 className="text-sm font-semibold uppercase text-foreground mb-4">
-              অফিস ও যোগাযোগ
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-4">
+              Office & Inquiries
             </h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
               {organization.address && (
@@ -113,7 +113,7 @@ export function TenantFooter({ organization }: TenantFooterProps) {
                     rel="noopener noreferrer"
                     className="hover:text-foreground transition-colors"
                   >
-                    WhatsApp চ্যাট
+                    WhatsApp Support
                   </a>
                 </li>
               )}
@@ -122,10 +122,10 @@ export function TenantFooter({ organization }: TenantFooterProps) {
         </div>
 
         <div className="mt-12 pt-8 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} {organization.name}. সর্বস্বত্ব সংরক্ষিত।</p>
+          <p>© {new Date().getFullYear()} {organization.name}. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <Link href="/dashboard" className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              এজেন্সি লগইন / ড্যাশবোর্ড
+              Broker Portal
             </Link>
             <span>•</span>
             <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">

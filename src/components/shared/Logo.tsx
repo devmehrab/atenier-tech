@@ -21,7 +21,7 @@ export function Logo({ className, iconOnly = false, href = "/", subtext }: LogoP
       <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg text-primary-foreground shadow-sm transition-transform group-hover:scale-105">
         <Image
           src="/favicon.png"
-          alt="Atenier Technologies Logo"
+          alt="Atenier Logo"
           fill
           className="object-cover"
         />
@@ -30,7 +30,7 @@ export function Logo({ className, iconOnly = false, href = "/", subtext }: LogoP
         <div className="flex flex-col">
           <div className="flex items-center gap-1.5">
             <span className="text-lg font-extrabold text-foreground">
-              ATENIER<span className="text-primary">TECHNOLOGIES</span>
+              ATENIER<span className="text-primary">.COM</span>
             </span>
           </div>
           {subtext && (

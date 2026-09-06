@@ -19,27 +19,27 @@ export function checkPasswordStrength(password: string) {
   const rules: PasswordRule[] = [
     {
       id: "length",
-      label: "কমপক্ষে ৮টি অক্ষর (Min 8 characters)",
+      label: "At least 8 characters",
       valid: password.length >= 8,
     },
     {
       id: "upper",
-      label: "একটি বড় হাতের অক্ষর (One uppercase letter A-Z)",
+      label: "One uppercase letter (A-Z)",
       valid: /[A-Z]/.test(password),
     },
     {
       id: "lower",
-      label: "একটি ছোট হাতের অক্ষর (One lowercase letter a-z)",
+      label: "One lowercase letter (a-z)",
       valid: /[a-z]/.test(password),
     },
     {
       id: "number",
-      label: "একটি সংখ্যা (One number 0-9)",
+      label: "One numerical digit (0-9)",
       valid: /[0-9]/.test(password),
     },
     {
       id: "special",
-      label: "একটি বিশেষ চিহ্ন (One symbol @, #, $, %, etc.)",
+      label: "One special character (@, #, $, %, etc.)",
       valid: /[!@#$%^&*(),.?":{}|<>_\-+=[\]\\]/.test(password),
     },
   ];
@@ -47,7 +47,7 @@ export function checkPasswordStrength(password: string) {
   const validCount = rules.filter((r) => r.valid).length;
 
   let score = 0;
-  let label = "দুর্বল (Weak)";
+  let label = "Weak";
   let color = "bg-destructive";
   let textColor = "text-destructive";
 
@@ -56,22 +56,22 @@ export function checkPasswordStrength(password: string) {
     label = "";
   } else if (validCount <= 2) {
     score = 1;
-    label = "দুর্বল (Weak)";
+    label = "Weak";
     color = "bg-red-500";
     textColor = "text-red-500";
   } else if (validCount === 3) {
     score = 2;
-    label = "মোটামুটি (Fair)";
+    label = "Fair";
     color = "bg-amber-500";
     textColor = "text-amber-500";
   } else if (validCount === 4) {
     score = 3;
-    label = "ভালো (Good)";
+    label = "Good";
     color = "bg-emerald-500";
     textColor = "text-emerald-500";
   } else if (validCount === 5) {
     score = 4;
-    label = "খুব শক্তিশালী (Strong)";
+    label = "Strong";
     color = "bg-green-500";
     textColor = "text-green-500";
   }
@@ -113,7 +113,7 @@ export function PasswordStrengthMeter({
             ) : (
               <ShieldAlert className="h-3.5 w-3.5 text-amber-500" />
             )}
-            পাসওয়ার্ড সিকিউরিটি মাত্রা:
+            Password Security:
           </span>
           <span className={`text-[11px] font-bold ${textColor}`}>
             {label}
@@ -160,12 +160,12 @@ export function PasswordStrengthMeter({
           {passwordsMatch ? (
             <div className="flex items-center gap-1.5 text-[11px] font-medium text-emerald-500">
               <Check className="h-3.5 w-3.5" />
-              <span>উভয় পাসওয়ার্ড মিলেছে (Passwords match)</span>
+              <span>Passwords match</span>
             </div>
           ) : passwordsMismatch ? (
             <div className="flex items-center gap-1.5 text-[11px] font-medium text-destructive">
               <X className="h-3.5 w-3.5" />
-              <span>পাসওয়ার্ড দুটি মিলছে না (Passwords do not match)</span>
+              <span>Passwords do not match</span>
             </div>
           ) : null}
         </div>

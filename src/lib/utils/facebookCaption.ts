@@ -19,24 +19,24 @@ export function generateFacebookCaption(
   // Purpose & Property Type
   const listingTypeText =
     property.listingType === "RENT"
-      ? "ভাড়ার জন্য (For Rent)"
+      ? "For Rent"
       : property.listingType === "LEASE"
-      ? "লিজের জন্য (For Lease)"
-      : "বিক্রয়ের জন্য (For Sale)";
+      ? "Commercial Lease"
+      : "For Sale";
 
   const propertyTypeMap: Record<string, string> = {
-    APARTMENT: "ফ্ল্যাট / অ্যাপার্টমেন্ট",
-    HOUSE: "বাড়ি / ভিলা",
-    VILLA: "লাক্সারি ভিলা",
-    COMMERCIAL: "বাণিজ্যিক স্পেস",
-    LAND: "জমি / প্লট",
-    OFFICE: "অফিস স্পেস",
-    PENTHOUSE: "পেন্টহাউস",
-    TOWNHOUSE: "টাউনহাউস",
+    APARTMENT: "Apartment / Condominium",
+    HOUSE: "Private Residence / Villa",
+    VILLA: "Luxury Villa",
+    COMMERCIAL: "Commercial Asset",
+    LAND: "Land / Development Parcel",
+    OFFICE: "Office Suite",
+    PENTHOUSE: "Penthouse",
+    TOWNHOUSE: "Townhouse",
   };
 
   const propertyTypeText = propertyTypeMap[property.propertyType] || property.propertyType;
-  lines.push(`🏢 প্রপার্টি টাইপ: ${propertyTypeText} • ${listingTypeText}`);
+  lines.push(`🏢 Property Type: ${propertyTypeText} • ${listingTypeText}`);
 
   // Location (only available parts)
   const locParts = [
@@ -45,7 +45,7 @@ export function generateFacebookCaption(
     property.location?.city,
   ].filter(Boolean);
   if (locParts.length > 0) {
-    lines.push(`📍 লোকেশন: ${locParts.join(", ")}`);
+    lines.push(`📍 Location: ${locParts.join(", ")}`);
   }
 
   // Price
@@ -55,8 +55,8 @@ export function generateFacebookCaption(
       property.currency,
       property.pricePeriod
     );
-    const negotiableText = property.priceNegotiable ? " (দাম আলোচনা সাপেক্ষ)" : "";
-    lines.push(`💰 মূল্য: ${formattedPrice}${negotiableText}`);
+    const negotiableText = property.priceNegotiable ? " (Negotiable)" : "";
+    lines.push(`💰 Price: ${formattedPrice}${negotiableText}`);
   }
 
   lines.push("");
@@ -64,56 +64,56 @@ export function generateFacebookCaption(
   // Specifications (only if present)
   const specs: string[] = [];
   if (property.specifications?.bedrooms) {
-    specs.push(`▫️ বেডরুম: ${property.specifications.bedrooms} টি`);
+    specs.push(`▫️ Bedrooms: ${property.specifications.bedrooms}`);
   }
   if (property.specifications?.bathrooms) {
-    specs.push(`▫️ বাথরুম: ${property.specifications.bathrooms} টি`);
+    specs.push(`▫️ Bathrooms: ${property.specifications.bathrooms}`);
   }
   if (property.specifications?.propertySize) {
     specs.push(
-      `▫️ সাইজ / আয়তন: ${formatArea(
+      `▫️ Total Area: ${formatArea(
         property.specifications.propertySize,
         property.specifications.propertySizeUnit
       )}`
     );
   }
   if (property.specifications?.parkingSpaces && property.specifications.parkingSpaces > 0) {
-    specs.push(`▫️ পার্কিং সুবিধা: ${property.specifications.parkingSpaces} টি`);
+    specs.push(`▫️ Dedicated Parking: ${property.specifications.parkingSpaces} spaces`);
   }
   if (property.specifications?.floorNumber !== undefined) {
     const totalFl = property.specifications.totalFloors
-      ? ` (মোট ${property.specifications.totalFloors} তলার)`
+      ? ` (of ${property.specifications.totalFloors} floors)`
       : "";
-    specs.push(`▫️ ফ্লোর নম্বর: ${property.specifications.floorNumber}${totalFl}`);
+    specs.push(`▫️ Floor Level: ${property.specifications.floorNumber}${totalFl}`);
   }
   if (
     property.specifications?.furnishedStatus &&
     property.specifications.furnishedStatus !== "UNFURNISHED"
   ) {
     const furnishedMap: Record<string, string> = {
-      SEMI_FURNISHED: "সেমি-ফার্নিশড",
-      FULLY_FURNISHED: "ফুল ফার্নিশড",
+      SEMI_FURNISHED: "Semi-Furnished",
+      FULLY_FURNISHED: "Fully Furnished",
     };
     specs.push(
-      `▫️ ফার্নিশিং: ${
+      `▫️ Furnishing: ${
         furnishedMap[property.specifications.furnishedStatus] ||
         property.specifications.furnishedStatus
       }`
     );
   }
   if (property.specifications?.yearBuilt) {
-    specs.push(`▫️ নির্মাণ সাল: ${property.specifications.yearBuilt}`);
+    specs.push(`▫️ Built: ${property.specifications.yearBuilt}`);
   }
 
   if (specs.length > 0) {
-    lines.push("📌 প্রপার্টির মূল বিবরণ:");
+    lines.push("📌 Key Property Highlights:");
     lines.push(...specs);
   }
 
   // Amenities (only if array is non-empty)
   if (property.amenities && property.amenities.length > 0) {
     lines.push("");
-    lines.push("✨ সুযোগ-সুবিধা ও সিকিউরিটি:");
+    lines.push("✨ Features & Amenities:");
     property.amenities.forEach((amenity) => {
       lines.push(`✔️ ${amenity}`);
     });
@@ -122,7 +122,7 @@ export function generateFacebookCaption(
   // Description (only if available)
   if (property.description?.trim()) {
     lines.push("");
-    lines.push("📝 প্রপার্টি সম্পর্কে:");
+    lines.push("📝 Overview:");
     lines.push(property.description.trim());
   }
 
@@ -133,30 +133,30 @@ export function generateFacebookCaption(
   const orgName = organization?.name || property.organizationName;
 
   const contacts: string[] = [];
-  if (phone) contacts.push(`📞 কল করুন: ${phone}`);
+  if (phone) contacts.push(`📞 Phone: ${phone}`);
   if (whatsapp) contacts.push(`💬 WhatsApp: ${whatsapp}`);
-  if (email) contacts.push(`✉️ ইমেইল: ${email}`);
-  if (orgName) contacts.push(`🏢 এজেন্সি: ${orgName}`);
-  if (publicUrl) contacts.push(`🌐 সম্পূর্ণ ছবি ও বিবরণ দেখতে ক্লিক করুন: ${publicUrl}`);
+  if (email) contacts.push(`✉️ Email: ${email}`);
+  if (orgName) contacts.push(`🏢 Agency: ${orgName}`);
+  if (publicUrl) contacts.push(`🌐 View full gallery & specifications: ${publicUrl}`);
 
   if (contacts.length > 0) {
     lines.push("");
-    lines.push("📲 যোগাযোগ ও ভিজিট শিডিউল:");
+    lines.push("📲 Inquiries & Private Viewings:");
     lines.push(...contacts);
   }
 
   // Relevant hashtags based on available data
   lines.push("");
-  const tags: string[] = ["#RealEstate", "#BangladeshProperty"];
+  const tags: string[] = ["#LuxuryRealEstate", "#PropertyInvestment", "#PrimeLocation"];
 
   if (property.propertyType === "APARTMENT" || property.propertyType === "PENTHOUSE") {
-    tags.push(property.listingType === "RENT" ? "#ApartmentForRent" : "#ApartmentForSale", "#FlatForSale");
+    tags.push(property.listingType === "RENT" ? "#LuxuryApartmentForRent" : "#ApartmentForSale", "#PenthouseLiving");
   } else if (property.propertyType === "LAND") {
-    tags.push("#LandForSale", "#PlotSale", "#PlotForSale");
+    tags.push("#LandForSale", "#DevelopmentParcel", "#PrimeLand");
   } else if (property.propertyType === "COMMERCIAL" || property.propertyType === "OFFICE") {
-    tags.push("#CommercialSpace", "#OfficeSpace");
+    tags.push("#CommercialRealEstate", "#PrimeOfficeSpace");
   } else if (property.propertyType === "HOUSE" || property.propertyType === "VILLA") {
-    tags.push(property.listingType === "RENT" ? "#HouseForRent" : "#HouseForSale", "#LuxuryVilla");
+    tags.push(property.listingType === "RENT" ? "#VillaForRent" : "#VillaForSale", "#LuxuryHomes");
   }
 
   if (property.location?.city) tags.push(`#${property.location.city.replace(/\s+/g, "")}`);

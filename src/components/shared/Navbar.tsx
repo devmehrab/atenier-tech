@@ -31,7 +31,7 @@ export function Navbar({ user }: NavbarProps) {
 
   const handleLogout = async () => {
     await logoutAction();
-    success("সফলভাবে লগআউট হয়েছে");
+    success("Successfully logged out");
     router.push("/login");
     router.refresh();
   };
@@ -49,19 +49,19 @@ export function Navbar({ user }: NavbarProps) {
               className="flex items-center gap-1.5 transition-colors hover:text-primary"
             >
               <Compass className="h-4 w-4 stroke-[1.5]" />
-              প্রপার্টি খুঁজুন
+              Explore Properties
             </Link>
             <Link
               href="/#features"
               className="transition-colors hover:text-primary"
             >
-              কেন ATENIER?
+              Features
             </Link>
             <Link
               href="/#agencies"
               className="transition-colors hover:text-primary"
             >
-              পার্টনার এজেন্সিসমূহ
+              Agencies
             </Link>
           </nav>
         </div>
@@ -75,7 +75,7 @@ export function Navbar({ user }: NavbarProps) {
                 <Link href="/system-admin">
                   <Button variant="outline" size="sm" className="gap-2 border-destructive/30 text-destructive hover:bg-destructive/10 rounded-full font-medium">
                     <ShieldAlert className="h-4 w-4 stroke-[1.5]" />
-                    অ্যাডমিন প্যানেল
+                    Admin Panel
                   </Button>
                 </Link>
               ) : (
@@ -84,20 +84,20 @@ export function Navbar({ user }: NavbarProps) {
                     <Link href={`/${user.organizationSlug}`} target="_blank">
                       <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-primary rounded-full font-medium">
                         <Building className="h-4 w-4 stroke-[1.5]" />
-                        আপনার সাইট
+                        Your Storefront
                       </Button>
                     </Link>
                   )}
                   <Link href="/dashboard">
                     <Button variant="outline" size="sm" className="gap-2 border-primary/20 text-primary hover:bg-primary/5 rounded-full font-medium">
                       <LayoutDashboard className="h-4 w-4 stroke-[1.5]" />
-                      ড্যাশবোর্ড
+                      Dashboard
                     </Button>
                   </Link>
                   <Link href="/dashboard/properties/new">
                     <Button size="sm" className="gap-2 rounded-full font-medium shadow-sm">
                       <PlusCircle className="h-4 w-4 stroke-[1.5]" />
-                      প্রপার্টি যোগ করুন
+                      Add Property
                     </Button>
                   </Link>
                 </>
@@ -108,7 +108,7 @@ export function Navbar({ user }: NavbarProps) {
                 size="sm"
                 onClick={handleLogout}
                 className="text-muted-foreground hover:text-destructive rounded-full h-9 w-9 p-0 flex items-center justify-center"
-                title="লগআউট করুন"
+                title="Log out"
               >
                 <LogOut className="h-4 w-4 stroke-[1.5]" />
               </Button>
@@ -117,12 +117,12 @@ export function Navbar({ user }: NavbarProps) {
             <div className="flex items-center gap-3">
               <Link href="/login">
                 <Button variant="ghost" size="sm" className="font-medium hover:text-primary rounded-full">
-                  লগইন
+                  Sign In
                 </Button>
               </Link>
               <Link href="/register-organization">
                 <Button size="sm" className="shadow-sm rounded-full font-medium px-5">
-                  এজেন্সি ওয়েবসাইট শুরু করুন
+                  Launch Agency Site
                 </Button>
               </Link>
             </div>
@@ -136,7 +136,7 @@ export function Navbar({ user }: NavbarProps) {
             type="button"
             onClick={() => setMobileOpen(!mobileOpen)}
             className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-full transition-colors focus:outline-none"
-            aria-label={mobileOpen ? "মেনু বন্ধ করুন" : "মেনু খুলুন"}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
           >
             {mobileOpen ? (
@@ -158,21 +158,21 @@ export function Navbar({ user }: NavbarProps) {
               className="flex items-center gap-2 py-2 hover:text-primary transition-colors"
             >
               <Compass className="h-5 w-5 stroke-[1.5] text-muted-foreground" />
-              প্রপার্টি খুঁজুন
+              Explore Properties
             </Link>
             <Link
               href="/#features"
               onClick={() => setMobileOpen(false)}
               className="py-2 hover:text-primary transition-colors pl-7"
             >
-              কেন Atenier?
+              Features
             </Link>
             <Link
               href="/#agencies"
               onClick={() => setMobileOpen(false)}
               className="py-2 hover:text-primary transition-colors pl-7"
             >
-              পার্টনার এজেন্সিসমূহ
+              Agencies
             </Link>
           </nav>
 
@@ -180,18 +180,18 @@ export function Navbar({ user }: NavbarProps) {
             {user ? (
               <>
                 <div className="text-sm text-muted-foreground font-light px-1 mb-2">
-                  লগইন অবস্থায় আছেন: <span className="font-medium text-foreground">{user.name}</span>
+                  Signed in as: <span className="font-medium text-foreground">{user.name}</span>
                 </div>
                 {user.role === "SYSTEM_ADMIN" ? (
                   <Link href="/system-admin" onClick={() => setMobileOpen(false)}>
                     <Button variant="outline" className="w-full justify-center text-destructive border-destructive/30 rounded-full h-11">
-                      অ্যাডমিন প্যানেল
+                      Admin Panel
                     </Button>
                   </Link>
                 ) : (
                   <Link href="/dashboard" onClick={() => setMobileOpen(false)}>
                     <Button className="w-full justify-center rounded-full h-11 font-medium shadow-sm">
-                      ড্যাশবোর্ডে যান
+                      Go to Dashboard
                     </Button>
                   </Link>
                 )}
@@ -203,19 +203,19 @@ export function Navbar({ user }: NavbarProps) {
                   }}
                   className="w-full text-destructive border-destructive/20 justify-center hover:bg-destructive/5 rounded-full h-11"
                 >
-                  লগআউট করুন
+                  Log Out
                 </Button>
               </>
             ) : (
               <>
                 <Link href="/login" onClick={() => setMobileOpen(false)}>
                   <Button variant="outline" className="w-full justify-center rounded-full h-11 border-border/60">
-                    লগইন করুন
+                    Sign In
                   </Button>
                 </Link>
                 <Link href="/register-organization" onClick={() => setMobileOpen(false)}>
                   <Button className="w-full justify-center rounded-full h-11 shadow-sm font-medium">
-                    এজেন্সি ওয়েবসাইট শুরু করুন
+                    Launch Agency Site
                   </Button>
                 </Link>
               </>

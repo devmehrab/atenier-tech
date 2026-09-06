@@ -43,7 +43,7 @@ export default function RegisterOrgPage() {
     organizationName: "",
     organizationSlug: "",
     city: "",
-    country: "BD",
+    country: "US",
   });
 
   const handleNameChange = (val: string) => {
@@ -74,7 +74,7 @@ export default function RegisterOrgPage() {
     if (emailDisposableCheck.isDisposable) {
       error(
         emailDisposableCheck.reason ||
-          "ডিসপোজেবল বা ফেক ইমেইল গ্রহণযোগ্য নয়। অনুগ্রহ করে আপনার আসল ইমেইল ব্যবহার করুন।"
+          "Disposable or temporary email addresses are not permitted. Please use a valid work or personal email."
       );
       return;
     }
@@ -82,14 +82,14 @@ export default function RegisterOrgPage() {
     // 2. Force strong password
     if (!passwordStatus.isStrong) {
       error(
-        "অনুগ্রহ করে শক্তিশালী পাসওয়ার্ড ব্যবহার করুন (কমপক্ষে ৮ অক্ষর, বড় ও ছোট হাতের অক্ষর, সংখ্যা এবং বিশেষ চিহ্ন আবশ্যক)"
+        "Please use a strong password (at least 8 characters with upper & lowercase letters, numbers, and symbols)"
       );
       return;
     }
 
     // 3. Confirm password check
     if (formData.password !== formData.confirmPassword) {
-      error("পাসওয়ার্ড এবং কনফার্ম পাসওয়ার্ড মিলছে না!");
+      error("Passwords do not match!");
       return;
     }
 
@@ -98,14 +98,14 @@ export default function RegisterOrgPage() {
     try {
       const res = await registerOrgAction(formData);
       if (res.success && res.data) {
-        success(res.message || "এজেন্সি সফলভাবে তৈরি হয়েছে!");
-        info("আপনার ইমেইলে পাঠানো ভেরিফিকেশন কোড দিয়ে অ্যাকাউন্ট ভেরিফাই করুন।");
+        success(res.message || "Brokerage registered successfully!");
+        info("A verification code has been sent to your email to activate your account.");
         router.push(res.data.redirectUrl);
       } else {
-        error(res.message || "এজেন্সি রেজিস্ট্রেশন ব্যর্থ হয়েছে");
+        error(res.message || "Failed to register brokerage");
       }
     } catch (err: any) {
-      error(err.message || "একটি অনাকাঙ্ক্ষিত ত্রুটি ঘটেছে");
+      error(err.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -114,11 +114,11 @@ export default function RegisterOrgPage() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-extrabold text-foreground">
-          নতুন এজেন্সি রেজিস্ট্রেশন
+        <h2 className="text-2xl font-extrabold text-foreground tracking-tight">
+          Create Brokerage Account
         </h2>
         <p className="mt-1.5 text-xs text-muted-foreground">
-          আপনার রিয়েল এস্টেট এজেন্সির জন্য নিজস্ব ব্র্যান্ডেড স্টোরফ্রন্ট ও ক্লাউড ম্যানেজমেন্ট ড্যাশবোর্ড তৈরি করুন
+          Launch your agency's branded digital storefront and cloud inventory platform
         </p>
       </div>
 
@@ -126,13 +126,13 @@ export default function RegisterOrgPage() {
         {/* Organization Name */}
         <div>
           <label className="block text-xs font-semibold text-foreground mb-1.5">
-            এজেন্সি / ব্রোকারেজ নাম *
+            Agency / Brokerage Name *
           </label>
           <div className="relative">
             <Building className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               required
-              placeholder="যেমন: স্কাইলাইন রিয়েল এস্টেট"
+              placeholder="e.g. Skyline Capital Realty"
               className="pl-10 h-11 bg-background border-input text-foreground text-sm"
               value={formData.organizationName}
               onChange={(e) => handleNameChange(e.target.value)}
@@ -143,11 +143,11 @@ export default function RegisterOrgPage() {
         {/* Organization Slug */}
         <div>
           <label className="block text-xs font-semibold text-foreground mb-1.5">
-            এজেন্সি ওয়েব হ্যান্ডেল (URL Slug) *
+            Agency URL Handle (Slug) *
           </label>
           <Input
             required
-            placeholder="skyline-real-estate"
+            placeholder="skyline-capital"
             className="h-11 bg-background border-input text-foreground text-sm font-mono"
             value={formData.organizationSlug}
             onChange={(e) =>
@@ -155,7 +155,7 @@ export default function RegisterOrgPage() {
             }
           />
           <p className="mt-1.5 text-[11px] font-mono text-primary font-medium">
-            পাবলিক স্টোরফ্রন্ট লিংক: /{formData.organizationSlug || "your-agency-slug"}
+            Public storefront link: /{formData.organizationSlug || "your-agency-slug"}
           </p>
         </div>
 
@@ -163,11 +163,11 @@ export default function RegisterOrgPage() {
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="block text-xs font-semibold text-foreground mb-1.5">
-              শহর / লোকেশন *
+              City / Region *
             </label>
             <Input
               required
-              placeholder="ঢাকা / চট্টগ্রাম"
+              placeholder="New York, NY"
               className="h-11 bg-background border-input text-foreground text-sm"
               value={formData.city}
               onChange={(e) => setFormData({ ...formData, city: e.target.value })}
@@ -175,11 +175,11 @@ export default function RegisterOrgPage() {
           </div>
           <div>
             <label className="block text-xs font-semibold text-foreground mb-1.5">
-              দেশ
+              Country Code
             </label>
             <Input
               required
-              placeholder="BD / US"
+              placeholder="US"
               className="h-11 bg-background border-input text-foreground text-sm"
               value={formData.country}
               onChange={(e) => setFormData({ ...formData, country: e.target.value })}
@@ -189,20 +189,20 @@ export default function RegisterOrgPage() {
 
         <div className="pt-4 border-t border-border/50">
           <span className="block text-xs font-bold text-foreground mb-3">
-            এজেন্সি ওনার অ্যাকাউন্ট ও নিরাপত্তা তথ্য
+            Principal Account & Credentials
           </span>
 
           <div className="space-y-3.5">
             {/* Full Name */}
             <div>
               <label className="block text-xs font-semibold text-foreground mb-1.5">
-                আপনার পুরো নাম *
+                Full Name *
               </label>
               <div className="relative">
                 <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   required
-                  placeholder="যেমন: তানভীর আহমেদ"
+                  placeholder="e.g. Alexander Wright"
                   className="pl-10 h-11 bg-background border-input text-foreground text-sm"
                   value={formData.userName}
                   onChange={(e) => setFormData({ ...formData, userName: e.target.value })}
@@ -214,10 +214,10 @@ export default function RegisterOrgPage() {
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="block text-xs font-semibold text-foreground">
-                  অফিসিয়াল ইমেইল এড্রেস *
+                  Official Email Address *
                 </label>
                 <span className="text-[10px] text-muted-foreground">
-                  (Gmail, Outlook, Yahoo বা অফিসিয়াল ডোমেইন)
+                  (Corporate domain, Gmail, or Outlook)
                 </span>
               </div>
               <div className="relative">
@@ -225,7 +225,7 @@ export default function RegisterOrgPage() {
                 <Input
                   type="email"
                   required
-                  placeholder="owner@agency.com বা owner@gmail.com"
+                  placeholder="principal@brokerage.com"
                   className={`pl-10 h-11 bg-background text-foreground text-sm ${
                     emailDisposableCheck.isDisposable
                       ? "border-destructive focus-visible:ring-destructive"
@@ -247,7 +247,7 @@ export default function RegisterOrgPage() {
             {/* Strong Password */}
             <div>
               <label className="block text-xs font-semibold text-foreground mb-1.5">
-                শক্তিশালী পাসওয়ার্ড *
+                Master Password *
               </label>
               <div className="relative">
                 <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -283,7 +283,7 @@ export default function RegisterOrgPage() {
             {/* Confirm Password */}
             <div>
               <label className="block text-xs font-semibold text-foreground mb-1.5">
-                পাসওয়ার্ড নিশ্চিত করুন (Confirm Password) *
+                Confirm Password *
               </label>
               <div className="relative">
                 <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -320,12 +320,12 @@ export default function RegisterOrgPage() {
                 <div className="mt-1.5 text-xs">
                   {formData.password === formData.confirmPassword ? (
                     <span className="text-emerald-500 font-medium flex items-center gap-1">
-                      ✓ পাসওয়ার্ড মিলেছে (Passwords match)
+                      ✓ Passwords match
                     </span>
                   ) : (
                     <span className="text-destructive font-medium flex items-center gap-1">
                       <AlertCircle className="h-3.5 w-3.5" />
-                      পাসওয়ার্ড মিলছে না (Passwords do not match)
+                      Passwords do not match
                     </span>
                   )}
                 </div>
@@ -335,13 +335,13 @@ export default function RegisterOrgPage() {
             {/* Phone Number */}
             <div>
               <label className="block text-xs font-semibold text-foreground mb-1.5">
-                মোবাইল / হোয়াটসঅ্যাপ নম্বর
+                Phone / WhatsApp Number
               </label>
               <div className="relative">
                 <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="tel"
-                  placeholder="+880 1700-000000"
+                  placeholder="+1 (555) 019-2834"
                   className="pl-10 h-11 bg-background border-input text-foreground text-sm"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -357,15 +357,15 @@ export default function RegisterOrgPage() {
           size="lg"
           className="w-full h-11 text-sm font-bold shadow-md gap-2 mt-4"
         >
-          <span>এজেন্সি তৈরি ও ইমেইল ভেরিফাই করুন</span>
+          <span>Create Agency & Verify Email</span>
           <ArrowRight className="h-4 w-4" />
         </Button>
       </form>
 
       <div className="text-center pt-2 text-xs text-muted-foreground">
-        ইতিমধ্যে এজেন্সি একাউন্ট আছে?{" "}
+        Already have a brokerage account?{" "}
         <Link href="/login" className="font-bold text-primary hover:underline">
-          লগইন করুন
+          Sign in
         </Link>
       </div>
     </div>

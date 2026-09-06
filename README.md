@@ -6,7 +6,7 @@ Every real estate agency or individual agent gets their own isolated public prop
 
 ---
 
-## 🌟 Key Highlights
+## Key Highlights
 
 - **Zero-Leak Multi-Tenancy**: Strict server-side tenant isolation enforced at the database service and Server Action layers. No client-supplied tenant identifiers are trusted.
 - **Dedicated Public Storefronts (`/[tenant]`)**: Real estate marketplace aesthetic with dynamic hero banners, faceted search, Schema.org `RealEstateListing` structured data, Open Graph cards, and direct WhatsApp CTAs.
@@ -17,7 +17,7 @@ Every real estate agency or individual agent gets their own isolated public prop
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -33,7 +33,7 @@ Every real estate agency or individual agent gets their own isolated public prop
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 real-estate-saas/
@@ -102,7 +102,7 @@ real-estate-saas/
 
 ---
 
-## 🔒 Multi-Tenancy & Security Model
+## Multi-Tenancy & Security Model
 
 ### 1. Tenant Isolation Architecture
 - Every tenant database entity (`Property`, `Lead`, `User`) stores an `organizationId`.
@@ -171,7 +171,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 👥 Demo Test Accounts
+## Demo Test Accounts
 
 The seed script creates the following pre-configured test accounts (with 1-click fill buttons available on `/login`):
 
@@ -184,7 +184,7 @@ The seed script creates the following pre-configured test accounts (with 1-click
 
 ---
 
-## 🌐 Public URL Routing Model
+## Public URL Routing Model
 
 - **Platform Portal / Agency Directory**: `/`
 - **Global Marketplace Explore**: `/explore`
@@ -196,7 +196,7 @@ The seed script creates the following pre-configured test accounts (with 1-click
 
 ---
 
-## 🚀 Deployment Instructions
+## Deployment Instructions
 
 ### Vercel / Cloudflare / Node Server
 1. Connect your Git repository to Vercel or your hosting platform.
@@ -206,5 +206,5 @@ The seed script creates the following pre-configured test accounts (with 1-click
 
 ---
 
-## 📄 License
+## License
 MIT License. Built for commercial multi-tenant SaaS deployment.

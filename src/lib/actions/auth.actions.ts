@@ -55,7 +55,7 @@ export async function loginAction(
     if (!validated.success) {
       return {
         success: false,
-        message: "সঠিক তথ্য প্রদান করুন",
+        message: "Please provide valid credentials",
         errors: validated.error.flatten().fieldErrors,
       };
     }
@@ -67,13 +67,13 @@ export async function loginAction(
     });
 
     if (!user) {
-      return { success: false, message: "ভুল ইমেইল অথবা পাসওয়ার্ড" };
+      return { success: false, message: "Invalid email or password" };
     }
 
     if (user.status === "DISABLED") {
       return {
         success: false,
-        message: "আপনার অ্যাকাউন্ট নিষ্ক্রিয় করা হয়েছে। সাপোর্টে যোগাযোগ করুন।",
+        message: "Your account has been deactivated. Please contact support.",
       };
     }
 
@@ -83,7 +83,7 @@ export async function loginAction(
     );
 
     if (!isMatch) {
-      return { success: false, message: "ভুল ইমেইল অথবা পাসওয়ার্ড" };
+      return { success: false, message: "Invalid email or password" };
     }
 
     // Check if email is verified
@@ -110,7 +110,7 @@ export async function loginAction(
         requiresVerification: true,
         unverifiedEmail: user.email,
         message:
-          "আপনার ইমেইল এখনও ভেরিফাই করা হয়নি। আপনার ইনবক্সে পাঠানো ভেরিফিকেশন লিংক বা ওটিপি দিয়ে ভেরিফাই করুন।",
+          "Your email is not verified yet. Please verify using the code or link sent to your inbox.",
       };
     }
 
@@ -123,7 +123,7 @@ export async function loginAction(
         if (org.status === "SUSPENDED") {
           return {
             success: false,
-            message: "আপনার এজেন্সি অ্যাকাউন্ট স্থগিত রাখা হয়েছে।",
+            message: "Your brokerage account has been suspended.",
           };
         }
         organizationSlug = org.slug;
@@ -151,14 +151,14 @@ export async function loginAction(
 
     return {
       success: true,
-      message: "সফলভাবে সাইন ইন হয়েছে",
+      message: "Signed in successfully",
       data: { user: sessionUser, redirectUrl },
     };
   } catch (error: any) {
     console.error("Login error:", error);
     return {
       success: false,
-      message: error.message || "সাইন ইন করার সময় একটি অনাকাঙ্ক্ষিত ত্রুটি ঘটেছে",
+      message: error.message || "An unexpected error occurred during sign in",
     };
   }
 }
@@ -175,7 +175,7 @@ export async function registerOrgAction(
     if (!validated.success) {
       return {
         success: false,
-        message: "প্রদত্ত তথ্যে ত্রুটি রয়েছে। অনুগ্রহ করে চেক করুন।",
+        message: "Validation error in submitted data. Please review.",
         errors: validated.error.flatten().fieldErrors,
       };
     }
@@ -189,7 +189,7 @@ export async function registerOrgAction(
     if (existingUser) {
       return {
         success: false,
-        message: "এই ইমেইল দিয়ে ইতিমধ্যে একটি অ্যাকাউন্ট রয়েছে। অনুগ্রহ করে লগইন করুন।",
+        message: "An account already exists with this email. Please sign in.",
       };
     }
 
@@ -201,7 +201,7 @@ export async function registerOrgAction(
       return {
         success: false,
         message:
-          "এই এজেন্সি ওয়েব হ্যান্ডেলটি (URL Slug) ইতিমধ্যে ব্যবহৃত হচ্ছে। অন্য একটি নাম দিন।",
+          "This agency URL handle is already taken. Please choose another name.",
       };
     }
 
@@ -230,7 +230,7 @@ export async function registerOrgAction(
       email: validated.data.email.toLowerCase(),
       phone: validated.data.phone,
       city: validated.data.city,
-      country: validated.data.country || "BD",
+      country: validated.data.country || "US",
       ownerId: user._id,
       status: "ACTIVE",
     });
@@ -250,7 +250,7 @@ export async function registerOrgAction(
     return {
       success: true,
       message:
-        "এজেন্সি সফলভাবে রেজিস্টার হয়েছে! আপনার ইমেইলে ভেরিফিকেশন কোড ও লিংক পাঠানো হয়েছে।",
+        "Brokerage registered successfully! Verification instructions have been sent to your email.",
       data: {
         email: user.email,
         redirectUrl: `/verify-email?email=${encodeURIComponent(user.email)}`,
@@ -260,7 +260,7 @@ export async function registerOrgAction(
     console.error("Org register error:", error);
     return {
       success: false,
-      message: error.message || "এজেন্সি রেজিস্ট্রেশন সম্পন্ন করা যায়নি",
+      message: error.message || "Failed to complete brokerage registration",
     };
   }
 }
@@ -276,7 +276,7 @@ export async function verifyEmailAction(
     if (!validated.success) {
       return {
         success: false,
-        message: "ভেরিফিকেশন টোকেন অথবা ওটিপি প্রদান করুন",
+        message: "Please provide a verification token or OTP",
         errors: validated.error.flatten().fieldErrors,
       };
     }
@@ -303,7 +303,7 @@ export async function verifyEmailAction(
       return {
         success: false,
         message:
-          "ভেরিফিকেশন লিংক বা ওটিপি কোডটি সঠিক নয় অথবা এর মেয়াদ শেষ হয়ে গেছে। অনুগ্রহ করে নতুন কোড রিকোয়েস্ট করুন।",
+          "Verification link or OTP is invalid or has expired. Please request a new code.",
       };
     }
 
@@ -348,14 +348,14 @@ export async function verifyEmailAction(
 
     return {
       success: true,
-      message: "আপনার ইমেইল সফলভাবে ভেরিফাই হয়েছে! ড্যাশবোর্ডে প্রবেশ করা হচ্ছে...",
+      message: "Your email has been verified successfully! Redirecting to dashboard...",
       data: { user: sessionUser, redirectUrl },
     };
   } catch (error: any) {
     console.error("Verify email error:", error);
     return {
       success: false,
-      message: error.message || "ইমেইল ভেরিফিকেশন সম্পন্ন করা যায়নি",
+      message: error.message || "Failed to complete email verification",
     };
   }
 }
@@ -368,20 +368,20 @@ export async function resendVerificationAction(
 ): Promise<ActionResult> {
   try {
     if (!email || !email.includes("@")) {
-      return { success: false, message: "সঠিক ইমেইল এড্রেস প্রদান করুন" };
+      return { success: false, message: "Please provide a valid email address" };
     }
 
     await connectToDatabase();
 
     const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
-      return { success: false, message: "এই ইমেইলে কোনো অ্যাকাউন্ট পাওয়া যায়নি" };
+      return { success: false, message: "No account found with this email" };
     }
 
     if (user.isEmailVerified) {
       return {
         success: false,
-        message: "আপনার ইমেইল ইতিমধ্যে ভেরিফাই করা আছে। অনুগ্রহ করে লগইন করুন।",
+        message: "Your email is already verified. Please sign in.",
       };
     }
 
@@ -400,13 +400,13 @@ export async function resendVerificationAction(
 
     return {
       success: true,
-      message: "নতুন ভেরিফিকেশন কোড ও লিংক আপনার ইমেইলে পাঠানো হয়েছে।",
+      message: "A new verification code and link have been dispatched to your email.",
     };
   } catch (error: any) {
     console.error("Resend verification error:", error);
     return {
       success: false,
-      message: error.message || "ভেরিফিকেশন কোড পুনরায় পাঠানো যায়নি",
+      message: error.message || "Failed to resend verification code",
     };
   }
 }
@@ -423,7 +423,7 @@ export async function forgotPasswordAction(
     if (!validated.success) {
       return {
         success: false,
-        message: "অনুগ্রহ করে একটি সঠিক ইমেইল এড্রেস প্রদান করুন",
+        message: "Please provide a valid email address",
         errors: validated.error.flatten().fieldErrors,
       };
     }
@@ -435,17 +435,16 @@ export async function forgotPasswordAction(
     });
 
     if (!user) {
-      // Return clear message or generic message for security
       return {
         success: false,
-        message: "এই ইমেইল অ্যাড্রেস দিয়ে কোনো অ্যাকাউন্ট খুঁজে পাওয়া যায়নি।",
+        message: "No account found with this email address.",
       };
     }
 
     if (user.status === "DISABLED") {
       return {
         success: false,
-        message: "আপনার অ্যাকাউন্ট নিষ্ক্রিয় রয়েছে। সাপোর্টে যোগাযোগ করুন।",
+        message: "Your account has been deactivated. Please contact support.",
       };
     }
 
@@ -467,14 +466,14 @@ export async function forgotPasswordAction(
     return {
       success: true,
       message:
-        "পাসওয়ার্ড রিসেট লিংক ও ওটিপি কোড আপনার ইমেইলে পাঠানো হয়েছে। আপনার ইনবক্স চেক করুন।",
+        "Password reset instructions have been dispatched to your email.",
       data: { email: user.email },
     };
   } catch (error: any) {
     console.error("Forgot password error:", error);
     return {
       success: false,
-      message: error.message || "পাসওয়ার্ড রিসেট রিকোয়েস্ট সম্পন্ন করা যায়নি",
+      message: error.message || "Failed to process password reset request",
     };
   }
 }
@@ -491,7 +490,7 @@ export async function resetPasswordAction(
     if (!validated.success) {
       return {
         success: false,
-        message: "প্রদত্ত তথ্যে ত্রুটি রয়েছে",
+        message: "Validation error in submitted data",
         errors: validated.error.flatten().fieldErrors,
       };
     }
@@ -518,7 +517,7 @@ export async function resetPasswordAction(
       return {
         success: false,
         message:
-          "পাসওয়ার্ড রিসেট লিংক বা ওটিপি কোডটি সঠিক নয় অথবা এর মেয়াদ শেষ হয়ে গেছে। অনুগ্রহ করে আবার রিকোয়েস্ট করুন।",
+          "Password reset link or OTP code is invalid or has expired. Please request a new code.",
       };
     }
 
@@ -533,14 +532,14 @@ export async function resetPasswordAction(
     return {
       success: true,
       message:
-        "পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে! অনুগ্রহ করে নতুন পাসওয়ার্ড দিয়ে লগইন করুন।",
+        "Password updated successfully! Please sign in with your new credentials.",
       data: { redirectUrl: "/login" },
     };
   } catch (error: any) {
     console.error("Reset password error:", error);
     return {
       success: false,
-      message: error.message || "পাসওয়ার্ড রিসেট করা সম্ভব হয়নি",
+      message: error.message || "Failed to reset password",
     };
   }
 }
@@ -550,5 +549,5 @@ export async function resetPasswordAction(
  */
 export async function logoutAction(): Promise<ActionResult> {
   await clearSessionCookie();
-  return { success: true, message: "সফলভাবে সাইন আউট হয়েছে" };
+  return { success: true, message: "Signed out successfully" };
 }
