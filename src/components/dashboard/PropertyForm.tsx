@@ -32,24 +32,24 @@ interface PropertyFormProps {
 }
 
 const COMMON_AMENITIES = [
-  "Full Generator Backup (100%)",
+  "Central Air Conditioning & Heating",
   "24/7 Security & CCTV Surveillance",
-  "High-Speed Passenger Lift",
-  "Bed / Cargo Lift",
-  "Covered Car Parking",
-  "Dedicated Prayer Room (Namaz Hall)",
-  "Rooftop Garden & Community Hall",
-  "Fitness Center / Gymnasium",
-  "Titas Gas Connection / Central LPG",
-  "Deep Tube-well & Water Filtration",
-  "Intercom & Video Door Phone",
-  "Fire Hydrant & Suppression System",
-  "Driver Waiting Area & Restroom",
+  "High-Speed Passenger Elevator",
+  "Service / Freight Elevator",
+  "Covered Garage & Parking",
+  "Rooftop Terrace & Lounge",
+  "Fitness Center & Gymnasium",
   "Swimming Pool",
-  "Caretaker & Guard Quarter",
-  "Solar Panel Backup System",
-  "South-Facing Open Verandas",
-  "Waste Management Chute",
+  "Private Balcony / Terrace",
+  "High-Speed Fiber Internet Ready",
+  "Intercom & Smart Video Access",
+  "Full Generator Power Backup",
+  "In-Unit Washer & Dryer",
+  "Concierge & Front Desk Service",
+  "Landscaped Courtyard & Garden",
+  "Pet Friendly Facilities",
+  "EV Charging Stations",
+  "Waste Management & Chute System",
 ];
 
 export function PropertyForm({
@@ -67,16 +67,16 @@ export function PropertyForm({
     listingType: initialData?.listingType || "SALE",
     propertyType: initialData?.propertyType || "APARTMENT",
     status: initialData?.status || "DRAFT",
-    price: initialData?.price || 17500000,
-    currency: initialData?.currency || "BDT",
+    price: initialData?.price || 650000,
+    currency: initialData?.currency || "USD",
     priceNegotiable: initialData?.priceNegotiable ?? false,
     pricePeriod: initialData?.pricePeriod,
     location: {
       address: initialData?.location?.address || "",
-      city: initialData?.location?.city || "Dhaka",
+      city: initialData?.location?.city || "New York",
       area: initialData?.location?.area || "",
-      state: initialData?.location?.state || "Dhaka Division",
-      country: initialData?.location?.country || "Bangladesh",
+      state: initialData?.location?.state || "NY",
+      country: initialData?.location?.country || "United States",
       zipCode: initialData?.location?.zipCode || "",
       latitude: initialData?.location?.latitude,
       longitude: initialData?.location?.longitude,
@@ -88,17 +88,17 @@ export function PropertyForm({
       propertySize: initialData?.specifications?.propertySize ?? 2150,
       propertySizeUnit: initialData?.specifications?.propertySizeUnit || "sqft",
       landSize: initialData?.specifications?.landSize,
-      landSizeUnit: initialData?.specifications?.landSizeUnit || "katha",
+      landSizeUnit: initialData?.specifications?.landSizeUnit || "sqft",
       floorNumber: initialData?.specifications?.floorNumber,
       totalFloors: initialData?.specifications?.totalFloors,
       yearBuilt: initialData?.specifications?.yearBuilt ?? 2024,
       furnishedStatus: initialData?.specifications?.furnishedStatus || "UNFURNISHED",
     },
     amenities: initialData?.amenities || [
-      "Full Generator Backup (100%)",
+      "Central Air Conditioning & Heating",
       "24/7 Security & CCTV Surveillance",
-      "High-Speed Passenger Lift",
-      "Covered Car Parking",
+      "High-Speed Passenger Elevator",
+      "Covered Garage & Parking",
     ],
     features: initialData?.features || [],
     images: initialData?.images || [],
@@ -182,7 +182,7 @@ export function PropertyForm({
               Property Title *
             </label>
             <Input
-              placeholder="e.g. South-Facing 3BHK Luxury Apartment in Gulshan-2 (Road 104)"
+              placeholder="e.g. Modern Luxury 3-Bedroom Penthouse with Skyline Views"
               error={errors.title?.message}
               {...register("title")}
             />
@@ -264,7 +264,7 @@ export function PropertyForm({
           </div>
           <div>
             <h3 className="text-base font-bold text-card-foreground">Pricing & Terms</h3>
-            <p className="text-xs text-muted-foreground">Set asking price in BDT (Taka), currency, and negotiable options</p>
+            <p className="text-xs text-muted-foreground">Set asking price, currency, and negotiable options</p>
           </div>
         </div>
 
@@ -275,12 +275,12 @@ export function PropertyForm({
             </label>
             <Input
               type="number"
-              placeholder="e.g. 18500000 (1.85 Cr) or 65000"
+              placeholder="e.g. 650000 or 3500"
               error={errors.price?.message}
               {...register("price")}
             />
             <span className="text-[11px] text-muted-foreground mt-1 block">
-              Enter numbers (e.g. 15000000 for 1.5 Crore BDT)
+              Enter numbers (e.g. 650000 for $650,000)
             </span>
           </div>
 
@@ -289,12 +289,14 @@ export function PropertyForm({
               Currency
             </label>
             <Select {...register("currency")}>
-              <option value="BDT">BDT (৳) - Bangladeshi Taka</option>
               <option value="USD">USD ($) - US Dollar</option>
               <option value="EUR">EUR (€) - Euro</option>
               <option value="GBP">GBP (£) - British Pound</option>
+              <option value="CAD">CAD ($) - Canadian Dollar</option>
+              <option value="AUD">AUD ($) - Australian Dollar</option>
               <option value="AED">AED (AED) - UAE Dirham</option>
               <option value="SAR">SAR (SAR) - Saudi Riyal</option>
+              <option value="BDT">BDT (৳) - Bangladeshi Taka</option>
             </Select>
           </div>
 
@@ -332,7 +334,7 @@ export function PropertyForm({
           </div>
           <div>
             <h3 className="text-base font-bold text-card-foreground">Property Location</h3>
-            <p className="text-xs text-muted-foreground">Road, holding address, neighborhood/thana, district, and postal code</p>
+            <p className="text-xs text-muted-foreground">Street address, neighborhood, city, and postal code</p>
           </div>
         </div>
 
@@ -342,7 +344,7 @@ export function PropertyForm({
               Street / Holding Address *
             </label>
             <Input
-              placeholder="e.g. House 42, Road 11, Block D or Plot 12, Road 104"
+              placeholder="e.g. 350 5th Avenue, Suite 400 or 742 Evergreen Terrace"
               error={errors.location?.address?.message}
               {...register("location.address")}
             />
@@ -351,10 +353,10 @@ export function PropertyForm({
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-semibold text-card-foreground mb-1">
-                Area / Neighborhood / Thana *
+                Area / Neighborhood *
               </label>
               <Input
-                placeholder="e.g. Gulshan-2, Banani, Dhanmondi, Uttara, Bashundhara R/A"
+                placeholder="e.g. Midtown, Downtown, West End, Beverly Hills"
                 error={errors.location?.area?.message}
                 {...register("location.area")}
               />
@@ -365,7 +367,7 @@ export function PropertyForm({
                 City / District *
               </label>
               <Input
-                placeholder="e.g. Dhaka, Chittagong, Sylhet, Cox's Bazar, Rajshahi"
+                placeholder="e.g. New York, Los Angeles, London, Miami"
                 error={errors.location?.city?.message}
                 {...register("location.city")}
               />
@@ -376,7 +378,7 @@ export function PropertyForm({
                 Country
               </label>
               <Input
-                placeholder="Bangladesh"
+                placeholder="United States"
                 {...register("location.country")}
               />
             </div>
@@ -388,7 +390,7 @@ export function PropertyForm({
                 Division / Region
               </label>
               <Input
-                placeholder="e.g. Dhaka Division, Chittagong Division"
+                placeholder="e.g. New York, California, Greater London"
                 {...register("location.state")}
               />
             </div>
@@ -398,7 +400,7 @@ export function PropertyForm({
                 Postal / Zip Code
               </label>
               <Input
-                placeholder="e.g. 1212, 1213, 1205, 1230, 4000"
+                placeholder="e.g. 10001, 90210, SW1A 1AA"
                 {...register("location.zipCode")}
               />
             </div>
@@ -461,7 +463,6 @@ export function PropertyForm({
             </label>
             <Select {...register("specifications.propertySizeUnit")}>
               <option value="sqft">Square Feet (sq ft)</option>
-              <option value="katha">Katha</option>
               <option value="sqm">Square Meters (m²)</option>
             </Select>
           </div>
@@ -510,10 +511,8 @@ export function PropertyForm({
               Land Unit
             </label>
             <Select {...register("specifications.landSizeUnit")}>
-              <option value="katha">Katha </option>
-              <option value="decimal">Decimal / Shatak </option>
-              <option value="bigha">Bigha </option>
               <option value="sqft">Square Feet (sq ft)</option>
+              <option value="sqm">Square Meters (m²)</option>
               <option value="acre">Acre</option>
             </Select>
           </div>

@@ -18,7 +18,6 @@ import {
   Check,
   Maximize2,
   Minimize2,
-  Layers,
   Compass,
   Sparkles,
 } from "lucide-react";
@@ -35,36 +34,8 @@ interface PropertyMapSectionProps {
 
 const DEFAULT_COORDS: [number, number] = [-73.9855, 40.7484]; // [lng, lat] (Manhattan, NY)
 
-// 1. High-DPI Bright / Voyager Style (Colorful, crisp, detailed streets & landmarks)
-const BRIGHT_STYLE: StyleSpecification = {
-  version: 8,
-  sources: {
-    "bright-tiles": {
-      type: "raster",
-      tiles: [
-        "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
-        "https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
-        "https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
-        "https://d.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
-      ],
-      tileSize: 256,
-      attribution:
-        '© <a href="https://openfreemap.org" target="_blank" rel="noopener noreferrer">OpenFreeMap</a> / <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>',
-    },
-  },
-  layers: [
-    {
-      id: "bright-layer",
-      type: "raster",
-      source: "bright-tiles",
-      minzoom: 0,
-      maxzoom: 20,
-    },
-  ],
-};
-
-// 2. OpenStreetMap Standard (Liberty)
-const LIBERTY_STYLE: StyleSpecification = {
+// OpenStreetMap (OSM) Standard Raster Tiles
+const OSM_STYLE: StyleSpecification = {
   version: 8,
   sources: {
     "osm-tiles": {
@@ -90,68 +61,6 @@ const LIBERTY_STYLE: StyleSpecification = {
   ],
 };
 
-// 3. Positron (Minimalist Luxury Light)
-const POSITRON_STYLE: StyleSpecification = {
-  version: 8,
-  sources: {
-    "positron-tiles": {
-      type: "raster",
-      tiles: [
-        "https://a.basemaps.cartocdn.light_all/{z}/{x}/{y}@2x.png",
-        "https://b.basemaps.cartocdn.light_all/{z}/{x}/{y}@2x.png",
-        "https://c.basemaps.cartocdn.light_all/{z}/{x}/{y}@2x.png",
-      ],
-      tileSize: 256,
-      attribution:
-        '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> / CARTO',
-    },
-  },
-  layers: [
-    {
-      id: "positron-layer",
-      type: "raster",
-      source: "positron-tiles",
-      minzoom: 0,
-      maxzoom: 20,
-    },
-  ],
-};
-
-// 4. Dark Matter (Sleek Dark Mode)
-const DARK_STYLE: StyleSpecification = {
-  version: 8,
-  sources: {
-    "dark-tiles": {
-      type: "raster",
-      tiles: [
-        "https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
-        "https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
-        "https://c.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
-      ],
-      tileSize: 256,
-      attribution:
-        '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> / CARTO',
-    },
-  },
-  layers: [
-    {
-      id: "dark-layer",
-      type: "raster",
-      source: "dark-tiles",
-      minzoom: 0,
-      maxzoom: 20,
-    },
-  ],
-};
-
-const MAP_STYLES: Record<string, string | StyleSpecification> = {
-  bright: BRIGHT_STYLE,
-  liberty: LIBERTY_STYLE,
-  positron: POSITRON_STYLE,
-  dark: DARK_STYLE,
-  ofm_vector: "https://tiles.openfreemap.org/styles/bright",
-};
-
 export function PropertyMapSection({
   location,
   propertyTitle,
@@ -164,7 +73,6 @@ export function PropertyMapSection({
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
 
   const [copied, setCopied] = useState(false);
-  const [mapStyle, setMapStyle] = useState<"bright" | "liberty" | "positron" | "dark">("liberty");
   const [isFullscreen, setIsFullscreen] = useState(false);
   const containerWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -220,15 +128,6 @@ export function PropertyMapSection({
     }
   };
 
-  // Switch style dynamically
-  const handleStyleChange = (styleKey: "bright" | "liberty" | "positron" | "dark") => {
-    setMapStyle(styleKey);
-    if (mapInstanceRef.current) {
-      const selectedStyle = MAP_STYLES[styleKey];
-      mapInstanceRef.current.setStyle(selectedStyle);
-    }
-  };
-
   // Toggle Fullscreen
   const toggleFullscreen = () => {
     if (!containerWrapperRef.current) return;
@@ -271,7 +170,7 @@ export function PropertyMapSection({
 
     const map = new Map({
       container: mapContainerRef.current,
-      style: MAP_STYLES[mapStyle],
+      style: OSM_STYLE,
       center: [lng, lat],
       zoom: hasExactCoords ? 15.5 : 13,
       attributionControl: false,
@@ -281,6 +180,8 @@ export function PropertyMapSection({
     map.addControl(new NavigationControl({ showCompass: true }), "top-right");
     map.addControl(
       new AttributionControl({
+        customAttribution:
+          '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
         compact: true,
       }),
       "bottom-right"
@@ -443,49 +344,10 @@ export function PropertyMapSection({
           style={{ width: "100%", height: isFullscreen ? "calc(100vh - 220px)" : "420px", minHeight: "380px" }}
         />
 
-        {/* Top Left: Style Switcher */}
-        <div className="absolute top-3 left-3 z-10 flex items-center bg-card/90 backdrop-blur-md rounded-xl p-1 border border-border/70 shadow-md text-xs font-semibold">
-          <Layers className="h-3.5 w-3.5 ml-2 mr-1.5 text-muted-foreground" />
-          <button
-            type="button"
-            onClick={() => handleStyleChange("bright")}
-            className={`px-2.5 py-1 rounded-lg transition-all ${mapStyle === "bright"
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "text-muted-foreground hover:text-foreground"
-              }`}
-          >
-            Bright
-          </button>
-          <button
-            type="button"
-            onClick={() => handleStyleChange("liberty")}
-            className={`px-2.5 py-1 rounded-lg transition-all ${mapStyle === "liberty"
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "text-muted-foreground hover:text-foreground"
-              }`}
-          >
-            OSM
-          </button>
-          <button
-            type="button"
-            onClick={() => handleStyleChange("positron")}
-            className={`px-2.5 py-1 rounded-lg transition-all ${mapStyle === "positron"
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "text-muted-foreground hover:text-foreground"
-              }`}
-          >
-            Positron
-          </button>
-          <button
-            type="button"
-            onClick={() => handleStyleChange("dark")}
-            className={`px-2.5 py-1 rounded-lg transition-all ${mapStyle === "dark"
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "text-muted-foreground hover:text-foreground"
-              }`}
-          >
-            Dark
-          </button>
+        {/* Top Left: OpenStreetMap Badge */}
+        <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 rounded-lg bg-card/90 backdrop-blur-md px-2.5 py-1 text-[11px] font-semibold text-card-foreground border border-border/70 shadow-sm">
+          <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
+          <span>OpenStreetMap (OSM)</span>
         </div>
 
         {/* Top Right: Custom Action Controls (Recenter & Fullscreen) */}

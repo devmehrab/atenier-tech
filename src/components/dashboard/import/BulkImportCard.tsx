@@ -33,36 +33,37 @@ interface BulkImportCardProps {
 
 const SAMPLE_CAPTIONS = [
   {
-    label: "বাংলা ফ্ল্যাট বিক্রি (Gulshan-2)",
-    text: `🔥 গুলশান-২ এ ১৮৫০ স্কয়ার ফিটের আল্ট্রা-লাক্সারি সাউথ-ফেসিং ফ্ল্যাট বিক্রি হবে!
-📍 লোকেশন: রোড ১০৪, গুলশান-২, ঢাকা
-▫️ সাইজ: ১৮৫০ স্কয়ার ফিট (sft)
-▫️ বেডরুম: ৩ টি | বাথরুম: ৩ টি | বারান্দা: ৩ টি
-▫️ পার্কিং: ১ টি ডেডিকেটেড কার পার্কিং
-▫️ ফ্লোর: ৬ষ্ঠ তলা (জি+৯ বিল্ডিং)
-▫️ সুযোগ-সুবিধা: ১০০% ফুল লোড জেনারেটর ব্যাকআপ, হাই-স্পিড প্যাসেঞ্জার লিফট, ২৪/৭ সিসিটিভি ও গার্ড সিকিউরিটি, তিতাস গ্যাস কানেকশন, রুফটপ গার্ডেন।
-💰 মূল্য: ২ কোটি ২৫ লাখ টাকা (আলোচনা সাপেক্ষ)
-📞 সরাসরি যোগাযোগ করুন: 01711002233`,
+    label: "Penthouse Sale (Midtown NY)",
+    text: `🔥 Magnificent 3-Bedroom Luxury Penthouse with Panoramic Skyline Views!
+📍 Location: 450 Lexington Avenue, Midtown, New York, NY
+▫️ Size: 2,450 sq ft
+▫️ Bedrooms: 3 | Bathrooms: 3.5 | Private Terrace: Yes
+▫️ Parking: 2 Dedicated Covered Parking Spaces
+▫️ Floor: 28th Floor (Top Floor)
+▫️ Amenities: 24/7 Concierge & Security, High-Speed Elevator, Rooftop Infinity Pool, Fitness Center & Spa, Wine Cellar, Smart Home Automation.
+💰 Price: $2,450,000 (Negotiable)
+📞 Contact Listing Agent: +1 (212) 555-0145`,
   },
   {
-    label: "English Flat Rent (Bashundhara)",
-    text: `Modern 3 BHK Apartment Available for Rent in Bashundhara R/A!
-Location: Block C, Road 5, Bashundhara R/A, Dhaka
-- Apartment Size: 1650 sqft
-- 3 Bedrooms, 3 Bathrooms, 2 Verandas, Large Kitchen
-- Fully Furnished with high-end interior and split ACs
-- Facilities: Lift, Full Generator Backup, 24/7 Security, 1 Car Parking in Basement
-- Monthly Rent: 55,000 BDT (Negotiable) + Service Charge 5000 BDT
-Contact for visit: 01819001122`,
+    label: "Designer Apartment Rent (Brooklyn)",
+    text: `Modern 2-Bedroom Designer Apartment Available for Immediate Lease!
+Location: 120 Water Street, DUMBO, Brooklyn, NY
+- Apartment Size: 1,350 sq ft
+- 2 Bedrooms, 2 Bathrooms, Balcony, Open Chef's Kitchen
+- Fully furnished with custom Italian finishes and premium appliances
+- Facilities: 24/7 Doorman, Elevator, Fitness Room, Bike Storage, In-Unit Laundry
+- Monthly Rent: $4,500/mo (Negotiable)
+Contact for private tour: +1 (718) 555-0199`,
   },
   {
-    label: "ডুপ্লেক্স ভিলা বিক্রি (Uttara)",
-    text: `উত্তরা সেক্টর ৪ এ ৪২০০ স্কয়ার ফিটের এক্সক্লুসিভ ডুপ্লেক্স ভিলা বিক্রি!
-- ৫ বেডরুম, ৫ বাথরুম, ড্রয়িং, ডাইনিং, ফ্যামিলি লাউঞ্জ, সার্ভেন্ট রুম
-- নিজস্ব সুইমিং পুল ও রুফটপ লন
-- পার্কিং: ২ টি গাড়ির
-- মূল্য: ৫ কোটি ৫০ লাখ (দাম আলোচনা সাপেক্ষ)
-যোগাযোগ: 01912334455`,
+    label: "Waterfront Villa (Miami Beach)",
+    text: `Stunning Waterfront Contemporary Villa with Private Dock & Heated Pool!
+Location: Palm Island, Miami Beach, FL
+- 5 Bedrooms, 5.5 Bathrooms, Expansive Open Living & Dining
+- Heated Saltwater Pool, Outdoor Kitchen & Landscaped Gardens
+- Parking: 3-Car Garage
+- Asking Price: $5,850,000 (Negotiable)
+- Direct Inquiries: +1 (305) 555-0122`,
   },
 ];
 
@@ -181,7 +182,7 @@ export function BulkImportCard({
                   onClick={() => handleInsertSample(s.text)}
                   className="text-primary hover:underline font-semibold ml-1"
                 >
-                  {idx === 0 ? "Bangla" : idx === 1 ? "English" : "Villa"}
+                  {idx === 0 ? "Penthouse" : idx === 1 ? "Brooklyn Rent" : "Miami Villa"}
                 </button>
               ))}
             </div>
@@ -191,7 +192,7 @@ export function BulkImportCard({
             rows={7}
             value={card.caption}
             onChange={(e) => onUpdateCaption(card.id, e.target.value)}
-            placeholder="Paste raw Facebook property post here in Bangla or English...&#10;&#10;Example:&#10;৩ বেডরুমের ১৮৫০ স্কয়ার ফিট ফ্ল্যাট বিক্রি হবে গুলশান-২ এ। ৩ বাথ, ১ পার্কিং। মূল্য: ২ কোটি ২৫ লাখ (আলোচনা সাপেক্ষ)। যোগাযোগ: ০১৭১১..."
+            placeholder="Paste raw Facebook or social media property post here...&#10;&#10;Example:&#10;Stunning 3-Bedroom luxury apartment in Downtown. 3 Bathrooms, private balcony, chef's kitchen, garage parking. Asking $1,250,000 (negotiable). Contact: +1 (555) 019-2834..."
             className="w-full rounded-xl border border-input bg-background p-3.5 text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-colors resize-y font-sans leading-relaxed"
           />
 

@@ -7,6 +7,7 @@ import { PropertyFormValues } from "@/lib/validations/property";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
+import { formatPrice } from "@/lib/utils/formatters";
 import {
   CheckCircle,
   AlertTriangle,
@@ -29,16 +30,16 @@ interface PropertyReviewCardProps {
 }
 
 const COMMON_AMENITIES = [
-  "Full Generator Backup (100%)",
+  "Central Air Conditioning & Heating",
   "24/7 Security & CCTV Surveillance",
-  "High-Speed Passenger Lift",
-  "Covered Car Parking",
-  "Titas Gas Connection / Central LPG",
-  "Dedicated Prayer Room (Namaz Hall)",
-  "Rooftop Garden & Community Hall",
-  "Fitness Center / Gymnasium",
+  "High-Speed Passenger Elevator",
+  "Covered Garage & Parking",
   "Swimming Pool",
-  "Intercom & Video Door Phone",
+  "Fitness Center & Gymnasium",
+  "Rooftop Terrace & Lounge",
+  "Intercom & Smart Video Access",
+  "Full Generator Power Backup",
+  "Private Balcony / Terrace",
 ];
 
 export function PropertyReviewCard({
@@ -114,14 +115,10 @@ export function PropertyReviewCard({
             </div>
             <p className="text-xs text-muted-foreground truncate">
               {formData.location?.area ? `${formData.location.area}, ` : ""}
-              {formData.location?.city || "Dhaka"} •{" "}
+              {formData.location?.city || "New York"} •{" "}
               {formData.listingType === "RENT" ? "For Rent" : "For Sale"} •{" "}
               {formData.price
-                ? formData.price >= 10000000
-                  ? `৳${(formData.price / 10000000).toFixed(2)} Cr`
-                  : formData.price >= 100000
-                  ? `৳${(formData.price / 100000).toFixed(1)} Lakh`
-                  : `৳${formData.price.toLocaleString()}`
+                ? formatPrice(formData.price, formData.currency || "USD")
                 : "No Price Set"}
             </p>
           </div>
@@ -284,7 +281,7 @@ export function PropertyReviewCard({
                     onChange={(e) =>
                       handleFieldChange("price", e.target.value ? Number(e.target.value) : 0)
                     }
-                    placeholder="e.g. 18500000"
+                    placeholder="e.g. 650000"
                     className={!hasPrice ? "border-amber-500" : ""}
                   />
                   {!hasPrice && (
@@ -302,8 +299,13 @@ export function PropertyReviewCard({
                     value={formData.currency}
                     onChange={(e) => handleFieldChange("currency", e.target.value)}
                   >
-                    <option value="BDT">BDT (৳)</option>
                     <option value="USD">USD ($)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="CAD">CAD ($)</option>
+                    <option value="AUD">AUD ($)</option>
+                    <option value="AED">AED (AED)</option>
+                    <option value="BDT">BDT (৳)</option>
                   </Select>
                 </div>
               </div>
@@ -339,7 +341,7 @@ export function PropertyReviewCard({
                 <Input
                   value={formData.location?.address || ""}
                   onChange={(e) => handleFieldChange("location.address", e.target.value)}
-                  placeholder="e.g. House 42, Road 11, Block D"
+                  placeholder="e.g. 350 5th Avenue or 742 Evergreen Terrace"
                   className={!hasAddress ? "border-amber-500" : ""}
                 />
                 {!hasAddress && (
@@ -357,7 +359,7 @@ export function PropertyReviewCard({
                   <Input
                     value={formData.location?.area || ""}
                     onChange={(e) => handleFieldChange("location.area", e.target.value)}
-                    placeholder="e.g. Gulshan-2, Bashundhara"
+                    placeholder="e.g. Midtown, Downtown, Beverly Hills"
                     className={!hasArea ? "border-amber-500" : ""}
                   />
                 </div>
@@ -369,7 +371,7 @@ export function PropertyReviewCard({
                   <Input
                     value={formData.location?.city || ""}
                     onChange={(e) => handleFieldChange("location.city", e.target.value)}
-                    placeholder="Dhaka"
+                    placeholder="New York"
                     className={!hasCity ? "border-amber-500" : ""}
                   />
                 </div>

@@ -19,7 +19,6 @@ import {
   Loader2,
   CheckCircle2,
   HelpCircle,
-  Layers,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,48 +32,22 @@ interface OpenFreeMapPickerProps {
   onChange: (coords: { latitude?: number; longitude?: number }) => void;
 }
 
-const DEFAULT_CENTER: [number, number] = [90.4125, 23.8103]; // Dhaka center [lng, lat]
+const DEFAULT_CENTER: [number, number] = [-73.9855, 40.7484]; // Manhattan, New York [lng, lat]
 const DEFAULT_ZOOM = 13;
 
 const PRESET_LOCATIONS = [
-  { name: "Gulshan-2", lng: 90.4152, lat: 23.7925 },
-  { name: "Banani", lng: 90.4043, lat: 23.7937 },
-  { name: "Dhanmondi", lng: 90.3752, lat: 23.7461 },
-  { name: "Uttara", lng: 90.3986, lat: 23.8759 },
-  { name: "Bashundhara R/A", lng: 90.4358, lat: 23.8164 },
-  { name: "Mirpur DOHS", lng: 90.3644, lat: 23.8378 },
-  { name: "Chittagong", lng: 91.8364, lat: 22.3569 },
-  { name: "Sylhet", lng: 91.8687, lat: 24.8949 },
+  { name: "Manhattan", lng: -73.9855, lat: 40.7484 },
+  { name: "Brooklyn", lng: -73.9442, lat: 40.6782 },
+  { name: "Los Angeles", lng: -118.2437, lat: 34.0522 },
+  { name: "Miami", lng: -80.1918, lat: 25.7617 },
+  { name: "London", lng: -0.1276, lat: 51.5074 },
+  { name: "Dubai", lng: 55.2708, lat: 25.2048 },
+  { name: "Toronto", lng: -79.3832, lat: 43.6532 },
+  { name: "Sydney", lng: 151.2093, lat: -33.8688 },
 ];
 
-// 1. High-DPI Bright / Voyager Style
-const BRIGHT_STYLE: StyleSpecification = {
-  version: 8,
-  sources: {
-    "bright-tiles": {
-      type: "raster",
-      tiles: [
-        "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
-        "https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
-        "https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
-        "https://d.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
-      ],
-      tileSize: 256,
-    },
-  },
-  layers: [
-    {
-      id: "bright-layer",
-      type: "raster",
-      source: "bright-tiles",
-      minzoom: 0,
-      maxzoom: 20,
-    },
-  ],
-};
-
-// 2. OpenStreetMap Standard
-const LIBERTY_STYLE: StyleSpecification = {
+// OpenStreetMap (OSM) Standard Raster Tiles
+const OSM_STYLE: StyleSpecification = {
   version: 8,
   sources: {
     "osm-tiles": {
@@ -100,67 +73,6 @@ const LIBERTY_STYLE: StyleSpecification = {
   ],
 };
 
-// 3. Positron
-const POSITRON_STYLE: StyleSpecification = {
-  version: 8,
-  sources: {
-    "positron-tiles": {
-      type: "raster",
-      tiles: [
-        "https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
-        "https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
-        "https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
-      ],
-      tileSize: 256,
-      attribution:
-        '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> / CARTO',
-    },
-  },
-  layers: [
-    {
-      id: "positron-layer",
-      type: "raster",
-      source: "positron-tiles",
-      minzoom: 0,
-      maxzoom: 20,
-    },
-  ],
-};
-
-// 4. Dark Matter
-const DARK_STYLE: StyleSpecification = {
-  version: 8,
-  sources: {
-    "dark-tiles": {
-      type: "raster",
-      tiles: [
-        "https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
-        "https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
-        "https://c.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
-      ],
-      tileSize: 256,
-      attribution:
-        '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> / CARTO',
-    },
-  },
-  layers: [
-    {
-      id: "dark-layer",
-      type: "raster",
-      source: "dark-tiles",
-      minzoom: 0,
-      maxzoom: 20,
-    },
-  ],
-};
-
-const MAP_STYLES: Record<string, string | StyleSpecification> = {
-  bright: BRIGHT_STYLE,
-  liberty: LIBERTY_STYLE,
-  positron: POSITRON_STYLE,
-  dark: DARK_STYLE,
-};
-
 export function OpenFreeMapPicker({
   latitude,
   longitude,
@@ -181,7 +93,6 @@ export function OpenFreeMapPicker({
   >([]);
   const [showResults, setShowResults] = useState(false);
   const [gettingLocation, setGettingLocation] = useState(false);
-  const [mapStyle, setMapStyle] = useState<"bright" | "liberty" | "positron" | "dark">("bright");
 
   const hasCoords =
     typeof latitude === "number" &&
@@ -207,15 +118,7 @@ export function OpenFreeMapPicker({
     return el;
   };
 
-  // Switch style dynamically
-  const handleStyleChange = (styleKey: "bright" | "liberty" | "positron" | "dark") => {
-    setMapStyle(styleKey);
-    if (mapInstanceRef.current) {
-      mapInstanceRef.current.setStyle(MAP_STYLES[styleKey]);
-    }
-  };
-
-  // Initialize Map
+  // Initialize Map with OpenStreetMap (OSM)
   useEffect(() => {
     if (!mapContainerRef.current) return;
 
@@ -235,7 +138,7 @@ export function OpenFreeMapPicker({
 
     const map = new Map({
       container: mapContainerRef.current,
-      style: MAP_STYLES[mapStyle],
+      style: OSM_STYLE,
       center: initialCenter,
       zoom: initialZoom,
       attributionControl: false,
@@ -246,7 +149,7 @@ export function OpenFreeMapPicker({
     map.addControl(
       new AttributionControl({
         customAttribution:
-          '© <a href="https://openfreemap.org" target="_blank" rel="noopener noreferrer">OpenFreeMap</a> / <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>',
+          '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
         compact: true,
       }),
       "bottom-right"
@@ -380,7 +283,7 @@ export function OpenFreeMapPicker({
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
           searchQuery.trim()
-        )}&limit=5&countrycodes=bd,in`
+        )}&limit=5`
       );
       const data = await response.json();
       setSearchResults(data || []);
@@ -473,7 +376,7 @@ export function OpenFreeMapPicker({
       fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
           queryParts
-        )}&limit=5&countrycodes=bd`
+        )}&limit=5`
       )
         .then((r) => r.json())
         .then((data) => {
@@ -494,7 +397,7 @@ export function OpenFreeMapPicker({
           </div>
           <div>
             <h4 className="text-xs font-bold text-card-foreground">
-              OpenFreeMap / OSM Pinpoint Location
+              OpenStreetMap (OSM) Pinpoint Location
             </h4>
             <p className="text-[11px] text-muted-foreground">
               Click anywhere on the map or drag the pin to set the exact property coordinates
@@ -529,7 +432,7 @@ export function OpenFreeMapPicker({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleSearch())}
-              placeholder="Search area, road, landmark in Bangladesh (e.g. Gulshan-2, Dhaka)..."
+              placeholder="Search address, neighborhood, city, or landmark (e.g. Manhattan, London)..."
               className="w-full rounded-xl border border-border/80 bg-background pl-9 pr-20 py-2 text-xs text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary shadow-sm"
             />
             <button
@@ -636,49 +539,10 @@ export function OpenFreeMapPicker({
           style={{ width: "100%", height: "400px", minHeight: "380px" }}
         />
 
-        {/* Map Style Selector Overlay */}
-        <div className="absolute top-3 left-3 z-10 flex items-center bg-card/90 backdrop-blur-md rounded-xl p-1 border border-border/70 shadow-md text-xs font-semibold">
-          <Layers className="h-3.5 w-3.5 ml-2 mr-1.5 text-muted-foreground" />
-          <button
-            type="button"
-            onClick={() => handleStyleChange("bright")}
-            className={`px-2.5 py-1 rounded-lg transition-all ${mapStyle === "bright"
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "text-muted-foreground hover:text-foreground"
-              }`}
-          >
-            Bright
-          </button>
-          <button
-            type="button"
-            onClick={() => handleStyleChange("liberty")}
-            className={`px-2.5 py-1 rounded-lg transition-all ${mapStyle === "liberty"
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "text-muted-foreground hover:text-foreground"
-              }`}
-          >
-            OSM
-          </button>
-          <button
-            type="button"
-            onClick={() => handleStyleChange("positron")}
-            className={`px-2.5 py-1 rounded-lg transition-all ${mapStyle === "positron"
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "text-muted-foreground hover:text-foreground"
-              }`}
-          >
-            Positron
-          </button>
-          <button
-            type="button"
-            onClick={() => handleStyleChange("dark")}
-            className={`px-2.5 py-1 rounded-lg transition-all ${mapStyle === "dark"
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "text-muted-foreground hover:text-foreground"
-              }`}
-          >
-            Dark
-          </button>
+        {/* OSM Map Indicator Badge on Top Left */}
+        <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 rounded-lg bg-card/90 backdrop-blur-md px-2.5 py-1 text-[11px] font-semibold text-card-foreground border border-border/70 shadow-sm">
+          <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
+          <span>OpenStreetMap (OSM)</span>
         </div>
 
         {/* Instruction overlay on bottom left */}

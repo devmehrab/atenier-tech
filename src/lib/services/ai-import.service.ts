@@ -45,11 +45,11 @@ const JSON_SCHEMA = {
     price: {
       type: ["number", "null"],
       description:
-        "Total numeric asking price or monthly rent normalized to BDT Taka (e.g. 1.85 crore = 18500000, 65k = 65000, 1.2 lakh = 120000). Return null if not stated.",
+        "Total numeric asking price or monthly rent normalized to integer digits (e.g. $1.85M = 1850000, 65k = 65000, $4,500 = 4500). Return null if not stated.",
     },
     currency: {
       type: "string",
-      default: "BDT",
+      default: "USD",
     },
     priceNegotiable: {
       type: "boolean",
@@ -71,18 +71,18 @@ const JSON_SCHEMA = {
         area: {
           type: ["string", "null"],
           description:
-            "Area, neighborhood, or thana (e.g., Gulshan-2, Banani, Bashundhara R/A, Dhanmondi, Uttara)",
+            "Area or neighborhood (e.g., Midtown, Downtown, Beverly Hills, Brooklyn, West End)",
         },
         city: {
           type: ["string", "null"],
-          description: "City or District (e.g. Dhaka, Chittagong, Sylhet)",
+          description: "City or District (e.g. New York, Los Angeles, London, Miami)",
         },
         state: {
           type: ["string", "null"],
         },
         country: {
           type: "string",
-          default: "Bangladesh",
+          default: "United States",
         },
         zipCode: {
           type: ["string", "null"],
@@ -145,7 +145,7 @@ const JSON_SCHEMA = {
       type: "array",
       items: { type: "string" },
       description:
-        "List of amenities mentioned (e.g., 'Full Generator Backup (100%)', 'High-Speed Passenger Lift', '24/7 Security & CCTV Surveillance', 'Covered Car Parking', 'Titas Gas Connection / Central LPG', 'Intercom & Video Door Phone', 'Fitness Center / Gymnasium', 'Rooftop Garden & Community Hall')",
+        "List of amenities mentioned (e.g., 'Central Air Conditioning & Heating', 'High-Speed Passenger Elevator', '24/7 Security & CCTV Surveillance', 'Covered Garage & Parking', 'Swimming Pool', 'Fitness Center & Gymnasium', 'Private Balcony / Terrace', 'Rooftop Terrace & Lounge')",
     },
     contactInfo: {
       type: "object",
@@ -167,55 +167,56 @@ const JSON_SCHEMA = {
   ],
 };
 
-const SYSTEM_PROMPT = `You are an expert AI parser specialized in Bangladeshi real estate listings and Facebook property posts.
-Your task is to parse unstructured property post captions (in Bengali, English, or Banglish) into structured property listing data adhering strictly to the provided JSON schema.
+const SYSTEM_PROMPT = `You are an expert AI parser specialized in international real estate listings and social media property posts.
+Your task is to parse unstructured property post captions (in English or other languages) into structured property listing data adhering strictly to the provided JSON schema.
 
 CRITICAL PARSING RULES:
-1. BANGLADESH NUMERICAL CONVERSIONS:
-   - "কোটি" / "crore" / "cr" = 10,000,000 (e.g., "1.85 কোটি" -> price: 18500000, "2.2 Cr" -> 22000000)
-   - "লাখ" / "লক্ষ" / "lakh" / "lac" = 100,000 (e.g., "75 লাখ" -> 7500000, "1.5 Lakh" -> 150000)
-   - "হাজার" / "k" / "thousand" = 1,000 (e.g., "65 হাজার" / "65k" -> 65000)
+1. NUMERICAL & PRICE CONVERSIONS:
+   - Extract numeric asking price or monthly rent as integer digits.
+   - "$1.85M" or "1.85 million" -> price: 1850000
+   - "$650k" or "650 thousand" -> price: 650000
+   - "$4,500/mo" -> price: 4500
    - If price is not mentioned, return price: null.
+   - Default currency is "USD" unless another currency code/symbol is explicitly specified (e.g., EUR, GBP, CAD, AUD).
 
 2. LISTING & PROPERTY TYPES:
    - ListingType:
-     * "ভাড়া" / "ভাড়া হবে" / "To-Let" / "Rent" -> "RENT" (set pricePeriod to "MONTHLY")
-     * "বিক্রি" / "বিক্রয়" / "বিক্রি হবে" / "Sale" / "For Sale" -> "SALE" (pricePeriod: null)
-     * "লিজ" / "Lease" -> "LEASE"
+     * Rent / For Rent / To-Let / Lease -> "RENT" (set pricePeriod to "MONTHLY")
+     * Sale / For Sale / Buy -> "SALE" (pricePeriod: null)
+     * Commercial Lease -> "LEASE"
    - PropertyType:
-     * "ফ্ল্যাট" / "অ্যাপার্টমেন্ট" / "Flat" / "Apartment" -> "APARTMENT"
-     * "বাড়ি" / "বিল্ডিং" / "House" / "Building" -> "HOUSE"
-     * "ডুপ্লেক্স" / "ভিলা" / "Duplex" / "Villa" -> "VILLA"
-     * "পেন্টহাউস" / "Penthouse" -> "PENTHOUSE"
-     * "বাণিজ্যিক স্পেস" / "দোকান" / "Commercial" / "Shop" -> "COMMERCIAL"
-     * "অফিস" / "Office" -> "OFFICE"
-     * "জমি" / "প্লট" / "Land" / "Plot" -> "LAND"
-     * "টাউনহাউস" / "Townhouse" -> "TOWNHOUSE"
+     * Apartment / Condo / Flat -> "APARTMENT"
+     * House / Single Family / Building -> "HOUSE"
+     * Villa / Mansion -> "VILLA"
+     * Penthouse -> "PENTHOUSE"
+     * Commercial / Retail / Shop -> "COMMERCIAL"
+     * Office / Suite -> "OFFICE"
+     * Land / Plot / Lot -> "LAND"
+     * Townhouse / Rowhouse -> "TOWNHOUSE"
 
 3. DIMENSIONS & ROOMS:
-   - "1650 sft" / "1650 sqft" / "১৬৫০ স্কয়ার ফিট" -> specifications.propertySize: 1650, propertySizeUnit: "sqft"
-   - "5 কাঠা" / "5 katha" -> specifications.landSize: 5, landSizeUnit: "katha"
-   - "3 bed" / "৩ বেড" / "3 bedroom" -> specifications.bedrooms: 3
-   - "3 bath" / "৩ বাথ" / "3 বাথরুম" -> specifications.bathrooms: 3
-   - "1 parking" / "১ পার্কিং" -> specifications.parkingSpaces: 1
-   - "6th floor" / "৬ষ্ঠ তলা" -> specifications.floorNumber: 6
+   - "1650 sqft" / "1650 sft" / "1,650 sq ft" -> specifications.propertySize: 1650, propertySizeUnit: "sqft"
+   - "3 bed" / "3 bedroom" / "3 BHK" -> specifications.bedrooms: 3
+   - "2.5 bath" / "2 bath" -> specifications.bathrooms: 2
+   - "2 parking" / "2-car garage" -> specifications.parkingSpaces: 2
+   - "6th floor" -> specifications.floorNumber: 6
 
 4. AMENITIES IDENTIFICATION:
-   - Lift / লিফট -> "High-Speed Passenger Lift"
-   - Generator / জেনারেটর / 100% backup -> "Full Generator Backup (100%)"
-   - Security / CCTV / গার্ড -> "24/7 Security & CCTV Surveillance"
-   - Parking / পার্কিং -> "Covered Car Parking"
-   - Gas / Titas Gas / গ্যাস / এলপিজি -> "Titas Gas Connection / Central LPG"
-   - Intercom / ইন্টারকম -> "Intercom & Video Door Phone"
-   - Gym / জিম -> "Fitness Center / Gymnasium"
-   - Swimming Pool / সুইমিং পুল -> "Swimming Pool"
-   - Rooftop Garden / ছাদ বাগান -> "Rooftop Garden & Community Hall"
-   - Prayer Room / নামাজের ঘর -> "Dedicated Prayer Room (Namaz Hall)"
+   - Air conditioning / AC / Central HVAC -> "Central Air Conditioning & Heating"
+   - Elevator / Lift -> "High-Speed Passenger Elevator"
+   - Security / 24/7 guard / CCTV -> "24/7 Security & CCTV Surveillance"
+   - Parking / Garage -> "Covered Garage & Parking"
+   - Pool / Swimming pool -> "Swimming Pool"
+   - Gym / Fitness center -> "Fitness Center & Gymnasium"
+   - Balcony / Terrace -> "Private Balcony / Terrace"
+   - Rooftop -> "Rooftop Terrace & Lounge"
+   - Washer / Dryer / Laundry -> "In-Unit Washer & Dryer"
+   - Doorman / Concierge -> "Concierge & Front Desk Service"
 
 5. STRICT ANTI-HALLUCINATION:
    - Extract ONLY information present or directly inferable from the caption.
    - If a field is not in the caption, set it to null. DO NOT invent fake prices, bedroom counts, or addresses.
-   - Generate a clean, descriptive property title (e.g., "South-Facing 3BHK Luxury Apartment in Gulshan-2").`;
+   - Generate a clean, descriptive property title (e.g., "Modern 3-Bedroom Penthouse with Skyline Views in Midtown").`;
 
 /**
  * Extracts structured property information from a single caption using Groq.
@@ -265,7 +266,7 @@ async function callGroqExtraction(
       { role: "system", content: SYSTEM_PROMPT },
       {
         role: "user",
-        content: `Parse the following Bangladeshi real estate Facebook post caption into the required structured JSON format:\n\n${caption}`,
+        content: `Parse the following real estate property post caption into the required structured JSON format:\n\n${caption}`,
       },
     ],
     response_format: {
@@ -347,33 +348,35 @@ export function heuristicFallbackExtract(caption: string): ExtractedPropertyValu
     text.match(/(\d{3,5})\s*(?:sft|sqft|sq\s*ft|স্কয়ার\s*ফিট|স্কয়ার\s*ফিট|বর্গফুট)/i);
   if (sizeMatch) propertySize = parseInt(sizeMatch[1], 10);
 
-  // 6. Price (handles compound like: 2 কোটি 25 লাখ or 1.85 crore or 75 lakh or 55,000)
+  // 6. Price
   let price: number | null = null;
-  let priceNegotiable = /আলোচনা\s*সাপেক্ষ|negotiable|আলোচনাযোগ্য|নেগোসিয়েবল/i.test(text);
+  let priceNegotiable = /negotiable|negotiation|আলোচনা\s*সাপেক্ষ|আলোচনাযোগ্য|নেগোসিয়েবল/i.test(text);
 
-  // Compound crore + lakh match (e.g. 2 কোটি 25 লাখ / 2 crore 25 lakh)
-  const compoundMatch = text.match(
-    /(\d+(?:\.\d+)?)\s*(?:কোটি|crore|cr)(?:\s*(\d+(?:\.\d+)?)\s*(?:লাখ|লক্ষ|lakh|lac))?/i
-  );
-  if (compoundMatch) {
-    const croreVal = parseFloat(compoundMatch[1]) * 10000000;
-    const lakhVal = compoundMatch[2] ? parseFloat(compoundMatch[2]) * 100000 : 0;
-    price = Math.round(croreVal + lakhVal);
+  // Millions match (e.g. $2.45M or 2.5 million)
+  const millionMatch = text.match(/(?:\$|usd)?\s*(\d+(?:\.\d+)?)\s*(?:m\b|million)/i);
+  if (millionMatch) {
+    price = Math.round(parseFloat(millionMatch[1]) * 1000000);
   } else {
-    // Lakh match (e.g. 75 lakh / 75 লাখ)
-    const lakhMatch = text.match(/(\d+(?:\.\d+)?)\s*(?:লাখ|লক্ষ|lakh|lac)/i);
-    if (lakhMatch) {
-      price = Math.round(parseFloat(lakhMatch[1]) * 100000);
+    // Thousand / K match (e.g. $650k or 650 thousand)
+    const thousandMatch = text.match(/(?:\$|usd)?\s*(\d+(?:\.\d+)?)\s*(?:k\b|thousand)/i);
+    if (thousandMatch) {
+      price = Math.round(parseFloat(thousandMatch[1]) * 1000);
     } else {
-      // Thousand / K match (e.g. 45k / 45 হাজার)
-      const thousandMatch = text.match(/(\d+(?:\.\d+)?)\s*(?:হাজার|k\b|thousand)/i);
-      if (thousandMatch) {
-        price = Math.round(parseFloat(thousandMatch[1]) * 1000);
+      // Direct price match (e.g. $2,450,000 or Price: 2450000 or Rent: $4,500)
+      const directPrice =
+        text.match(/(?:price|rent|asking|মূল্য|ভাড়া)[:\s]*(?:\$|usd|৳)?\s*([\d,]+)/i) ||
+        text.match(/\$\s*([\d,]{4,12})/);
+      if (directPrice) {
+        price = parseInt(directPrice[1].replace(/,/g, ""), 10);
       } else {
-        // Direct number match near price/মূল্য
-        const directPrice = text.match(/(?:মূল্য|price|ভাড়া|rent)[:\s]*৳?\s*([\d,]{4,12})/i);
-        if (directPrice) {
-          price = parseInt(directPrice[1].replace(/,/g, ""), 10);
+        // Compound crore / lakh fallback if present
+        const compoundMatch = text.match(
+          /(\d+(?:\.\d+)?)\s*(?:কোটি|crore|cr)(?:\s*(\d+(?:\.\d+)?)\s*(?:লাখ|লক্ষ|lakh|lac))?/i
+        );
+        if (compoundMatch) {
+          const croreVal = parseFloat(compoundMatch[1]) * 10000000;
+          const lakhVal = compoundMatch[2] ? parseFloat(compoundMatch[2]) * 100000 : 0;
+          price = Math.round(croreVal + lakhVal);
         }
       }
     }
@@ -381,106 +384,65 @@ export function heuristicFallbackExtract(caption: string): ExtractedPropertyValu
 
   // 7. Location (Area & City)
   let area: string | null = null;
-  let city = "Dhaka";
+  let city = "New York";
 
   const commonAreas = [
-    "Baridhara DOHS",
-    "Gulshan-2",
-    "Gulshan-1",
-    "Bashundhara R/A",
-    "গুলশান-২",
-    "গুলশান-১",
-    "বসুন্ধরা",
-    "Gulshan",
-    "গুলশান",
-    "Banani",
-    "বনানী",
-    "Bashundhara",
-    "Dhanmondi",
-    "ধানমন্ডি",
-    "Uttara",
-    "উত্তরা",
-    "Mirpur",
-    "মিরপুর",
-    "Mohakhali",
-    "মহাখালী",
-    "Baridhara",
-    "বারিধারা",
-    "Banasree",
-    "বনশ্রী",
-    "Niketan",
-    "নিকেতন",
-    "Lalmatia",
-    "লালমাটিয়া",
-    "Mohammadpur",
-    "মোহাম্মদপুর",
-    "Badda",
-    "বাড্ডা",
-    "Aftabnagar",
-    "আফতাবনগর",
-    "Khilkhet",
-    "খিলক্ষেত",
-    "Purbachal",
-    "পূর্বাচল",
-    "Chittagong",
-    "চট্টগ্রাম",
-    "Sylhet",
-    "সিলেট",
-    "Cox's Bazar",
-    "কক্সবাজার",
+    "Midtown",
+    "Downtown",
+    "Manhattan",
+    "Brooklyn",
+    "DUMBO",
+    "Tribeca",
+    "SoHo",
+    "Greenwich Village",
+    "Upper East Side",
+    "Upper West Side",
+    "Beverly Hills",
+    "West Hollywood",
+    "Santa Monica",
+    "Miami Beach",
+    "Brickell",
+    "Coral Gables",
+    "Mayfair",
+    "Kensington",
+    "Canary Wharf",
   ];
 
   for (const a of commonAreas) {
     if (new RegExp(a, "i").test(text)) {
-      // Map Bangla area name to standard name if needed
-      const areaMap: Record<string, string> = {
-        "গুলশান-২": "Gulshan-2",
-        "গুলশান-১": "Gulshan-1",
-        "গুলশান": "Gulshan",
-        "বনানী": "Banani",
-        "বসুন্ধরা": "Bashundhara R/A",
-        "ধানমন্ডি": "Dhanmondi",
-        "উত্তরা": "Uttara",
-        "মিরপুর": "Mirpur",
-        "মহাখালী": "Mohakhali",
-        "বারিধারা": "Baridhara",
-        "বনশ্রী": "Banasree",
-        "নিকেতন": "Niketan",
-        "লালমাটিয়া": "Lalmatia",
-        "মোহাম্মদপুর": "Mohammadpur",
-        "বাড্ডা": "Badda",
-        "আফতাবনগর": "Aftabnagar",
-        "খিলক্ষেত": "Khilkhet",
-        "পূর্বাচল": "Purbachal",
-        "চট্টগ্রাম": "Chittagong",
-        "সিলেট": "Sylhet",
-        "কক্সবাজার": "Cox's Bazar",
-      };
-      area = areaMap[a] || a;
+      area = a;
+      if (/Beverly Hills|West Hollywood|Santa Monica/i.test(a)) city = "Los Angeles";
+      else if (/Miami Beach|Brickell|Coral Gables/i.test(a)) city = "Miami";
+      else if (/Mayfair|Kensington|Canary Wharf/i.test(a)) city = "London";
+      else city = "New York";
       break;
     }
   }
 
   // 8. Amenities
   const amenities: string[] = [];
-  if (/লিফট|lift|elevator/i.test(text)) amenities.push("High-Speed Passenger Lift");
-  if (/জেনারেটর|generator|backup/i.test(text)) amenities.push("Full Generator Backup (100%)");
-  if (/সিকিউরিটি|security|cctv|সিসিটিভি|গার্ড/i.test(text)) amenities.push("24/7 Security & CCTV Surveillance");
-  if (/পার্কিং|parking|গ্যারেজ/i.test(text)) amenities.push("Covered Car Parking");
-  if (/গ্যাস|gas|titas/i.test(text)) amenities.push("Titas Gas Connection / Central LPG");
-  if (/সুইমিং\s*পুল|swimming\s*pool/i.test(text)) amenities.push("Swimming Pool");
-  if (/জিম|gym/i.test(text)) amenities.push("Fitness Center / Gymnasium");
-  if (/ইন্টারকম|intercom/i.test(text)) amenities.push("Intercom & Video Door Phone");
-  if (/গার্ডেন|garden|বাগান/i.test(text)) amenities.push("Rooftop Garden & Community Hall");
+  if (/ac\b|air\s*conditioning|hvac/i.test(text)) amenities.push("Central Air Conditioning & Heating");
+  if (/elevator|lift/i.test(text)) amenities.push("High-Speed Passenger Elevator");
+  if (/security|cctv|doorman|guard/i.test(text)) amenities.push("24/7 Security & CCTV Surveillance");
+  if (/parking|garage/i.test(text)) amenities.push("Covered Garage & Parking");
+  if (/pool|swimming/i.test(text)) amenities.push("Swimming Pool");
+  if (/gym|fitness/i.test(text)) amenities.push("Fitness Center & Gymnasium");
+  if (/balcony|terrace|patio/i.test(text)) amenities.push("Private Balcony / Terrace");
+  if (/rooftop|roof\s*deck/i.test(text)) amenities.push("Rooftop Terrace & Lounge");
+  if (/washer|dryer|laundry/i.test(text)) amenities.push("In-Unit Washer & Dryer");
+  if (/generator|power\s*backup/i.test(text)) amenities.push("Full Generator Power Backup");
+  if (/concierge/i.test(text)) amenities.push("Concierge & Front Desk Service");
 
   // 9. Phone & WhatsApp
   let phone: string | null = null;
-  const phoneMatch = text.match(/(?:\+?88)?01[3-9]\d{8}/);
+  const phoneMatch =
+    text.match(/(?:\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/) ||
+    text.match(/\+?\d{10,14}/);
   if (phoneMatch) phone = phoneMatch[0];
 
   // 10. Title
   const titleParts = [];
-  if (bedrooms) titleParts.push(`${bedrooms} BHK`);
+  if (bedrooms) titleParts.push(`${bedrooms} Bed`);
   titleParts.push(
     propertyType === "APARTMENT"
       ? "Apartment"
@@ -507,23 +469,23 @@ export function heuristicFallbackExtract(caption: string): ExtractedPropertyValu
     listingType,
     propertyType,
     price,
-    currency: "BDT",
+    currency: "USD",
     priceNegotiable,
     pricePeriod,
     location: {
-      address: area ? `${area}, Dhaka` : null,
+      address: area ? `${area}, ${city}` : null,
       area: area || null,
       city,
-      state: "Dhaka Division",
-      country: "Bangladesh",
+      state: city === "Los Angeles" ? "CA" : city === "Miami" ? "FL" : city === "London" ? "Greater London" : "NY",
+      country: city === "London" ? "United Kingdom" : "United States",
     },
     specifications: {
       bedrooms: bedrooms || (propertyType === "LAND" ? 0 : 1),
       bathrooms: bathrooms || (propertyType === "LAND" ? 0 : 1),
-      parkingSpaces: amenities.includes("Covered Car Parking") ? 1 : 0,
-      propertySize: propertySize || (propertyType === "LAND" ? 2160 : 1200),
+      parkingSpaces: amenities.includes("Covered Garage & Parking") ? 1 : 0,
+      propertySize: propertySize || (propertyType === "LAND" ? 2500 : 1400),
       propertySizeUnit: "sqft",
-      furnishedStatus: /ফার্নিশড|furnished/i.test(text) ? "SEMI_FURNISHED" : "UNFURNISHED",
+      furnishedStatus: /furnished/i.test(text) ? "SEMI_FURNISHED" : "UNFURNISHED",
     },
     amenities,
     features: [],

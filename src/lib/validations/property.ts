@@ -27,7 +27,7 @@ export const propertyFormSchema = z.object({
   ]),
   status: z.enum(["DRAFT", "PUBLISHED", "UNPUBLISHED", "SOLD", "RENTED"]).default("DRAFT"),
   price: z.coerce.number().min(1, "Price must be greater than 0"),
-  currency: z.string().default("BDT"),
+  currency: z.string().default("USD"),
   priceNegotiable: z.boolean().default(false),
   pricePeriod: z.enum(["MONTHLY", "YEARLY"]).optional(),
   location: z.object({
@@ -35,7 +35,7 @@ export const propertyFormSchema = z.object({
     city: z.string().min(2, "City is required"),
     area: z.string().min(2, "Area or Neighborhood is required"),
     state: z.string().optional(),
-    country: z.string().default("Bangladesh"),
+    country: z.string().default("United States"),
     zipCode: z.string().optional(),
     latitude: z.preprocess(
       (val) => (val === "" || val === null || val === undefined || isNaN(Number(val)) ? undefined : Number(val)),

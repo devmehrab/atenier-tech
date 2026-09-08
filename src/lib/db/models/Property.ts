@@ -123,7 +123,7 @@ const PropertySchema = new Schema<IPropertyDocument>(
     },
     currency: {
       type: String,
-      default: "BDT",
+      default: "USD",
       uppercase: true,
     },
     priceNegotiable: {
@@ -140,7 +140,7 @@ const PropertySchema = new Schema<IPropertyDocument>(
       city: { type: String, required: true, trim: true, index: true },
       area: { type: String, required: true, trim: true, index: true },
       state: { type: String, trim: true },
-      country: { type: String, default: "Bangladesh", trim: true },
+      country: { type: String, default: "United States", trim: true },
       zipCode: { type: String, trim: true },
       latitude: { type: Number },
       longitude: { type: Number },

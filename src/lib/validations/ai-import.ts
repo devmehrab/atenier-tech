@@ -20,7 +20,7 @@ export const extractedPropertySchema = z.object({
     .nullable()
     .optional(),
   price: z.number().nullable().optional(),
-  currency: z.string().default("BDT"),
+  currency: z.string().default("USD"),
   priceNegotiable: z.boolean().default(false),
   pricePeriod: z.enum(["MONTHLY", "YEARLY"]).nullable().optional(),
   location: z
@@ -29,12 +29,12 @@ export const extractedPropertySchema = z.object({
       city: z.string().nullable().optional(),
       area: z.string().nullable().optional(),
       state: z.string().nullable().optional(),
-      country: z.string().default("Bangladesh"),
+      country: z.string().default("United States"),
       zipCode: z.string().nullable().optional(),
     })
     .default({
-      city: "Dhaka",
-      country: "Bangladesh",
+      city: "New York",
+      country: "United States",
     }),
   specifications: z
     .object({
